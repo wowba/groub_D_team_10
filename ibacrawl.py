@@ -39,10 +39,13 @@ for link in links:
         driver.implicitly_wait(5)
 
         name = driver.find_element_by_class_name("entry-title").text
-        cocktail_class = driver.find_element_by_css_selector(
-            "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_0_tb_body.et_pb_css_mix_blend_mode_passthrough > div > div > p > a:nth-child(2)").text
-        ingredients = driver.find_element_by_css_selector(
+        cocktail_class = driver.find_element_by_class_name(
+            "et_pb_title_meta_container").text.replace("IBA COCKTAIL,","")
+        try:
+            ingredients = driver.find_element_by_css_selector(
             "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(2)").text
+        except:
+            ingredients = driver.find_element_by_class_name("column").text
         method = driver.find_element_by_css_selector(
             "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(4)").text
         try:
@@ -64,9 +67,9 @@ for link in links:
             "review": [],
             "stars": [],
         }
-        print(name)
+
         driver.close()
-        time.sleep(2)
+        time.sleep(3)
 
     print(link, "크롤링 끝")
 

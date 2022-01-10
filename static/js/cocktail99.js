@@ -1,9 +1,9 @@
 // 로그인 함수
 function login() {
-            let username = $("#input-username").val()
-            let password = $("#input-password").val()
+            let id = $("#input-username").val()
+            let pw = $("#input-password").val()
 
-            if (username === "") {
+            if (id === "") {
                 $("#help-id").removeClass("is-hidden")
                 $("#input-username").focus()
                 return;
@@ -11,7 +11,7 @@ function login() {
                 $("#help-id").addClass("is-hidden")
             }
 
-            if (password === "") {
+            if (pw === "") {
                 $("#help-pw").removeClass("is-hidden")
                 $("#input-password").focus()
                 return;
@@ -22,8 +22,8 @@ function login() {
                 type: "POST",
                 url: "/api/login",
                 data: {
-                    username_give: username,
-                    password_give: password
+                    id_give: id,
+                    pw_give: pw
                 },
                 success: function (response) {
                     if (response['result'] === 'success') {

@@ -34,15 +34,18 @@ def home():
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    username_receive = request.form['username_give']
-    password_receive = request.form['password_give']
+    id_receive = request.form['id_give']
+    pw_receive = request.form['pw_give']
 
-    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+    pw_encrypt = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+
+    # 현재 설계에 맞는 코드, 테스트 DB 설계가 달라서 주석 처리함
+    # result = db.users.find_one({'id': id_receive, 'pw': pw_encrypt})
+    result = db.users.find_one({'username': id_receive, 'password': pw_encrypt})
 
     if result is not None:
         payload = {
-            'id': username_receive,
+            'id': id_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')

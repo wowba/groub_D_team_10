@@ -63,13 +63,28 @@
         .footer{
             padding-top:30px;
         }
+        .modal{
+            position:fixed;
+            top:50%;
+            left:50%;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+        }
 
 
     </style>
 
 
     <script>
-
+        $(document).ready(function () {
+            {% if user_info %}
+                $("#signup-a").toggleClass("is-hidden")
+                $("#login-a").toggleClass("is-hidden")
+            {% else %}
+                $("#mypage-a").toggleClass("is-hidden")
+                $("#signout-a").toggleClass("is-hidden")
+            {% endif %}
+        })
     </script>
 
 </head>
@@ -84,9 +99,14 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html">칵테일 99 {{ user_info.username }}</a>
+                        <a href="./index.html">칵테일 99</a>
                     </div>
                 </div>
+                <p>
+                    {% if user_info %}
+                        <a href="/mypage">{{ user_info.username }}</a>님 환영합니다!
+                    {% endif %}
+                </p>
                 </div>
             </div>
             <div class="humberger__open">
@@ -109,11 +129,12 @@
                 <div class="col-lg-3">
                     <div class="hero__categories">
                         <ul style="display: none;">
-                            <li><a href="javascript:void(0)" data-bs-toggle="modal">로그인</a></li>
-                            <li><a href="./signup.html">회원가입</a></li>
-                            <li><a href="./mypage.html">마이페이지</a></li>
-                            <li><a href="./listpage.html">리스트페이지</a></li>
-                            <li><a href="./write.html">레시피작성</a></li>
+                            <li><a id="login-a" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#login-modal">로그인</a></li>
+                            <li><a id="signup-a" href="./signup.html">회원가입</a></li>
+                            <li><a id="mypage-a" href="/mypage">마이페이지</a></li>
+                            <li><a href="/listpage">리스트페이지</a></li>
+                            <li><a href="/write">레시피작성</a></li>
+                            <li><a id="signout-a" href="javascript:void(0)" onclick="sign_out()">로그아웃</a></li>
                         </ul>
                     </div>
                 </div>
@@ -132,9 +153,12 @@
             </div>
             <div class="modal-body">
                 <input id="input-username" class="input" type="text" placeholder="아이디">
+                <p id="help-id" class="help is-hidden is-danger">아이디를 입력해주세요!</p>
                 <input id="input-password" class="input" type="password" placeholder="비밀번호">
+                <p id="help-pw" class="help is-hidden is-danger">비밀번호를 입력해주세요!</p>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">회원가입</button>
                 <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
+
             </div>
             </div>
         </div>
@@ -227,7 +251,6 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-{#    <script src="../static/js/jquery-3.3.1.min.js"></script>#}
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/jquery.nice-select.min.js"></script>
     <script src="../static/js/jquery-ui.min.js"></script>

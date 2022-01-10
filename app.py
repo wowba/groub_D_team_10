@@ -17,7 +17,7 @@ client = MongoClient('localhost', 27017)
 db = client.logintest
 
 
-## HTML을 주는 부분
+
 
 @app.route('/')
 def home():
@@ -26,7 +26,9 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]}, {'_id': False})
         return render_template('index.html', user_info=user_info)
-    except:
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("home", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
         return render_template('index.html')
 
 
@@ -64,6 +66,25 @@ def sign_up():
         }
         db.users.insert_one(doc)
     return jsonify({'result': 'success'})
+
+
+# TODO 마이 페이지 API
+@app.route('/mypage', methods=['GET'])
+def to_mypage():
+    return render_template('mypage.html')
+
+
+# TODO 리스트 페이지 API
+@app.route('/listpage', methods=['GET'])
+def to_listpage():
+    return render_template('listpage.html')
+
+
+# TODO 게시글 작성 API
+@app.route('/write', methods=['GET', 'POST'])
+def to_write_page():
+    if request.method == 'GET':
+        return render_template('write.html')
 
 
 if __name__ == '__main__':

@@ -4,19 +4,19 @@ function login() {
             let password = $("#input-password").val()
 
             if (username === "") {
-                $("#help-id-login").text("아이디를 입력해주세요.")
+                $("#help-id").removeClass("is-hidden")
                 $("#input-username").focus()
                 return;
             } else {
-                $("#help-id-login").text("")
+                $("#help-id").addClass("is-hidden")
             }
 
             if (password === "") {
-                $("#help-password-login").text("비밀번호를 입력해주세요.")
+                $("#help-pw").removeClass("is-hidden")
                 $("#input-password").focus()
                 return;
             } else {
-                $("#help-password-login").text("")
+                $("#help-pw").addClass("is-hidden")
             }
             $.ajax({
                 type: "POST",
@@ -35,3 +35,10 @@ function login() {
                 }
             });
         }
+
+// 로그아웃 함수
+function sign_out() {
+    $.removeCookie('mytoken', {path: '/'})
+    alert('로그아웃!')
+    window.location.href = '/'
+}

@@ -41,21 +41,31 @@ for link in links:
         driver.set_window_size(1920, 1080)
         driver.get(link)
         driver.implicitly_wait(5)
-
-        name = driver.find_element_by_class_name("entry-title").text
-        cocktail_class = driver.find_element_by_class_name(
-            "et_pb_title_meta_container").text.replace("IBA COCKTAIL,", "")
-        desc = driver.find_element_by_xpath("//meta[@property='og:description']").get_attribute("content").split("METHOD")
-        ingredient = desc[0]
-        desc2 = desc[1].split("GARNISH")
-        method = desc2[0]
-        imgsrc = driver.find_element_by_xpath("//meta[@property='og:image']").get_attribute("content")
-        print(name)
-        print(ingredient)
-        print(method)
-        print(imgsrc)
-        driver.close()
-        time.sleep(3)
+        try:
+            name = driver.find_element_by_class_name("entry-title").text
+            cocktail_class = driver.find_element_by_class_name(
+                "et_pb_title_meta_container").text.replace("IBA COCKTAIL,", "")
+            desc = driver.find_element_by_xpath("//meta[@property='og:description']").get_attribute("content").split("METHOD")
+            ingredient = desc[0].replace("INGREDIENTS","")
+            desc2 = desc[1].split("GARNISH")
+            method = desc2[0]
+            try:
+                desc3 = desc2[1].split("HISTORY")
+                garnish = desc3[0]
+            except:
+                garnish = desc2[1]
+            imgsrc = driver.find_element_by_xpath("//meta[@property='og:image']").get_attribute("content")
+            print(name)
+            print(cocktail_class)
+            print(ingredient)
+            print(method)
+            print(garnish)
+            print(imgsrc)
+            driver.close()
+            time.sleep(3)
+        except:
+            driver.close()
+            time.sleep(3)
 
     print(link, "크롤링 끝")
 

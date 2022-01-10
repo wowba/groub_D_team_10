@@ -127,6 +127,46 @@
             font-weight:900;
         }
 
+        /* 별점 입력 */
+        .categories .reply_container .write_reply_field fieldset{
+            display: inline-block;
+            border: none;
+            direction: rtl;
+            padding-top:20px;
+        }
+
+        .categories .reply_container .write_reply_field fieldset .rating_input_box {
+            vertical-align: middle;
+            display: block;
+        }
+        
+
+        .categories .reply_container .write_reply_field fieldset .rating_input_box span{
+            font-size: 20px;
+        }
+
+        .categories .reply_container .write_reply_field fieldset label{
+            font-size:1em;
+            color:transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+
+        .categories .reply_container .write_reply_field fieldset label:hover{
+            text-shadow: 0 0 0 #d494c6;
+        }
+
+        .categories .reply_container .write_reply_field fieldset label:hover ~ label{
+            text-shadow: 0 0 0 #d494c6;
+        }
+        
+        .categories .reply_container .write_reply_field  input[type=radio]{
+            display: none;
+        }
+
+        .categories .reply_container .write_reply_field  input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 #d494c6;
+        }
+
         .categories .reply_container .write_reply_field .post_btn{
             border:none;
             background-color:#d494c6;
@@ -257,8 +297,16 @@
                 <form action="" class="write_reply_field">
                     <label for="write_reply_text">댓글내용 :</label>
                     <input type="text" id="write_reply_text">
-                    <label for="write_reply_score">평점 :</label>
-                    <input type="number" id="write_reply_score">
+                    <div class="rating_input_box">
+                        <span>평점 :</span>
+                        <fieldset>
+                            <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
+                            <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
+                            <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
+                            <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
+                            <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
+                        </fieldset>
+                    </div>
                     <button class="post_btn">등록</button>
                 </form>
             </div>

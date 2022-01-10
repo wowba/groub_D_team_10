@@ -56,11 +56,19 @@ for link in links:
                 garnish = desc2[1]
             imgsrc = driver.find_element_by_xpath("//meta[@property='og:image']").get_attribute("content")
             print(name)
-            print(cocktail_class)
-            print(ingredient)
-            print(method)
-            print(garnish)
-            print(imgsrc)
+            doc = {
+                "name": name,
+                "class": cocktail_class,
+                "ingredient": ingredient,
+                "method": method,
+                "garnish": garnish,
+                "imgsrc": imgsrc,
+                "like": 0,
+                "review": [],
+                "stars" : [],
+            }
+            db.cocktails.insert_one(doc)
+
             driver.close()
             time.sleep(3)
         except:

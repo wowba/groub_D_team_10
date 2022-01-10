@@ -68,6 +68,6 @@ for link in links:
         driver.close()
         time.sleep(2)
 
-    print(link, "크롤링 끝")
+    print(link, "크롤링 끝sdsdsdsd")
 
 print("전체 크롤링 끝")

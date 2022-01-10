@@ -49,9 +49,9 @@
         .side_menu_btn{
             display: inline-block;
             width :20px;
-
+            
         }
-
+        
         .categories .container .row .section-title{
             margin: 80px auto;
         }
@@ -98,7 +98,7 @@
     <nav class="nav">
         <div class="hero__categories__all side_menu_btn">
             <i class="fa fa-bars"></i>
-        </div>
+        </div>    
     </nav>
 
 
@@ -109,8 +109,8 @@
                 <div class="col-lg-3">
                     <div class="hero__categories">
                         <ul style="display: none;">
-                            <li><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#login-modal">로그인</a></li>
-                            <li><a href="./singup.html">회원가입</a></li>
+                            <li><a href="javascript:void(0)" data-bs-toggle="modal">로그인</a></li>
+                            <li><a href="./signup.html">회원가입</a></li>
                             <li><a href="./mypage.html">마이페이지</a></li>
                             <li><a href="./listpage.html">리스트페이지</a></li>
                             <li><a href="./write.html">레시피작성</a></li>
@@ -124,21 +124,21 @@
 
     <!-- Login Modal -->
     <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="loginModal">로그인</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <input id="input-username" class="input" type="text" placeholder="아이디">
-            <input id="input-password" class="input" type="password" placeholder="비밀번호">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">회원가입</button>
-            <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
-          </div>
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="loginModal">로그인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="input-username" class="input" type="text" placeholder="아이디">
+                <input id="input-password" class="input" type="password" placeholder="비밀번호">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">회원가입</button>
+                <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
+            </div>
+            </div>
         </div>
-      </div>
-    </div>
+        </div>
 
     <!-- Categories Section Begin -->
     <section class="categories">
@@ -149,22 +149,22 @@
                 </div>
                 <div class="categories__slider owl-carousel">
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-1.jpg">
                             <h5><a href="#">Fresh Fruit</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-2.jpg">
                             <h5><a href="#">Dried Fruit</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-3.jpg">
                             <h5><a href="#">Vegetables</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-4.jpg">
                             <h5><a href="#">drink fruits</a></h5>
                         </div>
                     </div>
@@ -185,27 +185,27 @@
                 </div>
                 <div class="categories__slider owl-carousel">
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-1.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-1.jpg">
                             <h5><a href="#">Fresh Fruit</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-2.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-2.jpg">
                             <h5><a href="#">Dried Fruit</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-3.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-3.jpg">
                             <h5><a href="#">Vegetables</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-4.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-4.jpg">
                             <h5><a href="#">drink fruits</a></h5>
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="img/categories/cat-5.jpg">
+                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-5.jpg">
                             <h5><a href="#">drink fruits</a></h5>
                         </div>
                     </div>
@@ -235,6 +235,7 @@
     <script src="../static/js/mixitup.min.js"></script>
     <script src="../static/js/owl.carousel.min.js"></script>
     <script src="../static/js/main.js"></script>
+
 
 
 

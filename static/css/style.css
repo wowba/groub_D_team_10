@@ -98,7 +98,6 @@ a:hover,
 a:focus {
 	text-decoration: none;
 	outline: none;
-	color: #ffffff;
 }
 
 ul,
@@ -129,7 +128,7 @@ ol {
 	right: 0;
 	height: 4px;
 	width: 80px;
-	background: #7fad39;
+	background: #d494c6;
 	content: "";
 	margin: 0 auto;
 }
@@ -587,10 +586,11 @@ ol {
 }
 
 .hero__categories__all {
-	background: #7fad39;
+	background: #d494c6;
 	position: relative;
-	padding: 10px 25px 10px 40px;
+	padding: 10px 25px 10px 15px;
 	cursor: pointer;
+	border-radius:20px;
 }
 
 .hero__categories__all i {
@@ -605,21 +605,21 @@ ol {
 	color: #ffffff;
 }
 
-.hero__categories__all:after {
-	position: absolute;
-	right: 18px;
-	top: 9px;
-	content: "3";
-	font-family: "ElegantIcons";
-	font-size: 18px;
-	color: #ffffff;
-}
-
 .hero__categories ul {
 	border: 1px solid #ebebeb;
 	padding-left: 40px;
 	padding-top: 10px;
 	padding-bottom: 12px;
+	width:90%;
+	height:100%;
+
+	/* 수정한 코드 */
+	background-color: #3f3f3f;
+	opacity:0.9;
+	position:fixed;
+	top:0;
+	left:10%;
+	z-index:99999;
 }
 
 .hero__categories ul li {
@@ -628,7 +628,7 @@ ol {
 
 .hero__categories ul li a {
 	font-size: 16px;
-	color: #1c1c1c;
+	color: #fff;
 	line-height: 39px;
 	display: block;
 }

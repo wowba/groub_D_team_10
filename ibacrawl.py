@@ -37,39 +37,72 @@ for link in links:
         driver.set_window_size(1920, 1080)
         driver.get(link)
         driver.implicitly_wait(5)
-
-        name = driver.find_element_by_class_name("entry-title").text
-        cocktail_class = driver.find_element_by_class_name(
-            "et_pb_title_meta_container").text.replace("IBA COCKTAIL,","")
         try:
-            ingredients = driver.find_element_by_css_selector(
-            "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(2)").text
-        except:
-            ingredients = driver.find_element_by_class_name("column").text
-        method = driver.find_element_by_css_selector(
-            "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(4)").text
-        try:
-            garnish = driver.find_element_by_css_selector(
-                "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(6)").text
-        except:
-            garnish = driver.find_element_by_css_selector(
-                "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(7)")
-        imgsrc = driver.find_element_by_xpath("//meta[@property='og:image']").get_attribute("content")
+            name = driver.find_element_by_class_name("entry-title").text
+            cocktail_class = driver.find_element_by_class_name(
+                "et_pb_title_meta_container").text.replace("IBA COCKTAIL,","")
+            try:
+                ingredients = driver.find_element_by_css_selector(
+                "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(2)").text
+            except:
+                ingredients = driver.find_element_by_class_name("column").text
+            method = driver.find_element_by_css_selector(
+                "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(4)").text
+            try:
+                garnish = driver.find_element_by_css_selector(
+                    "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(6)").text
+            except:
+                garnish = driver.find_element_by_css_selector(
+                    "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(7)")
+            imgsrc = driver.find_element_by_xpath("//meta[@property='og:image']").get_attribute("content")
 
-        doc = {
-            "name": name,
-            "class": cocktail_class,
-            "ingredients": ingredients,
-            "method": method,
-            "garnish": garnish,
-            "imgsrc": imgsrc,
-            "like": 0,
-            "review": [],
-            "stars": [],
-        }
+            doc = {
+                "name": name,
+                "class": cocktail_class,
+                "ingredients": ingredients,
+                "method": method,
+                "garnish": garnish,
+                "imgsrc": imgsrc,
+                "like": 0,
+                "review": [],
+                "stars": [],
+            }
+            print(name)
+            driver.close()
+            time.sleep(3)
+        except:
+            name = driver.find_element_by_class_name("entry-title").text
+            cocktail_class = driver.find_element_by_class_name(
+                "et_pb_title_meta_container").text.replace("IBA COCKTAIL,", "")
+            try:
+                ingredients = driver.find_element_by_css_selector(
+                    "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(3)").text
+            except:
+                ingredients = driver.find_element_by_class_name("column").text
+            method = driver.find_element_by_css_selector(
+                "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(5)").text
+            try:
+                garnish = driver.find_element_by_css_selector(
+                    "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(7)").text
+            except:
+                garnish = driver.find_element_by_css_selector(
+                    "#main-content > div > div > div > div > div.et_pb_column.et_pb_column_1_2.et_pb_column_1_tb_body.et_pb_css_mix_blend_mode_passthrough.et-last-child > div.et_pb_module.et_pb_post_content.et_pb_post_content_0_tb_body.blog-post-content > p:nth-child(8)")
+            imgsrc = driver.find_element_by_xpath("//meta[@property='og:image']").get_attribute("content")
 
-        driver.close()
-        time.sleep(3)
+            doc = {
+                "name": name,
+                "class": cocktail_class,
+                "ingredients": ingredients,
+                "method": method,
+                "garnish": garnish,
+                "imgsrc": imgsrc,
+                "like": 0,
+                "review": [],
+                "stars": [],
+            }
+            print(name)
+            driver.close()
+            time.sleep(3)
 
     print(link, "크롤링 끝")
 

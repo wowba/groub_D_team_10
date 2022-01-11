@@ -19,9 +19,9 @@ client = MongoClient('localhost', 27017)
 db = client.team10
 is_login = False
 
-
 @app.route('/')
 def home():
+    print(db.cocktails.find({}, {'class': 1, '_id': False}))
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])

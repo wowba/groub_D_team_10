@@ -128,6 +128,7 @@ def delete_article():
 def reply_write():
     name_receive = request.form['name_give']
     cocktail_name_receive = request.form['cocktail_name_give']
+    # db.reviews.find_one({'name'})
     content_receive = request.form['content_give']
     stars_receive = int(request.form['stars_give'])
 

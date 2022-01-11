@@ -82,7 +82,6 @@ function post_comment(id) {
     let cocktail_name = $('#cocktail-name').text()
     let content = $('#write_reply_text').val()
     let stars = $('input[name=rating]:checked').val();
-    console.log(stars)
     if (content === '') {
         alert("내용을 입력하세요!")
         return;

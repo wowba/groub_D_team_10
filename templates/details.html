@@ -319,7 +319,7 @@
                         <button class="post_btn" type="button" onclick="post_comment()">등록</button>
                     {% endif %}
                 </form>
-                {% if user_info.id == cocktail_info.id %}
+                {% if user_info and user_info.id == cocktail_info.id %}
                     <button class="delete" type="button" onclick="delete_article('{{user_info.id}}', '{{cocktail_info.idx}}')">삭제</button>
                 {% endif %}
             </div>

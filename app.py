@@ -97,6 +97,7 @@ def to_listpage():
 
 
 
+
 # TODO 상세 페이지 API
 @app.route('/api/view', methods=['GET'])
 def to_detail_page():

@@ -45,7 +45,7 @@
       <recent name="C:\Users\leeyu\OneDrive\바탕 화면\항해99\1주차\groub_D_team_10\static\img\icon" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.groub_D_team_10">
+  <component name="RunManager" selected="Flask server.Flask (app.py) (1)">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/groub_D_team_10/templates/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
@@ -71,6 +71,21 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="Flask (app.py) (1)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+      <module name="group_D_team_10" />
+      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="targetType" value="PATH" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
       <module name="groub_D_team_10" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
@@ -88,6 +103,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Flask server.Flask (app.py) (1)" />
         <item itemvalue="Flask server.Flask (app.py)" />
         <item itemvalue="JavaScript Debug.index.html" />
       </list>

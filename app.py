@@ -220,8 +220,7 @@ def like_click():
             return jsonify({'msg': '좋아요!'})
     else:
         print("로그인 먼저")
-        return jsonify({'error': '로그인이 필요합니다. 로그인 페이지로 이동합니다.'})
-
+        quit()
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

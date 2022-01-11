@@ -192,6 +192,7 @@ def random_list():
         pass
 
     user_like_list = ''
+
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})
@@ -210,6 +211,7 @@ def like_list():
         pass
 
     user_like_list = ''
+
     if token_receive is not None:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"username": payload["id"]})

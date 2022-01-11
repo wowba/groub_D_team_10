@@ -14,6 +14,7 @@
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/star.css" type="text/css">
     <link rel="stylesheet" href="../static/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="../static/css/nice-select.css" type="text/css">
@@ -256,7 +257,12 @@
                 </div>
                 <div class="method_box">
                     <h3>주조법</h3>
-                    <p>{{ cocktail_info.method }}</p>
+                    {% for idx, method in enumerate(cocktail_info.method.split(".")) %}
+                        {% if method == ' ' or method == '' %}
+                            {% continue %}
+                        {% endif %}
+                        <p>#{{idx + 1}} {{method}}</p>
+                    {% endfor %}
                 </div>
                 <div class="garnish_box">
                     <h3>가니쉬</h3>
@@ -294,8 +300,13 @@
                     <ul class="reply_list">
                         {% for review in cocktail_info.review %}
                             <li>
-                                <span class="reply_username">username</span>
-                                <span class="reply_content">{{ review.content }}</span>
+                                <span class="reply_username">{{ review.name }}</span>
+                                <span class="reply_content">{{ review.content }}    </span>
+                                <span class="small-ratings">
+                                    {% for i in range(review.stars) %}
+                                        <i class="fa fa-star rating-color"></i>
+                                    {% endfor %}
+                                </span>
                             </li>
                         {% endfor %}
                     </ul>
@@ -315,8 +326,15 @@
                                 <input type="radio" name="rating" value=1 id="rate5"><label for="rate5">⭐</label>
                             </fieldset>
                     </div>
-                    <button class="post_btn" onclick="post_comment({{ user_info.id }})">등록</button>
+                    {% if user_info %}
+                        <button class="post_btn" type="button" onclick="post_comment('{{ user_info.id }}')">등록</button>
+                    {% else %}
+                        <button class="post_btn" type="button" onclick="post_comment()">등록</button>
+                    {% endif %}
                 </form>
+                {% if user_info.id == cocktail_info.id %}
+                    <button class="delete" type="button" onclick="delete_article('{{user_info.id}}', '{{cocktail_info.idx}}')">삭제</button>
+                {% endif %}
             </div>
         </div>
     </section>

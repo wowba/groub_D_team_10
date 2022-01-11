@@ -251,7 +251,13 @@
             <div class="content-box">
                 <div class="ingredients_box">
                     <h3>재료</h3>
-                    <span>{{ cocktail_info.ingredient }}</span>
+                        {% set ingredient = "" %}
+                        {%  for idx, split in enumerate(cocktail_info.ingredient.split(' ')) %}
+                            {% if idx % 2 == 2 %}
+                                {% set ingredient = ingredient + split %}
+                            {% endif %}
+                            <span>{{ ingredient }}</span>
+                        {% endfor %}
                 </div>
                 <div class="method_box">
                     <h3>주조법</h3>

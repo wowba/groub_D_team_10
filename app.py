@@ -103,7 +103,7 @@ def to_detail_page():
     cocktail_name = request.args.get('cocktailname')
     cocktail_info = db.cocktails.find_one({'name': cocktail_name}, {'_id': False})
 
-    return render_template('details.html', cocktail_info=cocktail_info)
+    return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate)
 
 
 @app.route('/api/reply_write', methods=['POST'])
@@ -129,6 +129,28 @@ def reply_write():
 def to_write_page():
     if request.method == 'GET':
         return render_template('write.html')
+    else:
+        name_receive = request.form['name_give']
+        class_receive = request.form['class_give']
+        ingredient_receive = request.form['ingredient_give']
+        method_receive = request.form['method_give']
+        garnish_receive = request.form['garnish_give']
+        imgsrc_receive = request.form['imgsrc_give']
+
+        doc = {
+            "name": name_receive,
+            "class": class_receive,
+            "ingredient": ingredient_receive,
+            "method": method_receive,
+            "garnish": garnish_receive,
+            "like": 0,
+            "review": [],
+            "imgsrc": imgsrc_receive,
+            "stars": []
+        }
+
+        db.cocktails.insert_one(doc)
+        return jsonify({'msg': "등록 완료!"})
 
 
 # TODO 게시글 작성 API

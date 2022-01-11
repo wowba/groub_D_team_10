@@ -21,7 +21,9 @@
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
-    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <style>
         .header .container{
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -62,6 +64,35 @@
 
 
     </style>
+    <script>
+            function postArticle() {
+                let name = $('#cocktail-name').val();
+                let classname = $('#cocktail-class').val();
+                let ingredient = $('#cocktail-ingredients').val();
+                let method = $('#cocktail-method').val();
+                let garnish = $('#cocktail-garnish').val();
+                let imgsrc = $('#cocktail-imgsrc').val();
+                if (imgsrc === undefined) {
+                    imgsrc = "#"
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/custom_write",
+                    data: {
+                        name_give:name,
+                        class_give:classname,
+                        ingredient_give: ingredient,
+                        method_give:method,
+                        garnish_give:garnish,
+                        imgsrc_give:imgsrc,
+                    },
+                    success: function (response) { // 성공하면
+                        alert(response["msg"]);
+                    }
+                })
+            }
+    </script>
 </head>
 
 <body>
@@ -88,7 +119,7 @@
     <nav class="nav">
         <div class="hero__categories__all side_menu_btn">
             <i class="fa fa-bars"></i>
-        </div>    
+        </div>
     </nav>
 
 
@@ -103,7 +134,7 @@
                             <li><a href="./singup.html">회원가입</a></li>
                             <li><a href="./mypage.html">마이페이지</a></li>
                             <li><a href="./listpage.html">리스트페이지</a></li>
-                            <li><a href="./write.html">레시피작성</a></li>
+                            <li><a href="/api/custom_write">레시피작성</a></li>
                         </ul>
                     </div>
                 </div>
@@ -124,29 +155,33 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input write_input">
                                         <label for="">칵테일명</label>
-                                        <input type="text">
+                                        <input id="cocktail-name" type="text">
                                     </div>
                                 </div>
                             </div>
                             <div class="checkout__input write_input">
+                                <label for="">칵테일 레벨</label>
+                                <input id="cocktail-class" type="text">
+                            </div>
+                            <div class="checkout__input write_input">
                                 <label for="">재료</label>
-                                <textarea name="" id="post-comment" class="form-control" rows="2"></textarea>
+                                <textarea name="" id="cocktail-ingredients" class="form-control" rows="2"></textarea>
                             </div>
                             <div class="checkout__input write_input">
                                 <label for="">주조법</label>
-                                <textarea name="" id="post-comment" class="form-control" rows="2"></textarea>
+                                <textarea name="" id="cocktail-method" class="form-control" rows="2"></textarea>
                             </div>
                             <div class="checkout__input write_input">
                                 <label for="">가니쉬</label>
-                                <input type="text">
+                                <input id="cocktail-garnish" type="text">
                             </div>
                             <div class="checkout__input write_input">
                                 <label for="">이미지파일</label>
-                                <input type="file">
+                                <input id="cocktail-imgsrc" type="file">
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="site-btn signup-btn">가입하기</button>
+                    <button type="submit" onclick="postArticle()" class="site-btn signup-btn">가입하기</button>
                 </form>
             </div>
         </div>
@@ -169,7 +204,6 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/jquery.nice-select.min.js"></script>
     <script src="../static/js/jquery-ui.min.js"></script>

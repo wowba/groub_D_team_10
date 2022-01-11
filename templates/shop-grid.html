@@ -21,17 +21,20 @@
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+    <script src="../static/js/jquery-3.3.1.min.js"></script>
 </head>
-<script>
-    let cate = $('#class-cate option:selected').val();
+<script defer>
+    let cate = document.getElementById('class-cate');
+    console.log(cate);
 
-    function cate() {
-        if (cate == "") {
-            return false;
+    function cate(cate) {
+        if (cate !== "") {
+            self.location.href = "{{url_for('to_listpage')}}?class=" + cate;
         } else {
-            self.location.href = "{{url_for('to_listpage')}}?class="+cate;
+            window.location.reload()
         }
     }
+
 </script>
 <body>
 <!-- Page Preloder -->
@@ -87,7 +90,7 @@
                                 <h6>
                                     <a href={{ url_for('to_detail_page', cocktailname = result.name) }} onclick="">{{ result.name }}</a>
                                 </h6>
-                                <h5>{{ result.stars /{{resultㅣlength}}</h5>
+                                {#                                    <h5>{{ result.stars }}</h5>#}
                             </div>
                         </div>
                     </div>
@@ -194,7 +197,7 @@
 <!-- Footer Section End -->
 
 <!-- Js Plugins -->
-<script src="../static/js/jquery-3.3.1.min.js"></script>
+
 <script src="../static/js/bootstrap.min.js"></script>
 <script src="../static/js/jquery.nice-select.min.js"></script>
 <script src="../static/js/jquery-ui.min.js"></script>

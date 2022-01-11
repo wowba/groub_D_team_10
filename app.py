@@ -90,9 +90,8 @@ def to_listpage():
         result = list(db.cocktails.find({}))
         random.shuffle(result)
         return render_template('shop-grid.html', results=result)
-
-    elif cate is not None:
-        result = list(db.cocktails.find({'class':cate}, {'_id': False}).sort({"stars": 1}))
+    # elif cate is not None:
+    #     result = list(db.cocktails.find({'class': cate}, {'_id': False}))
         return render_template('shop-grid.html', results=result)
 
 

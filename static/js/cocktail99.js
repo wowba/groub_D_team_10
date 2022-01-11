@@ -1,10 +1,11 @@
 // 회원 가입
 function sign_up() {
-    let username = $("#input-username").val()
-    let password = $("#input-password").val()
+    let id = $("#input-username").val()
+    let pw = $("#input-password").val()
     let check_password = $("#input-check-password").val()
 
-    if (password !== check_password) {
+
+    if (pw !== check_password) {
         alert("비밀번호 일치하지 않음")
         $('#input-check-password').focus()
         return
@@ -13,8 +14,8 @@ function sign_up() {
         type: "POST",
         url: "/api/register",
         data: {
-            username_give: username,
-            password_give: password
+            id_give: id,
+            pw_give: pw
         },
         success: function (response) {
             alert("회원가입을 축하드립니다!")
@@ -54,6 +55,7 @@ function login() {
                 success: function (response) {
                     if (response['result'] === 'success') {
                         $.cookie('mytoken', response['token'], {path: '/'});
+                        alert("로그인 성공!")
                         window.location.reload()
                     } else {
                         alert(response['msg'])
@@ -72,10 +74,10 @@ function sign_out() {
 // 댓글 등록 함수
 function post_comment(id) {
 
-    // if ($.cookie('mytoken') === undefined) {
-    //     alert("로그인이 필요합니다")
-    //     return;
-    // }
+    if ($.cookie('mytoken') === undefined || id === undefined) {
+        alert("로그인이 필요합니다")
+        return;
+    }
     let name = id
     let cocktail_name = $('#cocktail-name').text()
     let content = $('#write_reply_text').val()
@@ -100,8 +102,55 @@ function post_comment(id) {
         },
         success: function (response) {
             alert(response['result'])
-            window.location.reload()
+            window.location.replace('/api/view?cocktailname='+cocktail_name)
         }
     })
 }
 
+// 게시글 등록 함수
+function post_article(id) {
+                let post_id = id
+                let name = $('#cocktail-name').val();
+                let classname = $('#cocktail-class').val();
+                let ingredient = $('#cocktail-ingredients').val();
+                let method = $('#cocktail-method').val();
+                let garnish = $('#cocktail-garnish').val();
+                let imgsrc = $('#cocktail-imgsrc').val();
+
+                if (imgsrc === undefined || imgsrc === " ") {
+                    imgsrc = "#"
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/custom_write",
+                    data: {
+                        id_give: post_id,
+                        name_give:name,
+                        class_give:classname,
+                        ingredient_give: ingredient,
+                        method_give:method,
+                        garnish_give:garnish,
+                        imgsrc_give:imgsrc,
+                    },
+                    success: function (response) { // 성공하면
+                        alert(response["msg"]);
+                        window.location.replace('../')
+                    }
+                })
+            }
+
+function delete_article(user_id, cocktail_idx) {
+        $.ajax({
+                    type: "DELETE",
+                    url: "/api/custom_delete",
+                    data: {
+                        id_give: user_id,
+                        idx_give: cocktail_idx
+                    },
+                    success: function (response) { // 성공하면
+                        alert(response["msg"]);
+                        window.location.replace('../')
+                    }
+                })
+}

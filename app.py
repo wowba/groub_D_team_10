@@ -1,17 +1,20 @@
+import this
+from datetime import datetime, timedelta
+from xmlrpc.client import DateTime
+
 from pymongo import MongoClient
 import jwt
-import datetime
 import hashlib
 import secrets
 from bson import ObjectId
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
-from datetime import datetime, timedelta
 import random
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+app.jinja_env.add_extension('jinja2.ext.loopcontrols')
 
 SECRET_KEY = secrets.token_hex(16)
 
@@ -25,7 +28,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]}, {'_id': False})
+        user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
         return render_template('index.html', user_info=user_info)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("home", msg="로그인 시간이 만료되었습니다."))
@@ -40,9 +43,7 @@ def login():
 
     pw_encrypt = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
-    # 현재 설계에 맞는 코드, 테스트 DB 설계가 달라서 주석 처리함
-    # result = db.users.find_one({'id': id_receive, 'pw': pw_encrypt})
-    result = db.users.find_one({'username': id_receive, 'password': pw_encrypt})
+    result = db.users.find_one({'id': id_receive, 'pw': pw_encrypt})
 
     if result is not None:
         payload = {
@@ -60,19 +61,19 @@ def sign_up():
     if request.method == 'GET':
         return render_template('signup.html')
     else:
-        username_receive = request.form['username_give']
-        password_receive = request.form['password_give']
-        password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+        id_receive = request.form['id_give']
+        pw_receive = request.form['pw_give']
+        pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
         # count = db.users.find({"id": id}).countDocuments()
         # if count > 0:
         #     flash("중복된 이메일 주소가 있습니다.")
         #     return render_template('join.html')
         doc = {
-            "username": username_receive,
-            "password": password_hash,
+            "id": id_receive,
+            "pw": pw_hash,
         }
         db.users.insert_one(doc)
-    return jsonify({'result': 'success'})
+        return jsonify({'result': 'success'})
 
 
 # TODO 마이 페이지 API
@@ -92,9 +93,8 @@ def to_listpage():
         return render_template('shop-grid.html', results=result)
     # elif cate is not None:
     #     result = list(db.cocktails.find({'class': cate}, {'_id': False}))
-        return render_template('shop-grid.html', results=result)
-
-
+    # result = list(db.cocktails.find({}))
+    # return render_template('shop-grid.html', results=result)
 
 
 # TODO 상세 페이지 API
@@ -105,11 +105,22 @@ def to_detail_page():
     cocktail_info = db.cocktails.find_one({'name': cocktail_name}, {'_id': False})
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"username": payload["id"]}, {'_id': False})
+        user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
         return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate, user_info=user_info)
     except:
         return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate)
 
+
+# 삭제 버튼을 누른 사람 기준 검증 or 현 페이지 접속자 기준 검증 ?
+# 일단 전자
+@app.route('/api/custom_delete', methods=['DELETE'])
+def delete_article():
+    id_receive = request.form['id_give']
+    idx_receive = request.form['idx_give']
+
+    db.cocktails.delete_one({'id': id_receive, 'idx': idx_receive})
+
+    return jsonify({'msg': "삭제 완료"})
 
 
 @app.route('/api/reply_write', methods=['POST'])
@@ -118,8 +129,9 @@ def reply_write():
     cocktail_name_receive = request.form['cocktail_name_give']
     content_receive = request.form['content_give']
     stars_receive = int(request.form['stars_give'])
-    print(name_receive)
+
     doc = {
+        'name': name_receive,
         'cocktail_name': cocktail_name_receive,
         'content': content_receive,
         'stars': stars_receive
@@ -135,16 +147,21 @@ def reply_write():
 @app.route('/api/custom_write', methods=['GET', 'POST'])
 def to_write_page():
     if request.method == 'GET':
-        return render_template('write.html')
+        user_info = get_user_info()
+        if user_info is None:
+            return render_template('index.html')
+        return render_template('write.html', user_info=user_info)
     else:
+        id_receive = request.form['id_give']
         name_receive = request.form['name_give']
         class_receive = request.form['class_give']
         ingredient_receive = request.form['ingredient_give']
         method_receive = request.form['method_give']
         garnish_receive = request.form['garnish_give']
         imgsrc_receive = request.form['imgsrc_give']
-
+        idx = str(datetime.now())
         doc = {
+            "id": id_receive,
             "name": name_receive,
             "class": class_receive,
             "ingredient": ingredient_receive,
@@ -153,12 +170,12 @@ def to_write_page():
             "like": 0,
             "review": [],
             "imgsrc": imgsrc_receive,
-            "stars": []
+            "stars": [],
+            "idx": idx
         }
 
         db.cocktails.insert_one(doc)
         return jsonify({'msg': "등록 완료!"})
-
 
 
 # TODO 랜덤 칵테일 추천 API
@@ -168,11 +185,22 @@ def random_list():
     random.shuffle(random_list)
     return jsonify({'result': random_list})
 
+
 # TODO 좋아요 순 칵테일 추천 API
 @app.route('/api/likerecommend', methods=['GET'])
 def like_list():
     like_list = list(db.cocktails.find({}, {'_id': False}).sort('like', -1))
     return jsonify({'result': like_list})
+
+
+def get_user_info():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
+        return user_info
+    except:
+        return None
 
 
 if __name__ == '__main__':

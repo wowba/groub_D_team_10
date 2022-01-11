@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
 
+    <script src="../static/js/cocktail99.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -66,35 +67,6 @@
 
 
     </style>
-    <script>
-            function postArticle() {
-                let name = $('#cocktail-name').val();
-                let classname = $('#cocktail-class').val();
-                let ingredient = $('#cocktail-ingredients').val();
-                let method = $('#cocktail-method').val();
-                let garnish = $('#cocktail-garnish').val();
-                let imgsrc = $('#cocktail-imgsrc').val();
-                if (imgsrc === undefined) {
-                    imgsrc = "#"
-                }
-
-                $.ajax({
-                    type: "POST",
-                    url: "/api/custom_write",
-                    data: {
-                        name_give:name,
-                        class_give:classname,
-                        ingredient_give: ingredient,
-                        method_give:method,
-                        garnish_give:garnish,
-                        imgsrc_give:imgsrc,
-                    },
-                    success: function (response) { // 성공하면
-                        alert(response["msg"]);
-                    }
-                })
-            }
-    </script>
 
 </head>
 
@@ -188,7 +160,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" onclick="postArticle()" class="site-btn signup-btn">가입하기</button>
+                    <button type="button" onclick="post_article('{{ user_info.id }}')" class="site-btn signup-btn">작성하기</button>
                 </form>
             </div>
         </div>

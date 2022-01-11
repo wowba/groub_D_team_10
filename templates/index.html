@@ -111,6 +111,7 @@
             {% else %}
                 $("#mypage-a").toggleClass("is-hidden")
                 $("#signout-a").toggleClass("is-hidden")
+                $("#write-a").toggleClass("is-hidden")
             {% endif %}
         })
     </script>
@@ -132,7 +133,7 @@
                 </div>
                 <p>
                     {% if user_info %}
-                        <a href="/mypage">{{ user_info.username }}</a>님 환영합니다!
+                        <a href="/mypage">{{ user_info.id }}</a>님 환영합니다!
                     {% endif %}
                 </p>
                 </div>
@@ -161,7 +162,7 @@
                             <li><a id="signup-a" href="/api/register">회원가입</a></li>
                             <li><a id="mypage-a" href="/api/mypage">마이페이지</a></li>
                             <li><a href="/api/list_view">리스트페이지</a></li>
-                            <li><a href="/api/custom_write">레시피작성</a></li>
+                            <li><a id="write-a" href="/api/custom_write">레시피작성</a></li>
                             <li><a id="signout-a" href="javascript:void(0)" onclick="sign_out()">로그아웃</a></li>
                         </ul>
                     </div>

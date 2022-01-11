@@ -1,11 +1,11 @@
 function handleClickArrowBtn(direction, order) {
-
+    const MAX = 3
 
     if (order === 'first') {
         const container = document.querySelector('#main-random-list');
         const next = document.querySelector('.arrow-btn.right.random');
         const prev = document.querySelector('.arrow-btn.left.random');
-        if (direction === 'next' && firstNum < 3) {
+        if (direction === 'next' && firstNum < MAX) {
             firstNum++;
             container.style.transform = `translateX(-${firstNum}00%)`;
             container.style.transition = `all .5s ease`;
@@ -15,7 +15,7 @@ function handleClickArrowBtn(direction, order) {
             container.style.transform = `translateX(-${firstNum}00%)`;
             container.style.transition = `all .5s ease`;
         }
-        if (firstNum === 3) {
+        if (firstNum === MAX) {
             next.style.opacity = `0`;
         } else if (firstNum === 0) {
             prev.style.opacity = `0`;
@@ -28,7 +28,7 @@ function handleClickArrowBtn(direction, order) {
         const container = document.querySelector('#main-like-list');
         const next = document.querySelector('.arrow-btn.right.like');
         const prev = document.querySelector('.arrow-btn.left.like');
-        if (direction === 'next' && secondNum < 3) {
+        if (direction === 'next' && secondNum < MAX) {
             secondNum++;
             container.style.transform = `translateX(-${secondNum}00%)`;
             container.style.transition = `all .5s ease`;
@@ -38,7 +38,7 @@ function handleClickArrowBtn(direction, order) {
             container.style.transform = `translateX(-${secondNum}00%)`;
             container.style.transition = `all .5s ease`;
         }
-        if (secondNum === 3) {
+        if (secondNum === MAX) {
             next.style.opacity = `0`;
         } else if (secondNum === 0) {
             prev.style.opacity = `0`;

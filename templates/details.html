@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>칵테일 99</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+
+    <!-- Js -->
+    <script src="../static/js/cocktail99.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <style>
+        .header .container{
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        .header .container .row .col-lg-3 .header__logo a{
+            font-size:50px;
+            font-weight:900;
+            color:#d494c6;
+        }
+
+        nav{
+            margin-left:50px;
+            position:fixed;
+            z-index: 999;
+            padding-left:
+
+        }
+
+        .side_menu_btn{
+            display: inline-block;
+            width :20px;
+            
+        }
+
+        .detail_article .container{
+            display: flex;
+            flex-direction: row;
+        }
+
+        .detail_article .container .image-box{
+            display: inline-block;
+            overflow: hidden;
+            text-align: center;
+            margin-right:200px;
+        }
+
+        
+
+        .categories .container .image-box img{
+            width:500px;
+            height:600px;
+            border-radius: 8px;
+        }
+
+        .categories .container .image-box h2{
+            transform: translateY(-100px);
+            font-size:50px;
+            font-weight:900;
+            color:white;
+        }
+
+        .categories .container .content-box{
+            width:30%;
+        }
+        .categories .container .content-box h3{
+            line-height: 60px;;
+        }
+
+        .categories .container .content-box .score-box h3{
+            width:50px;
+        }
+
+        .categories .reply_container{
+            background-color: #efefef;
+            border-radius: 15px;
+            padding:50px 40px;
+            height:600px;
+            /* height 지우기! */
+            margin-bottom:50px;
+        }
+
+        .categories .reply_container .reply_display_field h3{
+            font-weight: 900;
+        }
+
+        .categories .reply_container .reply_display_field ul{
+            list-style-type: none;
+            background-color: #fff;
+            border-radius: 15px;
+            padding:30px;
+            margin-bottom:50px;
+
+        }
+
+        .categories .reply_container .reply_display_field ul li{
+            margin:10px 0;
+            width:900px;
+            display: inline-block;
+            border-bottom:1px solid rgba(0,0,0,0.1);
+        }
+
+        .categories .reply_container .reply_display_field ul li .reply_username{
+            font-weight: bold;
+            margin-right: 30px;
+        }
+
+        .categories .reply_container .write_reply_field{
+            background-color: white;
+            border-radius:15px;
+            padding:20px 10px;
+        }
+        .categories .reply_container .write_reply_field label{
+            font-weight:900;
+        }
+
+        /* 별점 입력 */
+        .categories .reply_container .write_reply_field fieldset{
+            display: inline-block;
+            border: none;
+            direction: rtl;
+            padding-top:20px;
+        }
+
+        .categories .reply_container .write_reply_field fieldset .rating_input_box {
+            vertical-align: middle;
+            display: block;
+        }
+        
+
+        .categories .reply_container .write_reply_field fieldset .rating_input_box span{
+            font-size: 20px;
+        }
+
+        .categories .reply_container .write_reply_field fieldset label{
+            font-size:1em;
+            color:transparent;
+            text-shadow: 0 0 0 #f0f0f0;
+        }
+
+        .categories .reply_container .write_reply_field fieldset label:hover{
+            text-shadow: 0 0 0 #d494c6;
+        }
+
+        .categories .reply_container .write_reply_field fieldset label:hover ~ label{
+            text-shadow: 0 0 0 #d494c6;
+        }
+        
+        .categories .reply_container .write_reply_field  input[type=radio]{
+            display: none;
+        }
+
+        .categories .reply_container .write_reply_field  input[type=radio]:checked ~ label{
+            text-shadow: 0 0 0 #d494c6;
+        }
+
+        .categories .reply_container .write_reply_field .post_btn{
+            border:none;
+            background-color:#d494c6;
+            border-radius:10px;
+            padding:3px 10px;
+            color:#fff;
+            font-weight:700;
+            float:right;
+        }
+
+
+
+        .footer{
+            padding-top:30px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="./index.html">칵테일 99</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+    <nav class="nav">
+        <div class="hero__categories__all side_menu_btn">
+            <i class="fa fa-bars"></i>
+        </div>    
+    </nav>
+
+
+    <!-- Hero Section Begin -->
+    <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <ul style="display: none;">
+                            <li><a href="./login.html">로그인</a></li>
+                            <li><a href="./singup.html">회원가입</a></li>
+                            <li><a href="./mypage.html">마이페이지</a></li>
+                            <li><a href="./listpage.html">리스트페이지</a></li>
+                            <li><a href="./write.html">레시피작성</a></li>
+                        </ul>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section Begin -->
+    <article class="categories detail_article">
+        <div class="container">
+            <div class="image-box">
+                <img src="{{cocktail_info.imgsrc}}" alt="">
+                <h2 id="cocktail-name">{{cocktail_info.name}}</h2>
+            </div>
+            <div class="content-box">
+                <div class="ingredients_box">
+                    <h3>재료</h3>
+                    <span>{{ cocktail_info.ingredient }}</span>
+                </div>
+                <div class="method_box">
+                    <h3>주조법</h3>
+                    <p>{{ cocktail_info.method }}</p>
+                </div>
+                <div class="garnish_box">
+                    <h3>가니쉬</h3>
+                    <p>{{ cocktail_info.garnish }}</p>
+                </div>
+                <div class="score_box">
+                    <h3>평점</h3>
+                    {% if cocktail_info.review | length != 0 %}
+                        <span>{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }}</span>
+                    {% else %}
+                        <span>리뷰 없음</span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </article>
+    <section class="categories">
+        <div class="container reply_container">
+            <div class="reply_display_field">
+                <h3>Comment</h3>
+                <div class="reply_list_container">
+                    <ul class="reply_list">
+                        {% for review in cocktail_info.review %}
+                            <li>
+                                <span class="reply_username">username</span>
+                                <span class="reply_content">{{ review.content }}</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="reply_write_field">
+                <form action="" class="write_reply_field">
+                    <label for="write_reply_text">댓글내용 :</label>
+                    <input type="text" id="write_reply_text">
+                    <div class="rating_input_box">
+                        <span>평점 :</span>
+                            <fieldset>
+                                <input type="radio" name="rating" value=5 id="rate1"><label for="rate1">⭐</label>
+                                <input type="radio" name="rating" value=4 id="rate2"><label for="rate2">⭐</label>
+                                <input type="radio" name="rating" value=3 id="rate3"><label for="rate3">⭐</label>
+                                <input type="radio" name="rating" value=2 id="rate4"><label for="rate4">⭐</label>
+                                <input type="radio" name="rating" value=1 id="rate5"><label for="rate5">⭐</label>
+                            </fieldset>
+                    </div>
+                    <button class="post_btn" onclick="post_comment()">등록</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="footer spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="footer__copyright">
+                        <div class="footer__copyright__text"><p>Copyright &copy;항해99 5기 D반 10조 - 칵테일99</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/jquery.nice-select.min.js"></script>
+    <script src="../static/js/jquery-ui.min.js"></script>
+    <script src="../static/js/jquery.slicknav.js"></script>
+    <script src="../static/js/mixitup.min.js"></script>
+    <script src="../static/js/owl.carousel.min.js"></script>
+    <script src="../static/js/main.js"></script>
+
+
+
+</body>
+
+</html>

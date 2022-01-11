@@ -1,7 +1,7 @@
-function randomRecommend() {
+function likeRecommend() {
     $.ajax({
         type: "GET",
-        url: "/api/randomrecommend",
+        url: "/api/likerecommend",
         data: {},
         success: function (response) {
             const likeList = response['result']
@@ -20,8 +20,8 @@ function randomRecommend() {
                                         </div>
                                     </div>`
 
-                $("#main-random-list").append(temp_html)
-                
+                $("#main-like-list").append(temp_html)
+
             }
         }
     })

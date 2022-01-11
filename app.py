@@ -14,7 +14,7 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = secrets.token_hex(16)
 
 client = MongoClient('localhost', 27017)
-db = client.logintest
+db = client.team10
 
 
 
@@ -55,7 +55,7 @@ def login():
         return jsonify({'result': 'fail', 'msg': '아이디 / 비밀번호가 일치하지 않거나 정보가 없습니다'})
 
 
-@app.route('/sign_up', methods=['GET', 'POST'])
+@app.route('/api/register', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
         return render_template('sign-up.html')
@@ -72,19 +72,25 @@ def sign_up():
 
 
 # TODO 마이 페이지 API
-@app.route('/mypage', methods=['GET'])
+@app.route('/api/mypage', methods=['GET'])
 def to_mypage():
     return render_template('mypage.html')
 
 
 # TODO 리스트 페이지 API
-@app.route('/listpage', methods=['GET'])
+@app.route('/api/list_view', methods=['GET'])
 def to_listpage():
     return render_template('listpage.html')
 
 
+# TODO 상세 페이지 API
+@app.route('/api/view')
+def to_detail():
+    return render_template('details.html')
+
+
 # TODO 게시글 작성 API
-@app.route('/write', methods=['GET', 'POST'])
+@app.route('/api/custom_write', methods=['GET', 'POST'])
 def to_write_page():
     if request.method == 'GET':
         return render_template('write.html')

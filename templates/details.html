@@ -270,6 +270,19 @@
                         <span>리뷰 없음</span>
                     {% endif %}
                 </div>
+
+
+                <div onclick="handleClickLike('${name}')" class="click">
+
+
+                    <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active"
+                         style="width: 20px; height: 20px"/>
+
+
+                    <span class="${name}" style="margin-left: 5px">${likeCount}</span>
+                </div>
+
+
             </div>
         </div>
     </article>

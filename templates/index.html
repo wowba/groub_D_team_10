@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
 
+    <script src="../static/js/likecocktail.js"></script>
     <script src="../static/js/clickcontrol.js"></script>
     <script src="../static/js/randomcocktail.js"></script>
     <script src="../static/js/cocktail99.js"></script>
@@ -54,6 +55,7 @@
         let firstNum = 0;
         let secondNum = 0;
         randomRecommend()
+        likeRecommend()
     </script>
 
     <style>
@@ -156,7 +158,7 @@
                     <div class="hero__categories">
                         <ul style="display: none;">
                             <li><a id="login-a" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#login-modal">로그인</a></li>
-                            <li><a id="signup-a" href="./signup.html">회원가입</a></li>
+                            <li><a id="signup-a" href="/api/register">회원가입</a></li>
                             <li><a id="mypage-a" href="/api/mypage">마이페이지</a></li>
                             <li><a href="/api/list_view">리스트페이지</a></li>
                             <li><a href="/api/custom_write">레시피작성</a></li>
@@ -170,11 +172,11 @@
     </section>
 
     <!-- Login Modal -->
-    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="signUpModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModal">로그인</h5>
+                <h5 class="modal-title" id="signUpModal">로그인</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -182,7 +184,7 @@
                 <p id="help-id" class="help is-hidden is-danger">아이디를 입력해주세요!</p>
                 <input id="input-password" class="input" type="password" placeholder="비밀번호">
                 <p id="help-pw" class="help is-hidden is-danger">비밀번호를 입력해주세요!</p>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">회원가입</button>
+                <button type="button" class="btn btn-secondary" href="/api/register">회원가입</button>
                 <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
 
             </div>
@@ -210,14 +212,14 @@
         </div>
     </section>
 
-        <div class="wrap">
+    <div class="wrap">
         <div class="px-3 content-wrapper">
             <div class="horizontal-list custom-list">
                 <button class="arrow-btn left random" onclick="handleClickArrowBtn('prev', 'first')">
                     <img src="/static/img/icon/caret-left-fill.svg"/>
                 </button>
                 <div id="main-random-list" class="list-wrapper">
-                    <!--좋아요 높은 순 리스트-->
+                    <!--랜덤 리스트-->
                 </div>
                 <button class="arrow-btn right random" onclick="handleClickArrowBtn('next', 'first')">
                     <img src="/static/img/icon/caret-right-fill.svg"/>
@@ -242,7 +244,7 @@
                 <button class="arrow-btn left random" onclick="handleClickArrowBtn('prev', 'first')">
                     <img src="/static/img/icon/caret-left-fill.svg"/>
                 </button>
-                <div id="main-random-list" class="list-wrapper">
+                <div id="main-like-list" class="list-wrapper">
                     <!--좋아요 높은 순 리스트-->
                 </div>
                 <button class="arrow-btn right random" onclick="handleClickArrowBtn('next', 'first')">
@@ -251,6 +253,7 @@
             </div>
         </div>
     </div>
+
 
     <footer class="footer spad">
         <div class="container">

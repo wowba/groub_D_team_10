@@ -251,13 +251,8 @@
             <div class="content-box">
                 <div class="ingredients_box">
                     <h3>재료</h3>
-                        {% set ingredient = "" %}
-                        {%  for idx, split in enumerate(cocktail_info.ingredient.split(' ')) %}
-                            {% if idx % 2 == 2 %}
-                                {% set ingredient = ingredient + split %}
-                            {% endif %}
-                            <span>{{ ingredient }}</span>
-                        {% endfor %}
+                    <span>{{ cocktail_info.ingredient }}</span>
+
                 </div>
                 <div class="method_box">
                     <h3>주조법</h3>
@@ -307,7 +302,7 @@
                                 <input type="radio" name="rating" value=1 id="rate5"><label for="rate5">⭐</label>
                             </fieldset>
                     </div>
-                    <button class="post_btn" onclick="post_comment()">등록</button>
+                    <button class="post_btn" onclick="post_comment({{ user_info.id }})">등록</button>
                 </form>
             </div>
         </div>

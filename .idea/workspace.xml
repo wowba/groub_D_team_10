@@ -1,27 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="17c05aa4-23b3-4a6a-be31-16e2e2091763" name="Changes" comment="">
-<<<<<<< HEAD
-<<<<<<< HEAD
+    <list default="true" id="7c13fa96-25e0-4a9b-8b32-1408f5f942a4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/static/img/icon/suit-heart-fill.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/static/img/icon/suit-heart.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/cocktail99.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/cocktail99.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/details.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/details.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/listpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/listpage.html" afterDir="false" />
-=======
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
->>>>>>> 99a6edbbc59df2ad2e61be8189662516c96fa9d1
-=======
-      <change afterPath="$PROJECT_DIR$/static/img/icon/caret-left-fill.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/img/icon/caret-right-fill.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/clickcontrol.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/static/js/randomcocktail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
->>>>>>> 0b30d5dd3f6bd35e440821ee387ec797a0ce657b
+      <change beforePath="$PROJECT_DIR$/static/js/likecocktail.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/likecocktail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/js/randomcocktail.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/randomcocktail.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,21 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
-        <option value="Python Script" />
         <option value="JavaScript File" />
       </list>
-    </option>
-  </component>
-  <component name="FlaskConsoleOptions" custom-start-script="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))">
-    <envs>
-      <env key="FLASK_APP" value="app" />
-    </envs>
-    <option name="myCustomStartScript" value="import sys&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;from flask.cli import ScriptInfo&#10;locals().update(ScriptInfo(create_app=None).load_app().make_shell_context())&#10;print(&quot;Python %s on %s\nApp: %s [%s]\nInstance: %s&quot; % (sys.version, sys.platform, app.import_name, app.env, app.instance_path))" />
-    <option name="myEnvs">
-      <map>
-        <entry key="FLASK_APP" value="app" />
-      </map>
     </option>
   </component>
   <component name="Git.Settings">
@@ -54,34 +27,30 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectId" id="23VQJLOuN1vNSm46bBuGErnDYOt" />
+  <component name="ProjectId" id="23XWTpazokzAPYAVopHggma9W93" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/static/img/icon" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\leeyu\OneDrive\바탕 화면\항해99\1주차\group_D_team_10\static\img\icon" />
+      <recent name="C:\Users\leeyu\OneDrive\바탕 화면\항해99\1주차\groub_D_team_10\static\img\icon" />
     </key>
   </component>
-  <component name="RunManager" selected="Flask server.Flask (app.py)">
-    <configuration name="details.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/group_D_team_10/templates/details.html" useBuiltInWebServerPort="true">
+  <component name="RunManager" selected="Python.groub_D_team_10">
+    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/groub_D_team_10/templates/index.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
-    <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/group_D_team_10/templates/index.html" useBuiltInWebServerPort="true">
-      <method v="2" />
-    </configuration>
-    <configuration name="group_D_team_10" type="PythonConfigurationType" factoryName="Python">
-      <module name="group_D_team_10" />
+    <configuration name="groub_D_team_10" type="PythonConfigurationType" factoryName="Python">
+      <module name="groub_D_team_10" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -102,36 +71,14 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="ibacrawl" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="group_D_team_10" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/ibacrawl.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
-      <module name="group_D_team_10" />
+      <module name="groub_D_team_10" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -142,11 +89,6 @@
     <recent_temporary>
       <list>
         <item itemvalue="Flask server.Flask (app.py)" />
-<<<<<<< HEAD
-        <item itemvalue="Python.ibacrawl" />
-=======
-        <item itemvalue="JavaScript Debug.details.html" />
->>>>>>> 0b30d5dd3f6bd35e440821ee387ec797a0ce657b
         <item itemvalue="JavaScript Debug.index.html" />
       </list>
     </recent_temporary>
@@ -154,30 +96,14 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="17c05aa4-23b3-4a6a-be31-16e2e2091763" name="Changes" comment="" />
-      <created>1641816703216</created>
+      <changelist id="7c13fa96-25e0-4a9b-8b32-1408f5f942a4" name="Changes" comment="" />
+      <created>1641880923102</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1641816703216</updated>
-      <workItem from="1641816705477" duration="4904000" />
-      <workItem from="1641822362473" duration="6141000" />
-      <workItem from="1641828895328" duration="91000" />
-      <workItem from="1641829391403" duration="4850000" />
-      <workItem from="1641834324669" duration="764000" />
-      <workItem from="1641835237380" duration="739000" />
-<<<<<<< HEAD
-      <workItem from="1641857738621" duration="5555000" />
-=======
-      <workItem from="1641857738621" duration="615000" />
-      <workItem from="1641859579478" duration="411000" />
-      <workItem from="1641860274343" duration="42000" />
-      <workItem from="1641860317996" duration="461000" />
-<<<<<<< HEAD
->>>>>>> 99a6edbbc59df2ad2e61be8189662516c96fa9d1
-=======
-      <workItem from="1641863675252" duration="44000" />
-      <workItem from="1641866328158" duration="7307000" />
->>>>>>> 0b30d5dd3f6bd35e440821ee387ec797a0ce657b
+      <updated>1641880923102</updated>
+      <workItem from="1641880925543" duration="2109000" />
+      <workItem from="1641884251319" duration="206000" />
+      <workItem from="1641884593306" duration="7220000" />
     </task>
     <servers />
   </component>
@@ -196,16 +122,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/group_D_team_10$group_D_team_10.coverage" NAME="group_D_team_10 Coverage Results" MODIFIED="1641817569796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <SUITE FILE_PATH="coverage/group_D_team_10$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1641863026975" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/group_D_team_10$ibacrawl.coverage" NAME="ibacrawl Coverage Results" MODIFIED="1641861168465" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-=======
-    <SUITE FILE_PATH="coverage/group_D_team_10$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1641859673729" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
->>>>>>> 99a6edbbc59df2ad2e61be8189662516c96fa9d1
-=======
-    <SUITE FILE_PATH="coverage/group_D_team_10$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1641869264777" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
->>>>>>> 0b30d5dd3f6bd35e440821ee387ec797a0ce657b
+    <SUITE FILE_PATH="coverage/groub_D_team_10$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1641892472192" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/groub_D_team_10$groub_D_team_10.coverage" NAME="groub_D_team_10 Coverage Results" MODIFIED="1641892631760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

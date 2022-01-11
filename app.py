@@ -84,15 +84,17 @@ def to_my_page():
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
 def to_listpage():
-    # token = request.cookies.get('mytoken')
-    # if token is None:
-    #     result = list(db.cocktails.find({}))
-    #     random.shuffle(result)
-    #     return render_template('shop-grid.html', results=result)
-    # else:
-    #     result = list(db.cocktails.find({}, {'_id': False}))
-    result = list(db.cocktails.find({}))
-    return render_template('shop-grid.html', results=result)
+    cate = request.args.get("class")
+    token = request.cookies.get('mytoken')
+    if cate is None and token is None:
+        result = list(db.cocktails.find({}))
+        random.shuffle(result)
+        return render_template('shop-grid.html', results=result)
+
+    elif cate is not None:
+        result = list(db.cocktails.find({'class':cate}, {'_id': False}).sort({"stars": 1}))
+        return render_template('shop-grid.html', results=result)
+
 
 
 # TODO 상세 페이지 API

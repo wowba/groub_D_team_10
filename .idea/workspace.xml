@@ -4,8 +4,8 @@
     <list default="true" id="17c05aa4-23b3-4a6a-be31-16e2e2091763" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/js/cocktail99.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/js/cocktail99.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/listpage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/listpage.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,7 +48,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunManager" selected="Flask server.Flask (app.py)">
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/group_D_team_10/templates/index.html" useBuiltInWebServerPort="true">
@@ -112,7 +112,7 @@
       <workItem from="1641829391403" duration="4850000" />
       <workItem from="1641834324669" duration="764000" />
       <workItem from="1641835237380" duration="739000" />
-      <workItem from="1641857738621" duration="615000" />
+      <workItem from="1641857738621" duration="2563000" />
     </task>
     <servers />
   </component>
@@ -132,6 +132,6 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/group_D_team_10$group_D_team_10.coverage" NAME="group_D_team_10 Coverage Results" MODIFIED="1641817569796" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/group_D_team_10$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1641858351718" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/group_D_team_10$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1641860263721" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

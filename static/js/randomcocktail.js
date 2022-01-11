@@ -19,6 +19,7 @@ function randomRecommend() {
                                             <div class="address">Recipe : ${cocktail_class}</div>
                                             <div onclick="handleClickLike('${name}')" class="click">
                                                 <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 20px; height: 20px"/>
+                                                <span style="margin-left: 5px">${likeCount}</span>
                                             </div>
                                         </div>
                                     </div>`

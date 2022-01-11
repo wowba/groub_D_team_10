@@ -90,7 +90,7 @@ def to_listpage():
         random.shuffle(result)
         return render_template('shop-grid.html', results=result)
     else:
-        result = list(db.cocktails.find({}, {'_id': False}).sort({"stars": 1}))
+        result = list(db.cocktails.find({}, {'_id': False}))
 
     return render_template('shop-grid.html')
 

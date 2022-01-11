@@ -80,19 +80,18 @@ def sign_up():
 def to_my_page():
     return render_template('mypage.html')
 
-
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
 def to_listpage():
-    cate = request.args.get("class")
     token = request.cookies.get('mytoken')
-    if cate is None and token is None:
-        result = list(db.cocktails.find({}))
+    if token is None:
+        result = list(db.cocktails.find({},{'_id': False}))
         random.shuffle(result)
         return render_template('shop-grid.html', results=result)
-    # elif cate is not None:
-    #     result = list(db.cocktails.find({'class': cate}, {'_id': False}))
+    else :
+        result = list(db.cocktails.find({},{'_id': False}))
         return render_template('shop-grid.html', results=result)
+
 
 
 

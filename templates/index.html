@@ -156,7 +156,7 @@
                     <div class="hero__categories">
                         <ul style="display: none;">
                             <li><a id="login-a" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#login-modal">로그인</a></li>
-                            <li><a id="signup-a" href="./signup.html">회원가입</a></li>
+                            <li><a id="signup-a" href="/api/register">회원가입</a></li>
                             <li><a id="mypage-a" href="/api/mypage">마이페이지</a></li>
                             <li><a href="/api/list_view">리스트페이지</a></li>
                             <li><a href="/api/custom_write">레시피작성</a></li>
@@ -170,11 +170,11 @@
     </section>
 
     <!-- Login Modal -->
-    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="loginModal" aria-hidden="true">
+    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="signUpModal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="loginModal">로그인</h5>
+                <h5 class="modal-title" id="signUpModal">로그인</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -182,7 +182,7 @@
                 <p id="help-id" class="help is-hidden is-danger">아이디를 입력해주세요!</p>
                 <input id="input-password" class="input" type="password" placeholder="비밀번호">
                 <p id="help-pw" class="help is-hidden is-danger">비밀번호를 입력해주세요!</p>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">회원가입</button>
+                <button type="button" class="btn btn-secondary" href="/api/register">회원가입</button>
                 <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
 
             </div>

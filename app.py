@@ -58,12 +58,12 @@ def login():
 @app.route('/api/register', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':
-        return render_template('sign-up.html')
+        return render_template('signup.html')
     else:
         username_receive = request.form['username_give']
         password_receive = request.form['password_give']
         password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-        count = db.users.find({"id": id}).countDocuments()
+        # count = db.users.find({"id": id}).countDocuments()
         # if count > 0:
         #     flash("중복된 이메일 주소가 있습니다.")
         #     return render_template('join.html')
@@ -98,18 +98,25 @@ def to_listpage():
 # TODO 상세 페이지 API
 @app.route('/api/view', methods=['GET'])
 def to_detail_page():
+    token_receive = request.cookies.get('mytoken')
     cocktail_name = request.args.get('cocktailname')
     cocktail_info = db.cocktails.find_one({'name': cocktail_name}, {'_id': False})
-    return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate)
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]}, {'_id': False})
+        return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate, user_info=user_info)
+    except:
+        return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate)
 
 
 
 @app.route('/api/reply_write', methods=['POST'])
 def reply_write():
+    name_receive = request.form['name_give']
     cocktail_name_receive = request.form['cocktail_name_give']
     content_receive = request.form['content_give']
     stars_receive = int(request.form['stars_give'])
-
+    print(name_receive)
     doc = {
         'cocktail_name': cocktail_name_receive,
         'content': content_receive,

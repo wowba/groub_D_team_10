@@ -3488,7 +3488,8 @@ ol {
 }
 
 .wrap {
-	width: 1000px;
+width : 900px;
+margin: auto;
 }
 
 .horizontal-list {
@@ -3506,7 +3507,7 @@ ol {
 }
 
 .horizontal-list .item .title {
-    font-size: 18px;
+    font-size: 25px;
     cursor: pointer;
     overflow: hidden;
     white-space: nowrap;
@@ -3515,7 +3516,7 @@ ol {
 }
 
 .horizontal-list .item .address {
-    font-size: 14px;
+    font-size: 18px;
     color: var(--custom-secondary);
     text-overflow: ellipsis;
     white-space: nowrap;

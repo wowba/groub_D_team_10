@@ -12,15 +12,13 @@ function randomRecommend() {
                 const likeCount = likeList[i]['like']
                 const imgsrc = likeList[i]['imgsrc']
 
-                let temp_html =`<div class="item">
-                                    <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
+                let temp_html =`    <div class="item">
+                                        <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
                                         <div class="item-wrapper">
-                                        
-                                               <a href="/api/view?cocktailname=${name}"><div class="title">${name}</div></a>
+                                            <a href="/api/view?cocktailname=${name}"><div class="title">${name}</div></a>
                                             <div class="address">Recipe : ${cocktail_class}</div>
                                         </div>
-                                    </div>
-                                 </div>`
+                                    </div>`
 
                 $("#main-random-list").append(temp_html)
             }

@@ -44,6 +44,7 @@
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
 
+    <script src="../static/js/likecocktail.js"></script>
     <script src="../static/js/clickcontrol.js"></script>
     <script src="../static/js/randomcocktail.js"></script>
     <script src="../static/js/cocktail99.js"></script>
@@ -54,6 +55,7 @@
         let firstNum = 0;
         let secondNum = 0;
         randomRecommend()
+        likeRecommend()
     </script>
 
     <style>
@@ -75,9 +77,9 @@
         .side_menu_btn{
             display: inline-block;
             width :20px;
-            
+
         }
-        
+
         .categories .container .row .section-title{
             margin: 80px auto;
         }
@@ -144,7 +146,7 @@
     <nav class="nav">
         <div class="hero__categories__all side_menu_btn">
             <i class="fa fa-bars"></i>
-        </div>    
+        </div>
     </nav>
 
 
@@ -210,22 +212,21 @@
         </div>
     </section>
 
-    <div class="px-3 content-wrapper">
-        <div class="horizontal-list custom-list">
-            <button class="arrow-btn left random" onclick="handleClickArrowBtn('prev', 'first')">
-                <img src="/static/img/icon/caret-left-fill.svg"/>
-            </button>
-            <div id="main-random-list" class="list-wrapper">
-                <!--좋아요 높은 순 리스트-->
+    <div class="wrap">
+        <div class="px-3 content-wrapper">
+            <div class="horizontal-list custom-list">
+                <button class="arrow-btn left random" onclick="handleClickArrowBtn('prev', 'first')">
+                    <img src="/static/img/icon/caret-left-fill.svg"/>
+                </button>
+                <div id="main-random-list" class="list-wrapper">
+                    <!--랜덤 리스트-->
+                </div>
+                <button class="arrow-btn right random" onclick="handleClickArrowBtn('next', 'first')">
+                    <img src="/static/img/icon/caret-right-fill.svg"/>
+                </button>
             </div>
-            <button class="arrow-btn right random" onclick="handleClickArrowBtn('next', 'first')">
-                <img src="/static/img/icon/caret-right-fill.svg"/>
-            </button>
         </div>
     </div>
-
-
-
 
     <section class="categories">
         <div class="container">
@@ -233,36 +234,27 @@
                 <div class="section-title">
                     <h2>평점순 추천 칵테일</h2>
                 </div>
-                <div class="categories__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-1.jpg">
-                            <h5><a href="#">Fresh Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-2.jpg">
-                            <h5><a href="#">Dried Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-3.jpg">
-                            <h5><a href="#">Vegetables</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-4.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../static/img/categories/cat-5.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
+
+    <div class="wrap">
+        <div class="px-3 content-wrapper">
+            <div class="horizontal-list custom-list">
+                <button class="arrow-btn left random" onclick="handleClickArrowBtn('prev', 'first')">
+                    <img src="/static/img/icon/caret-left-fill.svg"/>
+                </button>
+                <div id="main-like-list" class="list-wrapper">
+                    <!--좋아요 높은 순 리스트-->
+                </div>
+                <button class="arrow-btn right random" onclick="handleClickArrowBtn('next', 'first')">
+                    <img src="/static/img/icon/caret-right-fill.svg"/>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <footer class="footer spad">
         <div class="container">
             <div class="row">

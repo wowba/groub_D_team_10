@@ -6,6 +6,7 @@ import secrets
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
+import random
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -94,6 +95,14 @@ def to_detail():
 def to_write_page():
     if request.method == 'GET':
         return render_template('write.html')
+
+# TODO 게시글 작성 API
+@app.route('/api/randomrecommend', methods=['GET'])
+def random_list():
+    random_list = list(db.cocktails.find({}, {'_id': False}))
+    random.shuffle(random_list)
+    return jsonify({'result': random_list})
+
 
 
 if __name__ == '__main__':

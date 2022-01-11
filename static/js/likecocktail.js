@@ -17,6 +17,9 @@ function likeRecommend() {
                                         <div class="item-wrapper">
                                             <a href="/api/view?cocktailname=${name}"><div class="title">${name}</div></a>
                                             <div class="address">Recipe : ${cocktail_class}</div>
+                                            <div onclick="handleClickLike('${name}')" class="click">
+                                                <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 20px; height: 20px"/>
+                                            </div>
                                         </div>
                                     </div>`
 

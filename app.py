@@ -165,5 +165,6 @@ def like_list():
     like_list = list(db.cocktails.find({}, {'_id': False}).sort('like', -1))
     return jsonify({'result': like_list})
 
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

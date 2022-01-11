@@ -19,9 +19,9 @@ client = MongoClient('localhost', 27017)
 db = client.team10
 is_login = False
 
+
 @app.route('/')
 def home():
-    print(db.cocktails.find({}, {'class': 1, '_id': False}))
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -88,11 +88,9 @@ def to_listpage():
     if token is None:
         result = list(db.cocktails.find({}))
         random.shuffle(result)
-        print(result)
         return render_template('shop-grid.html', results=result)
-
-    # if token is not None:
-    #     result = list(db.cocktails.find({},{'_id':False}).sort({"stars" : 1}))
+    else:
+        result = list(db.cocktails.find({}, {'_id': False}).sort({"stars": 1}))
 
     return render_template('shop-grid.html')
 
@@ -102,8 +100,8 @@ def to_listpage():
 def to_detail_page():
     cocktail_name = request.args.get('cocktailname')
     cocktail_info = db.cocktails.find_one({'name': cocktail_name}, {'_id': False})
-
     return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate)
+
 
 
 @app.route('/api/reply_write', methods=['POST'])
@@ -151,6 +149,7 @@ def to_write_page():
 
         db.cocktails.insert_one(doc)
         return jsonify({'msg': "등록 완료!"})
+
 
 
 # TODO 게시글 작성 API

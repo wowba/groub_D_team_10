@@ -3466,3 +3466,97 @@ ol {
 		font-size: 24px;
 	}
 }
+
+.horizontal-list {
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    padding-left: 8px;
+}
+
+.horizontal-list .item {
+    border: 1px solid var(--gray400);
+    border-radius: 8px;
+    overflow: hidden;
+    min-width: calc(100% / 3 - 8px);
+}
+
+.horizontal-list .item .title {
+    font-size: 18px;
+    cursor: pointer;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    transition: all 0.2s ease;
+}
+
+.horizontal-list .item .address {
+    font-size: 14px;
+    color: var(--custom-secondary);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.horizontal-list .item img {
+    width: 70%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.horizontal-list .item .item-wrapper {
+    padding: 16px;
+}
+
+.horizontal-list .list-wrapper {
+    display: flex;
+    width: 100%;
+    column-gap: 8px;
+}
+
+.horizontal-list .arrow-btn {
+    background: none;
+    border: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 9;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10em;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.horizontal-list .arrow-btn img {
+    fill: white;
+}
+
+.horizontal-list .arrow-btn.left {
+    left: 0;
+    opacity: 0;
+}
+
+.horizontal-list .arrow-btn.right {
+    right: 0;
+}
+
+.horizontal-list .item .item-wrapper .like-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    align-items: center;
+}
+
+.horizontal-list .item .item-wrapper .like-btn .like-count {
+    margin-right: 10px;
+    color: #e91550;
+    font-size: 14px;
+}
+
+.horizontal-list .item .item-wrapper .like-btn img {
+    width: 25px;
+    height: 25px;
+}

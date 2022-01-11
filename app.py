@@ -3,6 +3,7 @@ import jwt
 import datetime
 import hashlib
 import secrets
+from bson import ObjectId
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
@@ -17,9 +18,6 @@ SECRET_KEY = secrets.token_hex(16)
 client = MongoClient('localhost', 27017)
 db = client.team10
 
-
-
-
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
@@ -31,7 +29,6 @@ def home():
         return redirect(url_for("home", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return render_template('index.html')
-
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -47,10 +44,9 @@ def login():
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
+            'exp': datetime.utcnow() + timedelta(seconds= 60 * 60 * 24)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
         return jsonify({'result': 'success', 'token': token})
     else:
         return jsonify({'result': 'fail', 'msg': '아이디 / 비밀번호가 일치하지 않거나 정보가 없습니다'})
@@ -64,6 +60,10 @@ def sign_up():
         username_receive = request.form['username_give']
         password_receive = request.form['password_give']
         password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+        count = db.users.find({"id": id}).countDocuments()
+        # if count > 0:
+        #     flash("중복된 이메일 주소가 있습니다.")
+        #     return render_template('join.html')
         doc = {
             "username": username_receive,
             "password": password_hash,
@@ -81,7 +81,18 @@ def to_mypage():
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
 def to_listpage():
-    return render_template('listpage.html')
+
+    token = request.cookies.get('mytoken')
+    if token is None:
+        result = list(db.cocktails.find({}))
+        random.shuffle(result)
+        print(result)
+        return render_template('shop-grid.html', results=result)
+
+    # if token is not None:
+    #     result = list(db.cocktails.find({},{'_id':False}).sort({"stars" : 1}))
+
+    return render_template('shop-grid.html')
 
 
 # TODO 상세 페이지 API

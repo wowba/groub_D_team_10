@@ -32,7 +32,6 @@
             self.location.href = "{{url_for('to_listpage')}}?class="+cate;
         }
     }
-
 </script>
 <body>
 <!-- Page Preloder -->
@@ -88,7 +87,7 @@
                                 <h6>
                                     <a href={{ url_for('to_detail_page', cocktailname = result.name) }} onclick="">{{ result.name }}</a>
                                 </h6>
-                                {#                                    <h5>{{ result.stars }}</h5>#}
+                                <h5>{{ result.stars /{{resultㅣlength}}</h5>
                             </div>
                         </div>
                     </div>

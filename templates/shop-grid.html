@@ -23,6 +23,15 @@
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
 </head>
 <script>
+    let cate = $('#class-cate option:selected').val();
+
+    function cate() {
+        if (cate == "") {
+            return false;
+        } else {
+            self.location.href = "{{url_for('to_listpage')}}?class="+cate;
+        }
+    }
 
 </script>
 <body>
@@ -32,8 +41,6 @@
 </div>
 
 
-<!-- Breadcrumb Section End -->
-
 <!-- Product Section Begin -->
 <section class="product spad">
     <div class="container">
@@ -41,51 +48,36 @@
             <div class="col-lg-3 col-md-5">
             </div>
             <div class="col-lg-9 col-md-7">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-5">
-                            <div class="filter__sort">
-                                <span>Sort By</span>
-{#                                <select>#}
-{#                                    {% for result in lab %}#}
-{#                                    <option value="">{{ result.class }}</option>#}
-{#                                    {% endfor %}#}
-                                </select>
-                            </div>
+                <div class="row">
+                    <div class="col-lg-4 col-md-5">
+                        <div class="filter__sort">
+                            <span>Sort By</span>
+                            <select id="class-cate">
+                                <option value=" THE UNFORGETTABLES">IBA, 잊기 어려운 맛</option>
+                                <option value="CONTEMPORARY CLASSICS, IBA COCKTAIL">IBA, 컨템포러리 클래식</option>
+                                <option value=" NEW ERA DRINKS">IBA, 새시대의 맛</option>
+                                <option value="조주기능사">조주기능사</option>
+                            </select>
                         </div>
-                        <div class="col-lg-4 col-md-4">
-                            <div class="filter__found">
-                                <h6><span>16</span> Products found</h6>
-                            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4">
+                        <div class="filter__found">
+                            <h6><span>16</span> Products found</h6>
                         </div>
-                        <div class="col-lg-4 col-md-3">
-                            <div class="filter__option">
-                                <span class="icon_grid-2x2"></span>
-                                <span class="icon_ul"></span>
-                            </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3">
+                        <div class="filter__option">
+                            <span class="icon_grid-2x2"></span>
+                            <span class="icon_ul"></span>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    {% for result in results %}
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="{{result.imgsrc}}">
-                                    <ul class="product__item__pic__hover">
-                                        <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                                    </ul>
-                                </div>
-                                <div class="product__item__text">
-                                    <h6><a href={{ url_for('to_detail_page', cocktailname = result.name)}} onclick="">{{ result.name }}</a></h6>
-{#                                    <h5>{{ result.stars }}</h5>#}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
+            </div>
+            <div class="row">
+                {% for result in results %}
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                            <div class="product__item__pic set-bg" data-setbg="{{ result.imgsrc }}">
                                 <ul class="product__item__pic__hover">
                                     <li><a href="#"><i class="fa fa-heart"></i></a></li>
                                     <li><a href="#"><i class="fa fa-retweet"></i></a></li>
@@ -93,11 +85,29 @@
                                 </ul>
                             </div>
                             <div class="product__item__text">
-                                <h6><a href="#">Crab Pool Security</a></h6>
-                                <h5>$30.00</h5>
+                                <h6>
+                                    <a href={{ url_for('to_detail_page', cocktailname = result.name) }} onclick="">{{ result.name }}</a>
+                                </h6>
+                                {#                                    <h5>{{ result.stars }}</h5>#}
                             </div>
                         </div>
                     </div>
+                {% endfor %}
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
+                            <ul class="product__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="product__pagination">
                     <a href="#">1</a>

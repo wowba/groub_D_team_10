@@ -22,8 +22,10 @@
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
 
-    <!-- Custom Js -->
+    <!-- Js -->
     <script src="../static/js/cocktail99.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
     <style>
         .header .container{
@@ -188,6 +190,7 @@
 
 
     </style>
+
 </head>
 
 <body>
@@ -242,27 +245,29 @@
     <article class="categories detail_article">
         <div class="container">
             <div class="image-box">
-                <img src="../static/img/jeju.jpg" alt="">
-                <h2 id="cocktail-name">칵테일 이름</h2>
+                <img src="{{cocktail_info.imgsrc}}" alt="">
+                <h2 id="cocktail-name">{{cocktail_info.name}}</h2>
             </div>
             <div class="content-box">
                 <div class="ingredients_box">
                     <h3>재료</h3>
-                    <span>30 ml Cognac</span>
-                    <span>30 ml Creme de cacao (Brown)</span>
-                    <span>30 ml Fresh Cream</span>
+                    <span>{{ cocktail_info.ingredient }}</span>
                 </div>
                 <div class="method_box">
                     <h3>주조법</h3>
-                    <p>Pour all ingredients into cocktail shaker filled with ice cubes. Shake and strain into a chilled cocktail glass.</p>
+                    <p>{{ cocktail_info.method }}</p>
                 </div>
                 <div class="garnish_box">
                     <h3>가니쉬</h3>
-                    <p>Sprinkle fresh ground nutmeg on top.</p>
+                    <p>{{ cocktail_info.garnish }}</p>
                 </div>
                 <div class="score_box">
                     <h3>평점</h3>
-                    <span>00000</span>
+                    {% if cocktail_info.review | length != 0 %}
+                        <span>{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }}</span>
+                    {% else %}
+                        <span>리뷰 없음</span>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -273,26 +278,12 @@
                 <h3>Comment</h3>
                 <div class="reply_list_container">
                     <ul class="reply_list">
-                        <li>
-                            <span class="reply_username">username</span>
-                            <span class="reply_content">content </span>
-                        </li>
-                        <li>
-                            <span class="reply_username">username</span>
-                            <span class="reply_content">content </span>
-                        </li>
-                        <li>
-                            <span class="reply_username">username</span>
-                            <span class="reply_content">content </span>
-                        </li>
-                        <li>
-                            <span class="reply_username">username</span>
-                            <span class="reply_content">content </span>
-                        </li>
-                        <li>
-                            <span class="reply_username">username</span>
-                            <span class="reply_content">content </span>
-                        </li>
+                        {% for review in cocktail_info.review %}
+                            <li>
+                                <span class="reply_username">username</span>
+                                <span class="reply_content">{{ review.content }}</span>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </div>
             </div>
@@ -302,13 +293,13 @@
                     <input type="text" id="write_reply_text">
                     <div class="rating_input_box">
                         <span>평점 :</span>
-                        <fieldset>
-                            <input type="radio" name="rating" value="5" id="rate1"><label for="rate1">⭐</label>
-                            <input type="radio" name="rating" value="4" id="rate2"><label for="rate2">⭐</label>
-                            <input type="radio" name="rating" value="3" id="rate3"><label for="rate3">⭐</label>
-                            <input type="radio" name="rating" value="2" id="rate4"><label for="rate4">⭐</label>
-                            <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
-                        </fieldset>
+                            <fieldset>
+                                <input type="radio" name="rating" value=5 id="rate1"><label for="rate1">⭐</label>
+                                <input type="radio" name="rating" value=4 id="rate2"><label for="rate2">⭐</label>
+                                <input type="radio" name="rating" value=3 id="rate3"><label for="rate3">⭐</label>
+                                <input type="radio" name="rating" value=2 id="rate4"><label for="rate4">⭐</label>
+                                <input type="radio" name="rating" value=1 id="rate5"><label for="rate5">⭐</label>
+                            </fieldset>
                     </div>
                     <button class="post_btn" onclick="post_comment()">등록</button>
                 </form>
@@ -332,7 +323,6 @@
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="../static/js/jquery-3.3.1.min.js"></script>
     <script src="../static/js/bootstrap.min.js"></script>
     <script src="../static/js/jquery.nice-select.min.js"></script>
     <script src="../static/js/jquery-ui.min.js"></script>

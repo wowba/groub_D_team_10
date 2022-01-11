@@ -45,18 +45,35 @@ function sign_out() {
 
 // 댓글 등록 함수
 function post_comment() {
+
+    // if ($.cookie('mytoken') === undefined) {
+    //     alert("로그인이 필요합니다")
+    //     return;
+    // }
+
     let cocktail_name = $('#cocktail-name').text()
     let content = $('#write_reply_text').val()
-    console.log(content)
+    let stars = $('input[name=rating]:checked').val();
+    console.log(stars)
+    if (content === '') {
+        alert("내용을 입력하세요!")
+        return;
+    } else if (stars === undefined) {
+        alert("별점은 1개 이상 주어야 합니다!")
+        return;
+    }
+
     $.ajax({
         type: "POST",
         url: "/api/reply_write",
         data: {
             cocktail_name_give: cocktail_name,
-            content_give: content
+            content_give: content,
+            stars_give: stars
         },
         success: function (response) {
             alert(response['result'])
+            window.location.reload()
         }
     })
 }

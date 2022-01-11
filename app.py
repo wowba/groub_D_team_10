@@ -85,19 +85,28 @@ def to_list_page():
 # TODO 상세 페이지 API
 @app.route('/api/view', methods=['GET'])
 def to_detail_page():
+    cocktail_name = request.args.get('cocktailname')
+    cocktail_info = db.cocktails.find_one({'name': cocktail_name}, {'_id': False})
 
-    return render_template('details.html')
+
+    return render_template('details.html', cocktail_info=cocktail_info)
 
 
 @app.route('/api/reply_write', methods=['POST'])
 def reply_write():
     cocktail_name_receive = request.form['cocktail_name_give']
     content_receive = request.form['content_give']
+    stars_receive = int(request.form['stars_give'])
 
     doc = {
         'cocktail_name': cocktail_name_receive,
-        'content': content_receive
+        'content': content_receive,
+        'stars': stars_receive
     }
+
+
+
+    db.cocktails.update_one({'name': cocktail_name_receive}, {'$push': {'review': doc}})
 
     db.reviews.insert_one(doc)
     return jsonify({'result': "작성 완료!"})
@@ -108,6 +117,7 @@ def reply_write():
 def to_write_page():
     if request.method == 'GET':
         return render_template('write.html')
+
 
 
 if __name__ == '__main__':

@@ -21,7 +21,10 @@
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
-    
+
+    <!-- Custom Js -->
+    <script src="../static/js/cocktail99.js"></script>
+
     <style>
         .header .container{
             border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -240,7 +243,7 @@
         <div class="container">
             <div class="image-box">
                 <img src="../static/img/jeju.jpg" alt="">
-                <h2>칵테일 이름</h2>
+                <h2 id="cocktail-name">칵테일 이름</h2>
             </div>
             <div class="content-box">
                 <div class="ingredients_box">
@@ -307,7 +310,7 @@
                             <input type="radio" name="rating" value="1" id="rate5"><label for="rate5">⭐</label>
                         </fieldset>
                     </div>
-                    <button class="post_btn">등록</button>
+                    <button class="post_btn" onclick="post_comment()">등록</button>
                 </form>
             </div>
         </div>

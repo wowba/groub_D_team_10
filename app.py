@@ -15,8 +15,7 @@ SECRET_KEY = secrets.token_hex(16)
 
 client = MongoClient('localhost', 27017)
 db = client.team10
-
-
+is_login = False
 
 
 @app.route('/')
@@ -73,20 +72,35 @@ def sign_up():
 
 # TODO 마이 페이지 API
 @app.route('/api/mypage', methods=['GET'])
-def to_mypage():
+def to_my_page():
     return render_template('mypage.html')
 
 
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
-def to_listpage():
+def to_list_page():
     return render_template('listpage.html')
 
 
 # TODO 상세 페이지 API
-@app.route('/api/view')
-def to_detail():
+@app.route('/api/view', methods=['GET'])
+def to_detail_page():
+
     return render_template('details.html')
+
+
+@app.route('/api/reply_write', methods=['POST'])
+def reply_write():
+    cocktail_name_receive = request.form['cocktail_name_give']
+    content_receive = request.form['content_give']
+
+    doc = {
+        'cocktail_name': cocktail_name_receive,
+        'content': content_receive
+    }
+
+    db.reviews.insert_one(doc)
+    return jsonify({'result': "작성 완료!"})
 
 
 # TODO 게시글 작성 API

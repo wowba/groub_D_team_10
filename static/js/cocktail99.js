@@ -42,3 +42,21 @@ function sign_out() {
     alert('로그아웃!')
     window.location.href = '/'
 }
+
+// 댓글 등록 함수
+function post_comment() {
+    let cocktail_name = $('#cocktail-name').text()
+    let content = $('#write_reply_text').val()
+    console.log(content)
+    $.ajax({
+        type: "POST",
+        url: "/api/reply_write",
+        data: {
+            cocktail_name_give: cocktail_name,
+            content_give: content
+        },
+        success: function (response) {
+            alert(response['result'])
+        }
+    })
+}

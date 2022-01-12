@@ -72,18 +72,17 @@ function sign_out() {
 }
 
 // 댓글 등록 함수
-function post_comment(id, comment_id_list) {
+function post_comment(id, comment_list) {
 
     if ($.cookie('mytoken') === undefined || id === undefined) {
         alert("로그인이 필요합니다")
         return;
     }
 
-
-    if (comment_id_list !== undefined) {
-        for (let comment_id of comment_id_list) {
-            if (id === comment_id) {
-                alert("리뷰는 하나만 가능합니다!")
+    if (comment_list !== undefined) {
+        for (let comment of comment_list) {
+            if (comment['name'] === id) {
+                alert("리뷰는 한 칵테일당 하나만 작성 가능합니다!")
                 return;
             }
         }

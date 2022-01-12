@@ -78,11 +78,11 @@ def sign_up():
 def to_listpage():
     result = list(db.cocktails.find({}, {'_id': False}))
     random.shuffle(result)
-    try :
+    try:
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         id = db.users.find_one({"id": payload["id"]}, {'_id': False})
-        return render_template('shop-grid.html', results=result, id = id)
+        return render_template('shop-grid.html', results=result, id=id)
     except:
         return render_template('shop-grid.html', results=result)
 
@@ -118,6 +118,7 @@ def delete_comment():
     name_receive = request.form['name_give']
     cocktail_name_receive = request.form['cocktail_name_give']
     db.reviews.delete_one({'name': name_receive, 'cocktail_name': cocktail_name_receive})
+    db.cocktails.update_one({'name': cocktail_name_receive}, {'$pull': {'review': {'name': name_receive}}})
 
     return jsonify({'msg': "댓글 삭제 완료"})
 
@@ -237,16 +238,15 @@ def like_click():
         quit()
 
 
-
 @app.route('/api/mypage', methods=['GET'])
 def to_my_page():
     return render_template('mypage.html')
+
 
 @app.route('/api/mypage/listup', methods=['GET'])
 def my_page_list():
     cocktails = list(db.cocktails.find({}, {'_id': False}))
     return jsonify({'all_cocktails': cocktails})
-
 
 
 def get_user_info():

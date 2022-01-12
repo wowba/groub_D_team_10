@@ -2,7 +2,7 @@ import hashlib
 import random
 import secrets
 from datetime import datetime, timedelta
-from types import NoneType
+NoneType = type(None)
 
 import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for

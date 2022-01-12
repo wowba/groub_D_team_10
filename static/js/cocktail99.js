@@ -3,6 +3,7 @@ const VALID = {
     PW: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
     EMAIL: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
 }
+let id_save = ''
 
 function sign_up() {
     let id_box = $("#input-id")
@@ -21,7 +22,7 @@ function sign_up() {
             .removeClass("is-safe")
         id_box.focus()
         return;
-    } else if(!$('#help-id').hasClass('is-check')) {
+    } else if(!$('#help-id').hasClass('is-check') || id_save !== id) {
         $("#help-id").text("중복 확인을 해주세요!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
         return;
     } else if (!VALID.PW.test(pw)) {
@@ -80,6 +81,7 @@ function is_dup(id) {
                 id_box.focus()
             } else {
                 $("#help-id").text("멋진 아이디네요!").addClass("is-safe").addClass("is-check").removeClass("is-danger").removeClass("is-hidden")
+                id_save = id
             }
         }
     });

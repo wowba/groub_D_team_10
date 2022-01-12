@@ -2,6 +2,7 @@ import hashlib
 import random
 import secrets
 from datetime import datetime, timedelta
+from types import NoneType
 
 import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for
@@ -81,18 +82,38 @@ def is_dup():
         return jsonify({'is_dup': False})
 
 
-# TODO 리스트 페이지 API
-@app.route('/api/list_view', methods=['GET'])
+@app.route('/api/list_view', methods=['GET', 'POST'])
 def to_listpage():
-    result = list(db.cocktails.find({}, {'_id': False}))
-    random.shuffle(result)
+    if request.method == 'GET':
+        search_list = list(db.cocktails.find({}, {'_id': False}))
+        return render_template('shop-grid.html', results=search_list)
+
+    val_receive = request.form['val_give']
+    query = {}
+
+    print(val_receive)
+
+    if val_receive == 0 or isinstance(val_receive, NoneType):
+        search_list = list(db.cocktails.find({}, {'_id': False}))
+    else:
+        search_list = list(db.cocktails.find({'class': {"$regex": val_receive}}, {'_id': False}))
+
+    # if len(search_list) > -2:
+    #     query = {"$or": search_list}
+    #
+    # search = search
+    # keyword = keyword
+    #
+    # results = db.cocktails.find(query)
+
     try:
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         id = db.users.find_one({"id": payload["id"]}, {'_id': False})
-        return render_template('shop-grid.html', results=result, id=id)
+        print(id)
+        return jsonify({'results':search_list, 'is_login': id})
     except:
-        return render_template('shop-grid.html', results=result)
+        return jsonify({'results': search_list, 'is_login': 0})
 
 
 # TODO 상세 페이지 API

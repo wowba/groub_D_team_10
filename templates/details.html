@@ -310,7 +310,7 @@
                 <div class="score_box" style="display: flex; align-items: center">
                     <h3>평점</h3>
                     {% if cocktail_info.review | length != 0 %}
-                        <span style="margin-left: 15px">{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }}</span>
+                        <span style="margin-left: 15px">{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }} | .2f }}</span>
                     {% else %}
                         <span style="margin-left: 15px">리뷰 없음</span>
                     {% endif %}

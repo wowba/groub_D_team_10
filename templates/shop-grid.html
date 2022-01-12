@@ -22,7 +22,16 @@
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
     <script src="../static/js/jquery-3.3.1.min.js"></script>
+
+    <script src="../static/js/cocktail99.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <script>
+        {#$(document).ready(function () {#}
+        {#    selectCate()#}
+
+
         function handleClickLike(name) {
             $.ajax({
                 type: "POST",
@@ -59,12 +68,109 @@
                 iconElement.setAttribute('src', '/static/img/icon/suit-heart.svg');
             }
         }
+
+        function selectCate(value){
+            if (value === undefined || value === 'None')
+            {
+                value = 0
+            }
+
+            $('#item-list').empty()
+
+             $.ajax({
+                type: "POST",
+                url: "/api/list_view",
+                data: {val_give : value},
+                success: function (response) {
+                    const lists = response['results']
+                    const user = response['is_login']
+                    console.log(user)
+                        if (user === 0) {
+                            for (let i = 0; i < lists.length; i++) {
+                                const name = lists[i]['name']
+                                const imgsrc = lists[i]['imgsrc']
+                                const like = lists[i]['like']
+                                let temp_html = ''
+                                temp_html = `
+                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="product__item">
+                                                <div class="product__item__pic set-bg">
+                                                    <img src="${imgsrc}"/>
+                                                    <ul class="product__item__pic__hover">
+                                                        <div onclick="handleClickLike('${name}')" class="click" style="margin-left: 15px">
+                                                            <img src="/static/img/icon/suit-heart.svg" class="${name} active" style="width: 40px; height: 40px"/>
+                                                            <span class="${name}" style="margin-left: 5px"></div>${like}</span>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                                <div class="product__item__text">
+                                                    <h6>
+                                                        <a href=url_for('to_detail_page', cocktailname = ${name}) onclick="">${name}</a>
+                                                    </h6>
+                                            </div>
+                                        </div>
+                                            `
+                                $('#item-list').append(temp_html)
+                            }
+                     } else {
+                            for (let i = 0; i < lists.length; i++) {
+                                const name = lists[i]['name']
+                                const imgsrc = lists[i]['imgsrc']
+                                const like = lists[i]['like']
+                                let temp_html = ''
+                                if (name in user['like_list']) {
+                                    temp_html = `
+                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="product__item">
+                                                <div class="product__item__pic set-bg">
+                                                    <img src="${imgsrc}"/>
+                                                    <ul class="product__item__pic__hover">
+                                                        <div onclick="handleClickLike('${name}')" class="click" style="margin-left: 15px">
+                                                            <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 40px; height: 40px; "/>
+                                                            <span class="${name}" style="margin-left: 5px">${like}</span>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                                <div class="product__item__text">
+                                                    <h6>
+                                                        <a href=url_for('to_detail_page', cocktailname = ${name}) onclick="">${name}</a>
+                                                    </h6>
+                                            </div>
+                                        </div>
+                                            `
+                                    $('#item-list').append(temp_html)
+
+                                } else {
+                                    temp_html = `
+                                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                            <div class="product__item">
+                                                <div class="product__item__pic set-bg">
+                                                    <img src="${imgsrc}"/>
+                                                    <ul class="product__item__pic__hover">
+                                                        <div onclick="handleClickLike('${name}')" class="click" style="margin-left: 15px">
+                                                            <img src="/static/img/icon/suit-heart.svg" class="${name} active" style="width: 40px; height: 40px"/>
+                                                            <span class="${name}" style="margin-left: 5px">${like}</span>
+                                                        </div>
+                                                    </ul>
+                                                </div>
+                                                <div class="product__item__text">
+                                                    <h6>
+                                                        <a href=url_for('to_detail_page', cocktailname = ${name}) onclick="">${name}</a>
+                                                    </h6>
+                                            </div>
+                                        </div>
+                                            `
+                                    $('#item-list').append(temp_html)
+                                }
+                            }
+                        }
+                }
+            })
+        }
     </script>
 </head>
 <script defer>
-    function selectCate(){
 
-    }
 </script>
 <body>
 <!-- Page Preloder -->
@@ -84,17 +190,18 @@
                     <div class="col-lg-4 col-md-5">
                         <div class="filter__sort">
                             <span>Sort By</span>
-                            <select id="class-cate">
-                                <option value=" THE UNFORGETTABLES">IBA, 잊기 어려운 맛</option>
-                                <option value="CONTEMPORARY CLASSICS, IBA COCKTAIL">IBA, 컨템포러리 클래식</option>
-                                <option value=" NEW ERA DRINKS">IBA, 새시대의 맛</option>
-                                <option value="조주기능사">조주기능사</option>
+                            <select id="class-cate" onchange="selectCate(this.value)">
+                                <option value=0 selected>전체</option>
+                                <option value="UNFORGETTABLE">UNFORGETTABLE</option>
+                                <option value="CONTEMPORARY CLASSICS">CONTEMPORARY CLASSICS</option>
+                                <option value="NEW ERA DRINKS">NEW ERA DRINKS</option>
+                                <option value="조주기능사">조주기능사</option>s
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4">
                         <div class="filter__found">
-                            <h6><span>{{ result | length }}</span> 개의 레시피 </h6>
+{#                            <h6><span>{{ results | length }}</span> 개의 레시피 </h6>#}
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-3">
@@ -105,7 +212,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+
+            <div id="item-list" class="row">
                 {% for result in results %}
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
@@ -122,13 +230,13 @@
                                                                 <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
                                                                     <img src="/static/img/icon/suit-heart.svg" class="{{result.name}} active" style="width: 40px; height: 40px"/>
                                                                     <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
-                                                                <div>
+                                                                </div>
                                                             {% endif %}
                                                         {% else %}
                                                             <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
                                                                     <img src="/static/img/icon/suit-heart.svg" class="{{result.name}} active" style="width: 40px; height: 40px"/>
                                                                     <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
-                                                                <div>
+                                                                </div>
                                                         {% endif %}
                                 </ul>
                             </div>
@@ -256,3 +364,4 @@
 </body>
 
 </html>
+

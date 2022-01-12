@@ -160,7 +160,6 @@
 
         .categories .reply_container .reply_display_field ul li .reply_username{
             font-weight: bold;
-            margin-right: 30px;
         }
 
         .categories .reply_container .write_reply_field{
@@ -222,7 +221,18 @@
             float:right;
         }
 
+        .delete-button {
+            border:none;
+            background-color: #dc2c2c;
+            border-radius:20px;
+            padding:3px 10px;
+            color:#fff;
+            font-weight:700;
+        }
 
+        .reply {
+            margin-right: 6px;
+        }
 
         .footer{
             padding-top:30px;
@@ -285,7 +295,11 @@
     <article class="categories detail_article">
         <div class="container">
             <div class="image-box">
-                <img src="{{cocktail_info.imgsrc}}" alt="">
+                {% if cocktail_info.id %}
+                    <img src="{{ url_for('static', filename=cocktail_info.imgsrc)}}" alt="">
+                {% else %}
+                    <img src="{{cocktail_info.imgsrc}}" alt="">
+                {% endif %}
                 <h2 id="cocktail-name">{{cocktail_info.name}}</h2>
             </div>
             <div class="content-box">
@@ -310,9 +324,10 @@
                 <div class="score_box" style="display: flex; align-items: center">
                     <h3>평점</h3>
                     {% if cocktail_info.review | length != 0 %}
-                        <span style="margin-left: 15px">{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }} | .2f }}</span>
+                        {%   set rate = cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length %}
+                        <span style="margin-left: 15px;">{{'%0.2f' % rate|float}}</span>
                     {% else %}
-                        <span style="margin-left: 15px">리뷰 없음</span>
+                        <span style="margin-left: 15px">리뷰 없음</span><br>
                     {% endif %}
                     {% if user_info %}
                         {% if cocktail_info.name in user_info.like_list %}
@@ -344,15 +359,15 @@
                     <ul class="reply_list">
                         {% for review in cocktail_info.review %}
                             <li>
-                                <span class="reply_username">{{ review.name }} 님</span>
-                                <span class="reply_content">    {{ review.content }}      </span>
-                                <span class="small-ratings">
+                                <span class="reply_username reply">{{ review.name }} 님 :</span>
+                                <span class="reply_content reply">{{ review.content }}</span>
+                                <span class="small-ratings reply">
                                     {% for i in range(review.stars) %}
                                         <i class="fa fa-star rating-color"></i>
                                     {% endfor %}
                                 </span>
                                 {% if user_info and user_info.id == review.name %}
-                                    <button class="button is-danger is-small" onclick="delete_comment('{{ user_info.id }}', '{{ cocktail_info.name }}')">삭제</button>
+                                    <button class="button is-small delete-button" onclick="delete_comment('{{ user_info.id }}', '{{ cocktail_info.name }}')">삭제</button>
                                 {% endif %}
                             </li>
                         {% endfor %}

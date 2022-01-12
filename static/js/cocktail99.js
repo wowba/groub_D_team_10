@@ -182,38 +182,43 @@ function post_comment(id, comment_list) {
 
 // 게시글 등록 함수
 function post_article(id) {
-    let post_id = id
     let name = $('#cocktail-name').val();
-
     let ingredient = $('#cocktail-ingredients').val();
     let method = $('#cocktail-method').val();
     let garnish = $('#cocktail-garnish').val();
-    let imgsrc = $('#cocktail-imgsrc').val();
-
+    let file = $('#cocktail-imgsrc')[0].files[0];
 
     if (is_blank(name, ingredient, method, garnish) === 1) {
         alert("이미지를 제외한 모든 내용은 필수입니다!")
         return
     }
 
-    if (imgsrc === undefined || imgsrc === " ") {
-        imgsrc = "#"
+    if (file === undefined || file === " ") {
+        file = "#"
     }
+
+    let form_data = new FormData()
+    form_data.append("id_give", id)
+    form_data.append("name_give", name)
+    form_data.append("ingredient_give", ingredient)
+    form_data.append("method_give", method)
+    form_data.append("garnish_give", garnish)
+    form_data.append("file_give", file)
+
+
 
     $.ajax({
         type: "POST",
         url: "/api/custom_write",
-        data: {
-            id_give: post_id,
-            name_give: name,
-            ingredient_give: ingredient,
-            method_give: method,
-            garnish_give: garnish,
-            imgsrc_give: imgsrc,
-        },
+        data: form_data,
+        cache: false,
+        contentType: false,
+        processData: false,
         success: function (response) { // 성공하면
-            alert(response["msg"]);
-            window.location.replace('../')
+            if (response["result"] === "success") {
+                alert(response['msg'])
+                window.location.replace('../')
+            }
         }
     })
 }

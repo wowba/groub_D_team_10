@@ -2,11 +2,13 @@ import hashlib
 import random
 import secrets
 from datetime import datetime, timedelta
+
 NoneType = type(None)
 
 import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -111,7 +113,7 @@ def to_listpage():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         id = db.users.find_one({"id": payload["id"]}, {'_id': False})
         print(id)
-        return jsonify({'results':search_list, 'is_login': id})
+        return jsonify({'results': search_list, 'is_login': id})
     except:
         return jsonify({'results': search_list, 'is_login': 0})
 
@@ -187,8 +189,14 @@ def to_write_page():
         ingredient_receive = request.form['ingredient_give']
         method_receive = request.form['method_give']
         garnish_receive = request.form['garnish_give']
-        imgsrc_receive = request.form['imgsrc_give']
         idx = str(datetime.now())
+
+        file = request.files["file_give"]
+        filename = secure_filename(file.filename)
+        extension = filename.split(".")[-1]
+        file_path = f"pics/{name_receive}.{extension}"
+        file.save("./static/"+file_path)
+
         doc = {
             "id": id_receive,
             "name": name_receive,
@@ -198,14 +206,15 @@ def to_write_page():
             "garnish": garnish_receive,
             "like": 0,
             "review": [],
-            "imgsrc": imgsrc_receive,
+            "img_name": filename,
+            "imgsrc": file_path,
             "stars": [],
             "idx": idx
 
         }
 
         db.cocktails.insert_one(doc)
-        return jsonify({'msg': "등록 완료!"})
+        return jsonify({'msg': "등록 완료!", 'result': "success"})
 
 
 # 랜덤 칵테일 추천 API
@@ -286,6 +295,26 @@ def get_user_info():
         return user_info
     except:
         return None
+
+
+@app.route('/test')
+def test():
+    return render_template('filettest.html')
+
+
+@app.route('/update_profile', methods=['POST'])
+def save_img():
+    new_doc = {}
+    if 'file_give' in request.files:
+        file = request.files["file_give"]
+        filename = secure_filename(file.filename)
+        extension = filename.split(".")[-1]
+        file_path = f"/gg.{extension}"
+        file.save("./static/" + file_path)
+        new_doc["profile_pic"] = filename
+        new_doc["profile_pic_real"] = file_path
+
+    return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
 
 
 if __name__ == '__main__':

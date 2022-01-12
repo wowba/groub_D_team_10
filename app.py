@@ -93,7 +93,7 @@ def to_listpage():
 
     print(val_receive)
 
-    if val_receive == 0 or isinstance(val_receive, NoneType):
+    if val_receive == "0" or isinstance(val_receive, NoneType):
         search_list = list(db.cocktails.find({}, {'_id': False}))
     else:
         search_list = list(db.cocktails.find({'class': {"$regex": val_receive}}, {'_id': False}))

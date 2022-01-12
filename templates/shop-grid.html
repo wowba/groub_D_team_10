@@ -22,6 +22,44 @@
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
     <script src="../static/js/jquery-3.3.1.min.js"></script>
+    <script>
+        function handleClickLike(name) {
+            $.ajax({
+                type: "POST",
+                url: "/api/likeclick",
+                data: {name_give: name},
+                success: function (response) {
+                    changeLikeStatus(name)
+                }
+            })
+        }
+
+        function changeLikeStatus(name) {
+            const elements = document.getElementsByClassName(`${name}`);
+
+            const countElement = elements.item(1);  // 카운트 element
+
+            const iconElement = elements.item(0);  // 좋아요 아이콘 element
+
+            const currentCount = countElement.innerText;
+            const num = Number(currentCount);
+
+            // const currentIcon = iconElement.classList.contains('active');
+
+            const currentIcon = iconElement.getAttribute('src') === '/static/img/icon/suit-heart.svg';
+
+
+            // console.log(currentIcon)
+
+            if (currentIcon) {
+                countElement.innerText = (num + 1).toString();
+                iconElement.setAttribute('src', '/static/img/icon/suit-heart-fill.svg');
+            } else {
+                countElement.innerText = (num - 1).toString();
+                iconElement.setAttribute('src', '/static/img/icon/suit-heart.svg');
+            }
+        }
+    </script>
 </head>
 <script defer>
     function selectCate(){
@@ -73,9 +111,25 @@
                         <div class="product__item">
                             <div class="product__item__pic set-bg" data-setbg="{{ result.imgsrc }}">
                                 <ul class="product__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+
+                                                        {% if id %}
+                                                            {% if result.name in id.like_list %}
+                                                                <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
+                                                                    <img src="/static/img/icon/suit-heart-fill.svg" class="{{result.name}} active" style="width: 40px; height: 40px; "/>
+                                                                    <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
+                                                                </div>
+                                                            {% else %}
+                                                                <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
+                                                                    <img src="/static/img/icon/suit-heart.svg" class="{{result.name}} active" style="width: 40px; height: 40px"/>
+                                                                    <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
+                                                                <div>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
+                                                                    <img src="/static/img/icon/suit-heart.svg" class="{{result.name}} active" style="width: 40px; height: 40px"/>
+                                                                    <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
+                                                                <div>
+                                                        {% endif %}
                                 </ul>
                             </div>
                             <div class="product__item__text">

@@ -73,12 +73,6 @@ def sign_up():
         return jsonify({'result': 'success'})
 
 
-# TODO 마이 페이지 API
-@app.route('/api/mypage', methods=['GET'])
-def to_my_page():
-    return render_template('mypage.html')
-
-
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
 def to_listpage():
@@ -115,14 +109,22 @@ def delete_article():
 
     db.cocktails.delete_one({'id': id_receive, 'idx': idx_receive})
 
-    return jsonify({'msg': "삭제 완료"})
+    return jsonify({'msg': "게시글 삭제 완료"})
+
+
+@app.route('/api/reply_delete', methods=['DELETE'])
+def delete_comment():
+    name_receive = request.form['name_give']
+    cocktail_name_receive = request.form['cocktail_name_give']
+    db.reviews.delete_one({'name': name_receive, 'cocktail_name': cocktail_name_receive})
+
+    return jsonify({'msg': "댓글 삭제 완료"})
 
 
 @app.route('/api/reply_write', methods=['POST'])
-def reply_write():
+def write_comment():
     name_receive = request.form['name_give']
     cocktail_name_receive = request.form['cocktail_name_give']
-    # db.reviews.find_one({'name'})
     content_receive = request.form['content_give']
     stars_receive = int(request.form['stars_give'])
 
@@ -229,6 +231,16 @@ def like_click():
     else:
         print("로그인 먼저")
         quit()
+
+
+@app.route('/api/mypage', methods=['GET'])
+def to_my_page():
+    return render_template('mypage.html')
+
+@app.route('/api/mypage/listup', methods=['GET'])
+def my_page_list():
+    cocktails = list(db.cocktails.find({}, {'_id': False}))
+    return jsonify({'all_cocktails': cocktails})
 
 
 def get_user_info():

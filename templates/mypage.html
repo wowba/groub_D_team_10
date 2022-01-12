@@ -152,23 +152,17 @@
                 listUp();
             });
 
-        function listUp(e){
-            let val = $("input[name=options").val();
-            if(!val){
-                val = 0;
-            }
-
-
-
-            {#$('.card-deck').empty()#}
-                            $.ajax({
+        function listUp(){
+            $.ajax({
                     type: "GET",
-                    url: "/api/mypage",
+                    url: "/api/mypage/listup",
                     data: {},
                     success: function (response) {
-                        let cocktaillist = response['all_cocktails']
+                        let cocktail_list = response['all_cocktails']
+                        console.log(cocktail_list)
 
-                        for(let i =0; i<cocktaillist.length; i++) {
+
+                        for(let i =0; i<cocktail_list.length; i++) {
                             let name = cocktail_list[i]['name']
                             let imgsrc = cocktail_list[i]['imgsrc']
                             let review = cocktail_list[i]['review']

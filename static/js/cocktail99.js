@@ -72,12 +72,23 @@ function sign_out() {
 }
 
 // 댓글 등록 함수
-function post_comment(id) {
+function post_comment(id, comment_id_list) {
 
     if ($.cookie('mytoken') === undefined || id === undefined) {
         alert("로그인이 필요합니다")
         return;
     }
+
+
+    if (comment_id_list !== undefined) {
+        for (let comment_id of comment_id_list) {
+            if (id === comment_id) {
+                alert("리뷰는 하나만 가능합니다!")
+                return;
+            }
+        }
+    }
+
     let name = id
     let cocktail_name = $('#cocktail-name').text()
     let content = $('#write_reply_text').val()
@@ -102,7 +113,7 @@ function post_comment(id) {
         },
         success: function (response) {
             alert(response['result'])
-            window.location.replace('/api/view?cocktailname='+cocktail_name)
+            window.location.reload()
         }
     })
 }
@@ -158,6 +169,21 @@ function delete_article(user_id, cocktail_idx) {
                     success: function (response) { // 성공하면
                         alert(response["msg"]);
                         window.location.replace('../')
+                    }
+                })
+}
+
+function delete_comment(id, cocktail_name) {
+    $.ajax({
+                    type: "DELETE",
+                    url: "/api/reply_delete",
+                    data: {
+                        name_give: id,
+                        cocktail_name_give: cocktail_name
+                    },
+                    success: function (response) { // 성공하면
+                        alert(response["msg"]);
+                        window.location.reload()
                     }
                 })
 }

@@ -24,17 +24,9 @@
     <script src="../static/js/jquery-3.3.1.min.js"></script>
 </head>
 <script defer>
-    let cate = document.getElementById('class-cate');
-    console.log(cate);
+    function selectCate(){
 
-    function cate(cate) {
-        if (cate !== "") {
-            self.location.href = "{{url_for('to_listpage')}}?class=" + cate;
-        } else {
-            window.location.reload()
-        }
     }
-
 </script>
 <body>
 <!-- Page Preloder -->
@@ -64,7 +56,7 @@
                     </div>
                     <div class="col-lg-4 col-md-4">
                         <div class="filter__found">
-                            <h6><span>16</span> Products found</h6>
+                            <h6><span>{{ result | length }}</span> 개의 레시피 </h6>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-3">

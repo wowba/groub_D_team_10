@@ -76,13 +76,14 @@ def sign_up():
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
 def to_listpage():
-    token = request.cookies.get('mytoken')
-    if token is None:
-        result = list(db.cocktails.find({}, {'_id': False}))
-        random.shuffle(result)
-        return render_template('shop-grid.html', results=result)
-    else:
-        result = list(db.cocktails.find({}, {'_id': False}))
+    result = list(db.cocktails.find({}, {'_id': False}))
+    random.shuffle(result)
+    try :
+        token_receive = request.cookies.get('mytoken')
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        id = db.users.find_one({"id": payload["id"]}, {'_id': False})
+        return render_template('shop-grid.html', results=result, id = id)
+    except:
         return render_template('shop-grid.html', results=result)
 
 
@@ -211,26 +212,30 @@ def like_list():
 @app.route('/api/likeclick', methods=["POST"])
 def like_click():
     name_receive = request.form["name_give"]
-    token_receive = request.cookies.get('mytoken')
+    try:
+        token_receive = request.cookies.get('mytoken')
 
-    if token_receive is not None:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.users.find_one({"id": payload["id"]})
-        user_like_list = user_info["like_list"]
+        if token_receive is not None:
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+            user_info = db.users.find_one({"id": payload["id"]})
+            user_like_list = user_info["like_list"]
 
-        if name_receive in user_like_list:
-            db.users.update_one({"id": payload["id"]}, {'$pull': {'like_list': name_receive}})
-            db.cocktails.update_one({"name": name_receive}, {'$inc': {'like': -1}})
-            print("좋아요 취소")
-            return jsonify({'msg': '좋아요 취소'})
-        elif name_receive not in user_like_list:
-            db.users.update_one({"id": payload["id"]}, {'$push': {'like_list': name_receive}})
-            db.cocktails.update_one({"name": name_receive}, {'$inc': {'like': 1}})
-            print("좋아요")
-            return jsonify({'msg': '좋아요!'})
-    else:
-        print("로그인 먼저")
+            if name_receive in user_like_list:
+                db.users.update_one({"id": payload["id"]}, {'$pull': {'like_list': name_receive}})
+                db.cocktails.update_one({"name": name_receive}, {'$inc': {'like': -1}})
+                print("좋아요 취소")
+                return jsonify({'msg': '좋아요 취소'})
+            elif name_receive not in user_like_list:
+                db.users.update_one({"id": payload["id"]}, {'$push': {'like_list': name_receive}})
+                db.cocktails.update_one({"name": name_receive}, {'$inc': {'like': 1}})
+                print("좋아요")
+                return jsonify({'msg': '좋아요!'})
+        else:
+            print("로그인 먼저")
+            quit()
+    except:
         quit()
+
 
 
 @app.route('/api/mypage', methods=['GET'])
@@ -241,6 +246,7 @@ def to_my_page():
 def my_page_list():
     cocktails = list(db.cocktails.find({}, {'_id': False}))
     return jsonify({'all_cocktails': cocktails})
+
 
 
 def get_user_info():

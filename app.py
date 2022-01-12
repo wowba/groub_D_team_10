@@ -2,7 +2,7 @@ import hashlib
 import random
 import secrets
 from datetime import datetime, timedelta
-from types import NoneType
+NoneType = type(None)
 
 import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for
@@ -183,7 +183,7 @@ def to_write_page():
     else:
         id_receive = request.form['id_give']
         name_receive = request.form['name_give']
-        class_receive = request.form['class_give']
+        class_receive = "user_recipe"
         ingredient_receive = request.form['ingredient_give']
         method_receive = request.form['method_give']
         garnish_receive = request.form['garnish_give']

@@ -1,4 +1,3 @@
-// 회원 가입
 function sign_up() {
     let id = $("#input-username").val()
     let pw = $("#input-password").val()
@@ -30,7 +29,7 @@ function login() {
             let id = $("#input-username").val()
             let pw = $("#input-password").val()
 
-            if (id === "") {
+            if (is_blank(id)) {
                 $("#help-id").removeClass("is-hidden")
                 $("#input-username").focus()
                 return;
@@ -38,13 +37,14 @@ function login() {
                 $("#help-id").addClass("is-hidden")
             }
 
-            if (pw === "") {
+            if (is_blank(pw)) {
                 $("#help-pw").removeClass("is-hidden")
                 $("#input-password").focus()
                 return;
             } else {
                 $("#help-pw").addClass("is-hidden")
             }
+
             $.ajax({
                 type: "POST",
                 url: "/api/login",
@@ -82,7 +82,8 @@ function post_comment(id) {
     let cocktail_name = $('#cocktail-name').text()
     let content = $('#write_reply_text').val()
     let stars = $('input[name=rating]:checked').val();
-    if (content === '') {
+
+    if (is_blank(content)) {
         alert("내용을 입력하세요!")
         return;
     } else if (stars === undefined) {
@@ -116,6 +117,12 @@ function post_article(id) {
                 let garnish = $('#cocktail-garnish').val();
                 let imgsrc = $('#cocktail-imgsrc').val();
 
+
+                if (is_blank(name, classname, ingredient, method, garnish) === 1) {
+                    alert("이미지를 제외한 모든 내용은 필수입니다!")
+                    return
+                }
+
                 if (imgsrc === undefined || imgsrc === " ") {
                     imgsrc = "#"
                 }
@@ -139,6 +146,7 @@ function post_article(id) {
                 })
             }
 
+
 function delete_article(user_id, cocktail_idx) {
         $.ajax({
                     type: "DELETE",
@@ -152,4 +160,15 @@ function delete_article(user_id, cocktail_idx) {
                         window.location.replace('../')
                     }
                 })
+}
+
+function is_blank() {
+    let blank_pattern = "/^\\s+|\\s+$/g"
+
+    for (let arg of arguments) {
+        if (arg.replace(blank_pattern, "") === '') {
+            return 1
+        }
+    }
+    return 0;
 }

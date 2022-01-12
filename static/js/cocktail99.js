@@ -184,14 +184,14 @@ function post_comment(id, comment_list) {
 function post_article(id) {
     let post_id = id
     let name = $('#cocktail-name').val();
-    let classname = $('#cocktail-class').val();
+
     let ingredient = $('#cocktail-ingredients').val();
     let method = $('#cocktail-method').val();
     let garnish = $('#cocktail-garnish').val();
     let imgsrc = $('#cocktail-imgsrc').val();
 
 
-    if (is_blank(name, classname, ingredient, method, garnish) === 1) {
+    if (is_blank(name, ingredient, method, garnish) === 1) {
         alert("이미지를 제외한 모든 내용은 필수입니다!")
         return
     }
@@ -206,7 +206,6 @@ function post_article(id) {
         data: {
             id_give: post_id,
             name_give: name,
-            class_give: classname,
             ingredient_give: ingredient,
             method_give: method,
             garnish_give: garnish,

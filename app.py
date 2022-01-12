@@ -93,7 +93,7 @@ def to_listpage():
 
     print(val_receive)
 
-    if val_receive == "0" or isinstance(val_receive, NoneType):
+    if val_receive == 0 or isinstance(val_receive, NoneType):
         search_list = list(db.cocktails.find({}, {'_id': False}))
     else:
         search_list = list(db.cocktails.find({'class': {"$regex": val_receive}}, {'_id': False}))
@@ -183,7 +183,7 @@ def to_write_page():
     else:
         id_receive = request.form['id_give']
         name_receive = request.form['name_give']
-        class_receive = request.form['class_give']
+        class_receive = "user_recipe"
         ingredient_receive = request.form['ingredient_give']
         method_receive = request.form['method_give']
         garnish_receive = request.form['garnish_give']

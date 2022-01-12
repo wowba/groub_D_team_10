@@ -276,14 +276,40 @@ def like_click():
         quit()
 
 
+# TODO 마이 페이지 API
 @app.route('/api/mypage', methods=['GET'])
 def to_my_page():
-    return render_template('mypage.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
+        return render_template('mypage.html', user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("home", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('index.html')
 
-
-@app.route('/api/mypage/listup', methods=['GET'])
+@app.route('/api/mypage/likelistup', methods=['POST'])
 def my_page_list():
-    cocktails = list(db.cocktails.find({}, {'_id': False}))
+    name_receive = request.form['sample_give']
+    userinfo = db.users.find_one({'id':name_receive}, {'_id': False})
+    cocktails = []
+    for i in userinfo['like_list']:
+        cocktail_dic = db.cocktails.find_one({'name':i}, {'_id':False})
+        cocktails.append(cocktail_dic)
+    return jsonify({'like_cocktails': cocktails})
+
+@app.route('/api/mypage/reviewlistup', methods=['POST'])
+def my_page_review_list():
+    name_receive = request.form['name_give']
+    reviews = list(db.reviews.find({'name':name_receive}, {'_id': False}))
+    return jsonify({'all_reviews': reviews})
+
+
+@app.route('/api/mypage/recipelistup', methods=['POST'])
+def my_page_recipe_list():
+    name_receive = request.form['name_give']
+    cocktails = list(db.cocktails.find({'id':name_receive}, {'_id': False}))
     return jsonify({'all_cocktails': cocktails})
 
 

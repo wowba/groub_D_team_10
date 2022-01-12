@@ -13,6 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/elegant-icons.css" type="text/css">
@@ -26,12 +29,7 @@
     <script src="../static/js/cocktail99.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-
     <script>
-        {#$(document).ready(function () {#}
-        {#    selectCate()#}
-
-
         function handleClickLike(name) {
             $.ajax({
                 type: "POST",
@@ -69,29 +67,28 @@
             }
         }
 
-        function selectCate(value){
-            if (value === undefined || value === 'None')
-            {
+        function selectCate(value) {
+            if (value === undefined || value === 'None') {
                 value = 0
             }
 
             $('#item-list').empty()
 
-             $.ajax({
+            $.ajax({
                 type: "POST",
                 url: "/api/list_view",
-                data: {val_give : value},
+                data: {val_give: value},
                 success: function (response) {
                     const lists = response['results']
                     const user = response['is_login']
                     console.log(user)
-                        if (user === 0) {
-                            for (let i = 0; i < lists.length; i++) {
-                                const name = lists[i]['name']
-                                const imgsrc = lists[i]['imgsrc']
-                                const like = lists[i]['like']
-                                let temp_html = ''
-                                temp_html = `
+                    if (user === 0) {
+                        for (let i = 0; i < lists.length; i++) {
+                            const name = lists[i]['name']
+                            const imgsrc = lists[i]['imgsrc']
+                            const like = lists[i]['like']
+                            let temp_html = ''
+                            temp_html = `
                                             <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product__item">
                                                 <div class="product__item__pic set-bg">
@@ -99,7 +96,7 @@
                                                     <ul class="product__item__pic__hover">
                                                         <div onclick="handleClickLike('${name}')" class="click" style="margin-left: 15px">
                                                             <img src="/static/img/icon/suit-heart.svg" class="${name} active" style="width: 40px; height: 40px"/>
-                                                            <span class="${name}" style="margin-left: 5px"></div>${like}</span>
+                                                            <span class="${name}" style="margin-left: 5px">${like}</span>
                                                         </div>
                                                     </ul>
                                                 </div>
@@ -110,16 +107,16 @@
                                             </div>
                                         </div>
                                             `
-                                $('#item-list').append(temp_html)
-                            }
-                     } else {
-                            for (let i = 0; i < lists.length; i++) {
-                                const name = lists[i]['name']
-                                const imgsrc = lists[i]['imgsrc']
-                                const like = lists[i]['like']
-                                let temp_html = ''
-                                if (name in user['like_list']) {
-                                    temp_html = `
+                            $('#item-list').append(temp_html)
+                        }
+                    } else {
+                        for (let i = 0; i < lists.length; i++) {
+                            const name = lists[i]['name']
+                            const imgsrc = lists[i]['imgsrc']
+                            const like = lists[i]['like']
+                            let temp_html = ''
+                            if (name in user['like_list']) {
+                                temp_html = `
                                             <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product__item">
                                                 <div class="product__item__pic set-bg">
@@ -133,15 +130,15 @@
                                                 </div>
                                                 <div class="product__item__text">
                                                     <h6>
-                                                        <a href='/api/view?='+${name}) onclick="">${name}</a>
+                                                        <a href=url_for('to_detail_page', cocktailname = ${name}) onclick="">${name}</a>
                                                     </h6>
                                             </div>
                                         </div>
                                             `
-                                    $('#item-list').append(temp_html)
+                                $('#item-list').append(temp_html)
 
-                                } else {
-                                    temp_html = `
+                            } else {
+                                temp_html = `
                                             <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product__item">
                                                 <div class="product__item__pic set-bg">
@@ -155,126 +152,236 @@
                                                 </div>
                                                 <div class="product__item__text">
                                                     <h6>
-                                                        <a href='/api/view?='+${name}) onclick="">${name}</a>
+                                                        <a href=url_for('to_detail_page', cocktailname = ${name}) onclick="">${name}</a>
                                                     </h6>
                                             </div>
                                         </div>
                                             `
-                                    $('#item-list').append(temp_html)
-                                }
+                                $('#item-list').append(temp_html)
                             }
                         }
+                    }
                 }
             })
         }
+
+    </script>
+    <style>
+        .header .container {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .header .container .row .col-lg-3 .header__logo a {
+            font-size: 50px;
+            font-weight: 900;
+            color: #d494c6;
+        }
+
+        nav {
+            margin-left: 50px;
+            position: fixed;
+
+        }
+
+        .side_menu_btn {
+            display: inline-block;
+            width: 20px;
+
+        }
+
+        .categories .container .row .section-title {
+            margin: 80px auto;
+        }
+
+        .categories {
+            margin-bottom: 50px;
+        }
+
+        .footer {
+            padding-top: 30px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 99999;
+        }
+
+        img {
+            width: 360px;
+            height: 320px;
+            object-fit: contain;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            {% if user_info %}
+                $("#signup-a").toggleClass("is-hidden")
+                $("#login-a").toggleClass("is-hidden")
+            {% else %}
+                $("#mypage-a").toggleClass("is-hidden")
+                $("#signout-a").toggleClass("is-hidden")
+                $("#write-a").toggleClass("is-hidden")
+            {% endif %}
+        })
     </script>
 </head>
-<script defer>
-
-</script>
 <body>
 <!-- Page Preloder -->
 <div id="preloder">
     <div class="loader"></div>
 </div>
-
-
-<!-- Product Section Begin -->
-<section class="product spad">
+<header class="header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-5">
-            </div>
-            <div class="col-lg-9 col-md-7">
-                <div class="row">
-                    <div class="col-lg-4 col-md-5">
-                        <div class="filter__sort">
-                            <span>Sort By</span>
-                            <select id="class-cate" onchange="selectCate(this.value)">
-                                <option value=0>전체</option>
-                                <option value="UNFORGETTABLE">UNFORGETTABLE</option>
-                                <option value="CONTEMPORARY CLASSICS">CONTEMPORARY CLASSICS</option>
-                                <option value="NEW ERA DRINKS">NEW ERA DRINKS</option>
-                                <option value="조주기능사">조주기능사</option>
-                                <option value="user_recipe">유저 레시피</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-4">
-                        <div class="filter__found">
-{#                            <h6><span>{{ results | length }}</span> 개의 레시피 </h6>#}
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-3">
-                        <div class="filter__option">
-                            <span class="icon_grid-2x2"></span>
-                            <span class="icon_ul"></span>
-                        </div>
-                    </div>
+            <div class="col-lg-3">
+                <div class="header__logo">
+                    <a href="/">칵테일 99</a>
                 </div>
             </div>
-
-            <div id="item-list" class="row">
-                {% for result in results %}
-                    <div class="col-lg-4 col-md-6 col-sm-6">
-                        <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="{{ result.imgsrc }}">
-                                <ul class="product__item__pic__hover">
-
-                                                        {% if id %}
-                                                            {% if result.name in id.like_list %}
-                                                                <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
-                                                                    <img src="/static/img/icon/suit-heart-fill.svg" class="{{result.name}} active" style="width: 40px; height: 40px; "/>
-                                                                    <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
-                                                                </div>
-                                                            {% else %}
-                                                                <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
-                                                                    <img src="/static/img/icon/suit-heart.svg" class="{{result.name}} active" style="width: 40px; height: 40px"/>
-                                                                    <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
-                                                                </div>
-                                                            {% endif %}
-                                                        {% else %}
-                                                            <div onclick="handleClickLike(`{{result.name}}`)" class="click" style="margin-left: 15px">
-                                                                    <img src="/static/img/icon/suit-heart.svg" class="{{result.name}} active" style="width: 40px; height: 40px"/>
-                                                                    <span class="{{result.name}}" style="margin-left: 5px">{{ result.like }}</span>
-                                                                </div>
-                                                        {% endif %}
-                                </ul>
-                            </div>
-                            <div class="product__item__text">
-                                <h6>
-                                    <a href={{ url_for('to_detail_page', cocktailname = result.name) }} onclick="">{{ result.name }}</a>
-                                </h6>
-                                {#                                    <h5>{{ result.stars }}</h5>#}
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
-                <div class="col-lg-4 col-md-6 col-sm-6">
-                    <div class="product__item">
-                        <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
-                            <ul class="product__item__pic__hover">
-                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            </ul>
-                        </div>
-                        <div class="product__item__text">
-                            <h6><a href="#">Crab Pool Security</a></h6>
-                            <h5>$30.00</h5>
-                        </div>
+            <p>
+                {% if user_info %}
+                    <a href="/api/mypage">{{ user_info.id }}</a>님 환영합니다!
+                {% endif %}
+            </p>
+        </div>
+    </div>
+    <div class="humberger__open">
+        <i class="fa fa-bars"></i>
+    </div>
+    </div>
+</header>
+<!-- Header Section End -->
+<nav class="nav">
+    <div class="hero__categories__all side_menu_btn">
+        <i class="fa fa-bars"></i>
+    </div>
+</nav>
+<!-- Hero Section Begin -->
+<section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="hero__categories">
+                        <ul style="display: none;">
+                            <li><a id="login-a" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#login-modal">로그인</a></li>
+                            <li><a id="signup-a" href="/api/register">회원가입</a></li>
+                            <li><a id="mypage-a" href="/api/mypage">마이페이지</a></li>
+                            <li><a href="/api/list_view">리스트페이지</a></li>
+                            <li><a id="write-a" href="/api/custom_write">레시피작성</a></li>
+                            <li><a id="signout-a" href="javascript:void(0)" onclick="sign_out()">로그아웃</a></li>
+                        </ul>
                     </div>
                 </div>
-
-                <div class="product__pagination">
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>
                 </div>
             </div>
         </div>
+    </section>
+
+<!-- Login Modal -->
+    <div class="modal fade" id="login-modal" tabindex="-1" aria-labelledby="signUpModal" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signUpModal">로그인</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input id="input-username" class="input" type="text" placeholder="아이디">
+                <p id="help-id" class="help is-hidden is-danger">아이디를 입력해주세요!</p>
+                <input id="input-password" class="input" type="password" placeholder="비밀번호">
+                <p id="help-pw" class="help is-hidden is-danger">비밀번호를 입력해주세요!</p>
+                <button type="button" class="btn btn-secondary" onclick="location.href='/api/register'">회원가입</button>
+                <button type="button" class="btn btn-primary" onclick="login()">로그인</button>
+
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <!-- Login Failed Alert -->
+    <div id="login-fail-modal" class="modal">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+
+      </div>
+      <button class="modal-close is-large" aria-label="close"></button>
     </div>
+
+<!-- Product Section Begin -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-5">
+        </div>
+        <div class="col-lg-9 col-md-7">
+            <div class="row">
+                <div class="col-lg-4 col-md-5">
+                    <div class="filter__sort">
+                        <span>Sort By</span>
+                        <select id="class-cate" onchange="selectCate(this.value)">
+                            <option value=0 selected>전체</option>
+                            <option value="UNFORGETTABLE">UNFORGETTABLE</option>
+                            <option value="CONTEMPORARY CLASSICS">CONTEMPORARY CLASSICS</option>
+                            <option value="NEW ERA DRINKS">NEW ERA DRINKS</option>
+                            <option value="조주기능사">조주기능사</option>
+                            <option value="user_recipe">유저 레시피</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="item-list" class="row">
+            {% for result in results %}
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg">
+                            <img src="{{ result.imgsrc }}"/>
+                            <ul class="product__item__pic__hover">
+                                {% if id %}
+                                    {% if result.name in id.like_list %}
+                                        <div onclick="handleClickLike(`{{ result.name }}`)" class="click"
+                                             style="margin-left: 15px">
+                                            <img src="/static/img/icon/suit-heart-fill.svg"
+                                                 class="{{ result.name }} active" style="width: 40px; height: 40px; "/>
+                                            <span class="{{ result.name }}"
+                                                  style="margin-left: 5px">{{ result.like }}</span>
+                                        </div>
+                                    {% else %}
+                                        <div onclick="handleClickLike(`{{ result.name }}`)" class="click"
+                                             style="margin-left: 15px">
+                                            <img src="/static/img/icon/suit-heart.svg" class="{{ result.name }} active"
+                                                 style="width: 40px; height: 40px"/>
+                                            <span class="{{ result.name }}"
+                                                  style="margin-left: 5px">{{ result.like }}</span>
+                                        </div>
+                                    {% endif %}
+                                {% else %}
+                                    <div onclick="handleClickLike(`{{ result.name }}`)" class="click"
+                                         style="margin-left: 15px">
+                                        <img src="/static/img/icon/suit-heart.svg" class="{{ result.name }} active"
+                                             style="width: 40px; height: 40px"/>
+                                        <span class="{{ result.name }}"
+                                              style="margin-left: 5px">{{ result.like }}</span>
+                                    </div>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6>
+                                <a href={{ url_for('to_detail_page', cocktailname = result.name) }} onclick="">{{ result.name }}</a>
+                            </h6>
+                            {#                                    <h5>{{ result.stars }}</h5>#}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
 </section>
 <!-- Product Section End -->
 
@@ -282,68 +389,9 @@
 <footer class="footer spad">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="footer__about">
-                    <div class="footer__about__logo">
-                        <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                    </div>
-                    <ul>
-                        <li>Address: 60-49 Road 11378 New York</li>
-                        <li>Phone: +65 11.188.888</li>
-                        <li>Email: hello@colorlib.com</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                <div class="footer__widget">
-                    <h6>Useful Links</h6>
-                    <ul>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">About Our Shop</a></li>
-                        <li><a href="#">Secure Shopping</a></li>
-                        <li><a href="#">Delivery infomation</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Our Sitemap</a></li>
-                    </ul>
-                    <ul>
-                        <li><a href="#">Who We Are</a></li>
-                        <li><a href="#">Our Services</a></li>
-                        <li><a href="#">Projects</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Innovation</a></li>
-                        <li><a href="#">Testimonials</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-12">
-                <div class="footer__widget">
-                    <h6>Join Our Newsletter Now</h6>
-                    <p>Get E-mail updates about our latest shop and special offers.</p>
-                    <form action="#">
-                        <input type="text" placeholder="Enter your mail">
-                        <button type="submit" class="site-btn">Subscribe</button>
-                    </form>
-                    <div class="footer__widget__social">
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-instagram"></i></a>
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
             <div class="col-lg-12">
                 <div class="footer__copyright">
-                    <div class="footer__copyright__text">
-                        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                            Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                            All rights reserved | This template is made with <i class="fa fa-heart"
-                                                                                aria-hidden="true"></i> by <a
-                                    href="https://colorlib.com" target="_blank">Colorlib</a>
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-                    </div>
-                    <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                    <div class="footer__copyright__text"><p>Copyright &copy;항해99 5기 D반 10조 - 칵테일99</p></div>
                 </div>
             </div>
         </div>
@@ -365,4 +413,3 @@
 </body>
 
 </html>
-

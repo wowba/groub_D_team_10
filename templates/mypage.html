@@ -47,6 +47,7 @@
     <script src="../static/js/clickcontrol.js"></script>
     <script src="../static/js/randomcocktail.js"></script>
     <script src="../static/js/cocktail99.js"></script>
+    <script src="../static/js/cocktail_mypage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
@@ -107,14 +108,17 @@
 
         .card-deck .card{
             display: inline-block;
-            width:450px;
+            width:350px;
             height:600px;
-            margin-bottom: 50px;
+            margin: 0 50px 50px;
         }
 
         .card-deck .card img{
-            width:450px;
+            width:350px;
             height:350px;
+        }
+        .card-deck .card h5{
+            font-size:30px;
         }
         .card-deck .card p{
             word-break: break-word;
@@ -130,9 +134,17 @@
         }
 
         .card-deck .card .card-footer .like{
-                margin-right:150px;
+            margin-right:150px;
         }
 
+        .card-deck .card .card-footer .stars{
+            margin-right:100px;
+        }
+
+        .stars{
+            text-shadow: 0 0 0 #d494c6;
+            color:transparent;
+        }
 
     </style>
 
@@ -149,44 +161,10 @@
         })
 
         $(document).ready(function () {
-                listUp();
+                recipeListUp();
             });
 
-        function listUp(){
-            $.ajax({
-                    type: "GET",
-                    url: "/api/mypage/listup",
-                    data: {},
-                    success: function (response) {
-                        let cocktail_list = response['all_cocktails']
-                        console.log(cocktail_list)
 
-
-                        for(let i =0; i<cocktail_list.length; i++) {
-                            let name = cocktail_list[i]['name']
-                            let imgsrc = cocktail_list[i]['imgsrc']
-                            let review = cocktail_list[i]['review']
-                            let like = cocktail_list[i]['like']
-                            let stars = cocktail_list[i]['stars']
-
-                            let temp_html = `
-                <div class="card">
-                  <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">${name}</h5>
-                        <p class="card-text reply-content">${review}</p>
-                    </div>
-                    <div class="card-footer">
-                        <span class="like">${like}</span>
-                        <span class="stars">${stars}</span>
-                    </div>
-                </div>`
-
-                            $('.card-deck').append(temp_html)
-                        }
-                    }
-                })
-        }
     </script>
 
 </head>
@@ -206,7 +184,7 @@
                 </div>
                 <p>
                     {% if user_info %}
-                        <a href="/mypage">{{ user_info.username }}</a>님 환영합니다!
+                        <a id="user_id" href="/mypage">{{ user_info.username }}</a>님 환영합니다!
                     {% endif %}
                 </p>
                 </div>
@@ -279,105 +257,23 @@
     <section class="content_container">
         <div class="button-box">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary active" for="like-receipe" onclick="listUp()">
+              <label class="btn btn-secondary active" for="like-receipe" onclick="likeListUp('testjm')">
                 <input type="radio" name="options" id="like-receipe" value="0" autocomplete="off" checked>좋아요레시피
               </label>
-              <label class="btn btn-secondary" for="reply-receipe" onclick="listUp()">
+              <label class="btn btn-secondary" for="reply-receipe" id="1" onclick="reviewListUp('testjm')">
                 <input type="radio" name="options" id="reply-receipe" value="1" autocomplete="off">내가 쓴 댓글
               </label>
-              <label class="btn btn-secondary" for="write-receipe" onclick="listUp()">
+              <label class="btn btn-secondary" for="write-receipe" id="2" onclick="recipeListUp('testjm')">
                 <input type="radio" name="options" id="write-receipe"  value="2" autocomplete="off">나의 레시피
               </label>
             </div>
         </div>
         <div class="contents-box">
-
-
             <div class="card-deck">
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
-              <div class="card">
-                <img class="card-img-top" src="../static/img/smash-backgroung2.jpg" alt="Card image cap">
-                <div class="card-body">
-                  <h5 class="card-title">칵테일 이름</h5>
-                  <p class="card-text reply-content">이 칵테일 괜찮네요 :)</p>
-                </div>
-                <div class="card-footer">
-                    <span class="like">좋아요수:</span>
-                    <span class="stars">평점:</span>
-                </div>
-              </div>
 
             </div>
-
-
+        </div>
     </section>
-
-
 
 
     <footer class="footer spad">

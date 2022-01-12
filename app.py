@@ -82,13 +82,14 @@ def to_my_page():
 # TODO 리스트 페이지 API
 @app.route('/api/list_view', methods=['GET'])
 def to_listpage():
-    token = request.cookies.get('mytoken')
-    if token is None:
-        result = list(db.cocktails.find({}, {'_id': False}))
-        random.shuffle(result)
-        return render_template('shop-grid.html', results=result)
-    else:
-        result = list(db.cocktails.find({}, {'_id': False}))
+    result = list(db.cocktails.find({}, {'_id': False}))
+    random.shuffle(result)
+    try :
+        token_receive = request.cookies.get('mytoken')
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        id = db.users.find_one({"id": payload["id"]}, {'_id': False})
+        return render_template('shop-grid.html', results=result, id = id)
+    except:
         return render_template('shop-grid.html', results=result)
 
 

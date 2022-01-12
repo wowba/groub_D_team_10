@@ -91,9 +91,9 @@ def to_listpage():
     val_receive = request.form['val_give']
     query = {}
 
-    print(val_receive)
+    print(val_receive.__class__)
 
-    if val_receive == 0 or isinstance(val_receive, NoneType):
+    if val_receive == '0' or isinstance(val_receive, NoneType):
         search_list = list(db.cocktails.find({}, {'_id': False}))
     else:
         search_list = list(db.cocktails.find({'class': {"$regex": val_receive}}, {'_id': False}))

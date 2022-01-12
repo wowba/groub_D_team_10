@@ -1,20 +1,47 @@
+const VALID = {
+    ID : /^[a-z]+[a-z0-9\-_]{4,19}$/,
+    PW : /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@!%*#?&])[A-Za-z\d$@!%*#?&]{8,16}$/ ,
+    EMAIL : /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
+}
+
 function sign_up() {
-    let id = $("#input-username").val()
-    let pw = $("#input-password").val()
+    let id_box = $("#input-id")
+    let pw_box = $("#input-password")
+    let email_box = $("#input-email")
+    let id = id_box.val()
+    let pw = pw_box.val()
+    let email = email_box.val()
     let check_password = $("#input-check-password").val()
 
-
-    if (pw !== check_password) {
-        alert("비밀번호 일치하지 않음")
+    if (!VALID.ID.test(id)) {
+        $("#help-id").removeClass("is-hidden")
+        id_box.focus()
+        return;
+    } else if (!VALID.PW.test(pw)) {
+        $("#help-id").addClass("is-hidden")
+        $("#help-pw").removeClass("is-hidden")
+        pw_box.focus()
+        return;
+    } else if (pw !== check_password) {
+        $("#help-pw").addClass("is-hidden")
+        $("#help-pw-re").removeClass("is-hidden")
         $('#input-check-password').focus()
-        return
+        return;
+    } else if (!VALID.EMAIL.test(email)) {
+        $("#help-pw-re").addClass("is-hidden")
+        $("#help-email").removeClass("is-hidden")
+        return;
     }
+
+    $("#help-email").addClass("is-hidden")
+
     $.ajax({
         type: "POST",
         url: "/api/register",
         data: {
             id_give: id,
-            pw_give: pw
+            pw_give: pw,
+            email_give: email
         },
         success: function (response) {
             alert("회원가입을 축하드립니다!")
@@ -188,7 +215,7 @@ function delete_comment(id, cocktail_name) {
 }
 
 function is_blank() {
-    let blank_pattern = "/^\\s+|\\s+$/g"
+    let blank_pattern = '/^\\s+|\\s+$/g'
 
     for (let arg of arguments) {
         if (arg.replace(blank_pattern, "") === '') {
@@ -196,4 +223,8 @@ function is_blank() {
         }
     }
     return 0;
+}
+
+function is_valid(exp, reg) {
+    return reg.test(exp)
 }

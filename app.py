@@ -65,10 +65,20 @@ def sign_up():
         doc = {
             "id": id_receive,
             "pw": pw_hash,
+            "email": email_receive,
             "like_list": []
         }
         db.users.insert_one(doc)
         return jsonify({'result': 'success'})
+
+
+@app.route('/api/is_dup', methods=['POST'])
+def is_dup():
+    id_receive = request.form['id_give']
+    if db.users.find_one({'id': id_receive}) is not None:
+        return jsonify({'is_dup': True})
+    else:
+        return jsonify({'is_dup': False})
 
 
 # TODO 리스트 페이지 API

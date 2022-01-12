@@ -141,7 +141,8 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>아이디<span>*</span></p>
-                                        <input id="input-id" type="text" placeholder="아이디">
+                                        <input id="input-id" type="text" placeholder="아이디" >
+                                        <button id="dup-check-btn" class="btn btn-primary" type="button" onclick="is_dup($('#input-id').val())">중복확인</button>
                                         <p id="help-id" class="help is-hidden is-danger">아이디는 영어 소문자로 시작하는 5~20자 영문자 또는 숫자와 특수기호 (-),(_)만 사용 가능합니다!</p>
                                     </div>
                                 </div>

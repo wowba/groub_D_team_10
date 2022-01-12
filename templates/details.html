@@ -24,6 +24,44 @@
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
 
     <!-- Js -->
+    <script>
+        function handleClickLike(name) {
+            $.ajax({
+                type: "POST",
+                url: "/api/likeclick",
+                data: {name_give: name},
+                success: function (response) {
+                    changeLikeStatus(name)
+                }
+            })
+        }
+
+        function changeLikeStatus(name) {
+            const elements = document.getElementsByClassName(`${name}`);
+
+            const countElement = elements.item(1);  // 카운트 element
+
+            const iconElement = elements.item(0);  // 좋아요 아이콘 element
+
+            const currentCount = countElement.innerText;
+            const num = Number(currentCount);
+
+            // const currentIcon = iconElement.classList.contains('active');
+            
+            const currentIcon = iconElement.getAttribute('src') === '/static/img/icon/suit-heart.svg';
+
+
+            // console.log(currentIcon)
+
+            if (currentIcon) {
+                countElement.innerText = (num + 1).toString();
+                iconElement.setAttribute('src', '/static/img/icon/suit-heart-fill.svg');
+            } else {
+                countElement.innerText = (num - 1).toString();
+                iconElement.setAttribute('src', '/static/img/icon/suit-heart.svg');
+            }
+        }
+    </script>
     <script src="../static/js/cocktail99.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -268,12 +306,30 @@
                     <h3>가니쉬</h3>
                     <p>{{ cocktail_info.garnish }}</p>
                 </div>
-                <div class="score_box">
+                <div class="score_box" style="display: flex; align-items: center">
                     <h3>평점</h3>
                     {% if cocktail_info.review | length != 0 %}
-                        <span>{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }}</span>
+                        <span style="margin-left: 15px">{{ cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length }}</span>
                     {% else %}
-                        <span>리뷰 없음</span>
+                        <span style="margin-left: 15px">리뷰 없음</span>
+                    {% endif %}
+                    {% if user_info %}
+                        {% if cocktail_info.name in user_info.like_list %}
+                            <div onclick="handleClickLike(`{{cocktail_info.name}}`)" class="click" style="margin-left: 15px">
+                                <img src="/static/img/icon/suit-heart-fill.svg" class="{{cocktail_info.name}} active" style="width: 40px; height: 40px; "/>
+                                <span class="{{cocktail_info.name}}" style="margin-left: 5px">{{ cocktail_info.like }}</span>
+                            </div>
+                        {% else %}
+                            <div onclick="handleClickLike(`{{cocktail_info.name}}`)" class="click" style="margin-left: 15px">
+                                <img src="/static/img/icon/suit-heart.svg" class="{{cocktail_info.name}} active" style="width: 40px; height: 40px"/>
+                                <span class="{{cocktail_info.name}}" style="margin-left: 5px">{{ cocktail_info.like }}</span>
+                            <div>
+                        {% endif %}
+                    {% else %}
+                        <div onclick="handleClickLike(`{{cocktail_info.name}}`)" class="click" style="margin-left: 15px">
+                                <img src="/static/img/icon/suit-heart.svg" class="{{cocktail_info.name}} active" style="width: 40px; height: 40px"/>
+                                <span class="{{cocktail_info.name}}" style="margin-left: 5px">{{ cocktail_info.like }}</span>
+                            <div>
                     {% endif %}
                 </div>
             </div>

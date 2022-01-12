@@ -91,28 +91,16 @@ def to_listpage():
         return render_template('shop-grid.html', results=search_list)
 
     val_receive = request.form['val_give']
-    query = {}
-
-    print(val_receive.__class__)
 
     if val_receive == '0' or isinstance(val_receive, NoneType):
         search_list = list(db.cocktails.find({}, {'_id': False}))
     else:
         search_list = list(db.cocktails.find({'class': {"$regex": val_receive}}, {'_id': False}))
 
-    # if len(search_list) > -2:
-    #     query = {"$or": search_list}
-    #
-    # search = search
-    # keyword = keyword
-    #
-    # results = db.cocktails.find(query)
-
     try:
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         id = db.users.find_one({"id": payload["id"]}, {'_id': False})
-        print(id)
         return jsonify({'results': search_list, 'is_login': id})
     except:
         return jsonify({'results': search_list, 'is_login': 0})

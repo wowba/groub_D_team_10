@@ -81,18 +81,26 @@
                 success: function (response) {
                     const lists = response['results']
                     const user = response['is_login']
+                    let name = ''
+                    let imgsrc = ''
+                    let like = ''
+                    let temp_html = ''
                     console.log(user)
                     if (user === 0) {
                         for (let i = 0; i < lists.length; i++) {
-                            const name = lists[i]['name']
-                            const imgsrc = lists[i]['imgsrc']
-                            const like = lists[i]['like']
-                            let temp_html = ''
+                            if (lists[i]['id'] !== undefined) {
+                                imgsrc = '/static/'+ lists[i]['imgsrc']
+                            } else {
+                                imgsrc = lists[i]['imgsrc']
+                            }
+                            name = lists[i]['name']
+                            like = lists[i]['like']
+
                             temp_html = `
                                             <div class="col-lg-4 col-md-6 col-sm-6">
                                             <div class="product__item">
                                                 <div class="product__item__pic set-bg">
-                                                    <img src="${imgsrc}"/>
+                                                    <img src="${imgsrc}" alt="${imgsrc}"/>
                                                     <ul class="product__item__pic__hover">
                                                         <div onclick="handleClickLike('${name}')" class="click" style="margin-left: 15px">
                                                             <img src="/static/img/icon/suit-heart.svg" class="${name} active" style="width: 40px; height: 40px"/>
@@ -111,10 +119,13 @@
                         }
                     } else {
                         for (let i = 0; i < lists.length; i++) {
-                            const name = lists[i]['name']
-                            const imgsrc = lists[i]['imgsrc']
-                            const like = lists[i]['like']
-                            let temp_html = ''
+                            if (lists[i]['id'] !== undefined) {
+                                imgsrc = '/static/'+ lists[i]['imgsrc']
+                            } else {
+                                imgsrc = lists[i]['imgsrc']
+                            }
+                            name = lists[i]['name']
+                            like = lists[i]['like']
                             if (name in user['like_list']) {
                                 temp_html = `
                                             <div class="col-lg-4 col-md-6 col-sm-6">
@@ -338,7 +349,11 @@
                 <div class="col-lg-4 col-md-6 col-sm-6">
                     <div class="product__item">
                         <div class="product__item__pic set-bg">
+                        {% if result.id %}
+                            <img src="{{ url_for('static', filename=result.imgsrc)}}" alt="">
+                        {% else %}
                             <img src="{{ result.imgsrc }}"/>
+                        {% endif %}
                             <ul class="product__item__pic__hover">
                                 {% if id %}
                                     {% if result.name in id.like_list %}

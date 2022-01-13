@@ -52,7 +52,6 @@ function reviewListUp(id){
 
 
             for (let i = 0; i < reviewlist.length; i++) {
-                let name = reviewlist[i]['name']
                 let cocktail_name = reviewlist[i]['cocktail_name']
                 let content = reviewlist[i]['content']
                 let stars = reviewlist[i]['stars']
@@ -60,8 +59,8 @@ function reviewListUp(id){
                 let temp_html = `
                                                 <div class="card">
                                                     <div class="review-box style="padding:20px">
-                                                        <h5 class="card-title">${name}</h5>
-                                                        <p class="card-text reply-content">Comment : ${cocktail_name} ${content}</p>
+                                                        <h5 class="card-title">${cocktail_name}</h5>
+                                                        <p class="card-text reply-content">Comment : ${content}</p>
                                                     </div>
                                                     <div class="card-footer">
                                                         <span class="like"><img src="/static/img/icon/suit-heart.svg" class="Dry Martini active" style="width: 20px; height: 20px"></span>

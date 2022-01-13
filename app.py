@@ -272,41 +272,82 @@ def like_click():
 
 
 # TODO 마이 페이지 API
+# mypage 접근 api
 @app.route('/api/mypage', methods=['GET'])
 def to_my_page():
+
+    # 클라이언트에서 토큰정보 받기
     token_receive = request.cookies.get('mytoken')
     try:
+
+        # jwt에서 복호화 된 token 정보를 id값으로 변환
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+        # 유저id값으로 db에서 유저정보 확인
         user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
+
+        # 유저 정보를 mypage로 넘기면서, mypage.html으로 연결
         return render_template('mypage.html', user_info=user_info)
-    except jwt.ExpiredSignatureError:
+
+    # 토큰 인증 만료시, home함수 실행
+    except jwt.ExpredSignatureError:
         return redirect(url_for("home", msg="로그인 시간이 만료되었습니다."))
+
+    # 토큰 복호화 에러시 index.html으로 연결
     except jwt.exceptions.DecodeError:
         return render_template('index.html')
 
 
+# 좋아요 리스트 출력 API
 @app.route('/api/mypage/likelistup', methods=['POST'])
 def my_page_list():
+
+    # 클라이언트에서 로그인한 유저의 id값 수신
     name_receive = request.form['sample_give']
+
+    # id 값을 키로 db에서 유저 정보 확인
     userinfo = db.users.find_one({'id': name_receive}, {'_id': False})
+
+    # 유저 정보의 like_list에 담긴 name값을 순환
     cocktails = []
     for i in userinfo['like_list']:
+
+        # name 값으로 db의 cocktails에서 딕셔너리 값 확인
         cocktail_dic = db.cocktails.find_one({'name': i}, {'_id': False})
+
+        #찾은 값을 cocktails 리스트에 넣기
         cocktails.append(cocktail_dic)
+
+        # 리스트를 json형식으로 변환하여 발송
     return jsonify({'like_cocktails': cocktails})
 
 
+
+# 내가 쓴 댓글 리스트 출력 API
 @app.route('/api/mypage/reviewlistup', methods=['POST'])
 def my_page_review_list():
+
+    # 클라이언트에서 로그인한 유저의 id값 수신
     name_receive = request.form['name_give']
+
+    # id값으로 db의 reviews 값에서 name에 동일한 value로 갖는 딕셔너리들을 리스트에 담아 추출
     reviews = list(db.reviews.find({'name': name_receive}, {'_id': False}))
+
+    # 리스트를 json형식으로 변환하여 발송
     return jsonify({'all_reviews': reviews})
 
 
+# 나만의레시피 출력 API
 @app.route('/api/mypage/recipelistup', methods=['POST'])
 def my_page_recipe_list():
+
+    # 클라이언트에서 로그인한 유저의 id값 수신
     name_receive = request.form['name_give']
+
+    # id값으로 db의 cocktails 값에서 동일한 값을 작성자 값으로 갖는 딕셔너리들을 리스트에 담아 추출
     cocktails = list(db.cocktails.find({'id': name_receive}, {'_id': False}))
+
+    # 리스트를 json형식으로 변환하여 발송 
     return jsonify({'all_cocktails': cocktails})
 
 

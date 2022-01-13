@@ -99,7 +99,6 @@
             margin-left:50px;
             position:fixed;
             z-index: 999;
-            padding-left:
 
         }
 
@@ -361,9 +360,6 @@
                 </p>
                 </div>
             </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
         </div>
     </header>
     <!-- Header Section End -->
@@ -437,27 +433,6 @@
                 <h2 id="cocktail-name">{{cocktail_info.name}}</h2>
             </div>
             <div class="content-box">
-<<<<<<< HEAD
-            <div class="content-text-field">
-                    <div class="ingredients_box">
-                        <h3>재료</h3>
-                        <span>{{ cocktail_info.ingredient }}</span>
-
-                    </div>
-                    <div class="method_box">
-                        <h3>주조법</h3>
-                        {% for idx, method in enumerate(cocktail_info.method.split(".")) %}
-                            {% if method == ' ' or method == '' %}
-                                {% continue %}
-                            {% endif %}
-                            <p>#{{idx + 1}} {{method}}</p>
-                        {% endfor %}
-                    </div>
-                    <div class="garnish_box">
-                        <h3>가니쉬</h3>
-                        <p>{{ cocktail_info.garnish }}</p>
-                    </div>
-=======
                 <div class="ingredients_box">
                     <h3>재료</h3>
                     <span style="font-size: 20px">{{ cocktail_info.ingredient }}</span>
@@ -475,7 +450,6 @@
                 <div class="garnish_box">
                     <h3>가니쉬</h3>
                     <p style="font-size: 20px">{{ cocktail_info.garnish }}</p>
->>>>>>> 4d7b2e7a948cca206e22a2891b2c6d6f9b28f560
                 </div>
                 <div class="score_box">
                     <div class="score_box_inner">

@@ -2,23 +2,20 @@
 function likeListUp(id){
         $(".card-deck").empty();
             var username = id;
-console.log(id);
-    $.ajax({
-        type: "POST",
-        url: "/api/mypage/likelistup",
-        data: {sample_give:username},
-        success: function (response) {
-            console.log(response)
-            let cocktaillist = response['like_cocktails']
-            console.log(cocktaillist);
-            for (let i = 0; i < cocktaillist.length; i++) {
-                let name = cocktaillist[i]['id']
-                let imgsrc = cocktaillist[i]['imgsrc']
-                let cocktailclass = cocktaillist[i]['class']
-                let like = cocktaillist[i]['like']
-                let stars = cocktaillist[i]['stars']
+            $.ajax({
+                type: "POST",
+                url: "/api/mypage/likelistup",
+                data: {sample_give:username},
+                success: function (response) {
+                    let cocktaillist = response['like_cocktails']
+                    for (let i = 0; i < cocktaillist.length; i++) {
+                        let name = cocktaillist[i]['id']
+                        let imgsrc = cocktaillist[i]['imgsrc']
+                        let cocktailclass = cocktaillist[i]['class']
+                        let like = cocktaillist[i]['like']
+                        let stars = cocktaillist[i]['stars']
 
-                let temp_html = `
+                        let temp_html = `
                                                 <div class="card">
                                                   <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
                                                     <div class="card-body">

@@ -8,10 +8,17 @@ function randomRecommend() {
             const userLikeList = response['user_like_list'];
 
             for (let i = 0; i < 12; i++) {
+                let imgsrc = ''
+                if (likeList[i]['id'] !== undefined) {
+                    imgsrc = '/static/'+ likeList[i]['imgsrc']
+                } else {
+                    imgsrc = likeList[i]['imgsrc']
+                }
+
                 const name = likeList[i]['name']
                 const cocktail_class = likeList[i]["class"]
                 const likeCount = likeList[i]['like']
-                const imgsrc = likeList[i]['imgsrc']
+
 
                 let temp_html = ""
 

@@ -109,9 +109,18 @@
         .card-deck .card{
             display: inline-block;
             width:350px;
-            height:600px;
             margin: 0 50px 50px;
         }
+
+        .card-deck .card .card-img-box{
+            width:350px;
+            height:350px;
+        }
+        .card-deck .card .card-body{
+            padding-bottom:30px;
+
+        }
+
 
         .card-deck .card img{
             width:350px;
@@ -127,7 +136,7 @@
 
         .card-deck .card .card-footer{
             height:50px;
-            position: absolute;
+            position: relative;
             bottom:0px;
             width:450px;
             display: block;
@@ -160,9 +169,6 @@
             {% endif %}
         })
 
-        $(document).ready(function () {
-                recipeListUp();
-            });
 
 
     </script>
@@ -260,10 +266,10 @@
               <label class="btn btn-secondary active" for="like-receipe" onclick="likeListUp(`{{ user_info.id }}`)">
                 <input type="radio" name="options" id="like-receipe" value="0" autocomplete="off" checked>좋아요레시피
               </label>
-              <label class="btn btn-secondary" for="reply-receipe" id="1" onclick="reviewListUp(`{{ user_info.id }}`)">
+              <label class="btn btn-secondary" for="reply-receipe" onclick="reviewListUp(`{{ user_info.id }}`)">
                 <input type="radio" name="options" id="reply-receipe" value="1" autocomplete="off">내가 쓴 댓글
               </label>
-              <label class="btn btn-secondary" for="write-receipe" id="2" onclick="recipeListUp(`{{ user_info.id }}`)">
+              <label class="btn btn-secondary" for="write-receipe" onclick="recipeListUp(`{{ user_info.id }}`)">
                 <input type="radio" name="options" id="write-receipe"  value="2" autocomplete="off">나의 레시피
               </label>
             </div>

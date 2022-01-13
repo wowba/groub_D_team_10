@@ -1,3 +1,5 @@
+
+
 const VALID = {
     ID: /^[a-z]+[a-z0-9\-_]{4,19}$/,
     PW: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
@@ -52,8 +54,8 @@ function sign_up() {
             email_give: email
         },
         success: function (response) {
-            alert("회원가입을 축하드립니다!")
-            window.location.replace('../')
+            swal("회원 가입을 축하드립니다!", "당신도 이제 칵테일 러버!")
+            .then((value) => {window.location.replace('../')});
         }
     });
 }
@@ -118,8 +120,7 @@ function login() {
         success: function (response) {
             if (response['result'] === 'success') {
                 $.cookie('mytoken', response['token'], {path: '/'});
-                alert("로그인 성공!")
-                window.location.reload()
+                window.location.replace('../')
             } else {
                 alert(response['msg'])
             }
@@ -130,7 +131,6 @@ function login() {
 // 로그아웃 함수
 function sign_out() {
     $.removeCookie('mytoken', {path: '/'})
-    alert('로그아웃!')
     window.location.href = '/'
 }
 
@@ -138,14 +138,14 @@ function sign_out() {
 function post_comment(id, comment_list) {
 
     if ($.cookie('mytoken') === undefined || id === undefined) {
-        alert("로그인이 필요합니다")
+        swal("로그인이 필요합니다!")
         return;
     }
 
     if (comment_list !== undefined) {
         for (let comment of comment_list) {
             if (comment['name'] === id) {
-                alert("리뷰는 한 칵테일당 하나만 작성 가능합니다!")
+                swal("리뷰는 한 칵테일당 하나만 작성 가능합니다!")
                 return;
             }
         }
@@ -157,10 +157,10 @@ function post_comment(id, comment_list) {
     let stars = $('input[name=rating]:checked').val();
 
     if (is_blank(content)) {
-        alert("내용을 입력하세요!")
+        swal("내용을 입력하세요!")
         return;
     } else if (stars === undefined) {
-        alert("별점은 1개 이상 주어야 합니다!")
+        swal("별점은 1개 이상 주어야 합니다!")
         return;
     }
 
@@ -174,7 +174,6 @@ function post_comment(id, comment_list) {
             stars_give: stars
         },
         success: function (response) {
-            alert(response['result'])
             window.location.reload()
         }
     })
@@ -189,7 +188,7 @@ function post_article(id) {
     let file = $('#cocktail-imgsrc')[0].files[0];
 
     if (is_blank(name, ingredient, method, garnish) === 1) {
-        alert("이미지를 제외한 모든 내용은 필수입니다!")
+        swal("이미지를 제외한 모든 내용은 필수입니다!")
         return
     }
 
@@ -218,8 +217,8 @@ function post_article(id) {
         processData: false,
         success: function (response) { // 성공하면
             if (response["result"] === "success") {
-                alert(response['msg'])
-                window.location.replace('../')
+                swal(response['msg'])
+                .then((value) => {window.location.replace('../')});
             }
         }
     })
@@ -235,8 +234,8 @@ function delete_article(user_id, cocktail_idx) {
             idx_give: cocktail_idx
         },
         success: function (response) { // 성공하면
-            alert(response["msg"]);
-            window.location.replace('../')
+            swal(response["msg"])
+            .then((value) => {window.location.replace('../')});
         }
     })
 }
@@ -250,7 +249,6 @@ function delete_comment(id, cocktail_name) {
             cocktail_name_give: cocktail_name
         },
         success: function (response) { // 성공하면
-            alert(response["msg"]);
             window.location.reload()
         }
     })

@@ -32,7 +32,7 @@ function likeListUp(id){
                                                     <div class="card-footer">
                                                         <div onclick="handleClickLike('${name}');" class="click">
                                                             <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 20px; height: 20px"/>
-                                                            <span class="${name}" style="margin-left: 5px">${like}</span>
+                                                            <span class="${name}" style="margin-left: 5px; margin-right: 20px">${like}</span>
                                                             <span class="stars">⭐${stars}</span>
                                                         </div>                                                        
                                                     </div>

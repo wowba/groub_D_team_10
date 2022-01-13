@@ -6,8 +6,8 @@ const VALID = {
 let id_save = ''
 
 function sign_up() {
-    let id_box = $("#input-id")
-    let pw_box = $("#input-password")
+    let id_box = $("#input-id-register")
+    let pw_box = $("#input-password-register")
     let email_box = $("#input-email")
     let id = id_box.val()
     let pw = pw_box.val()
@@ -16,22 +16,22 @@ function sign_up() {
 
 
     if (!VALID.ID.test(id)) {
-        $("#help-id").text("아이디는 영어 소문자로 시작하는 5~20자 영문자 또는 숫자와 특수기호 (-),(_)만 사용 가능합니다!")
+        $("#help-id-register").text("아이디는 영어 소문자로 시작하는 5~20자 영문자 또는 숫자와 특수기호 (-),(_)만 사용 가능합니다!")
             .removeClass("is-hidden")
             .addClass("is-danger")
             .removeClass("is-safe")
         id_box.focus()
         return;
-    } else if(!$('#help-id').hasClass('is-check') || id_save !== id) {
-        $("#help-id").text("중복 확인을 해주세요!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
+    } else if(!$('#help-id-register').hasClass('is-check') || id_save !== id) {
+        $("#help-id-register").text("중복 확인을 해주세요!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
         return;
     } else if (!VALID.PW.test(pw)) {
-        $("#help-id").addClass("is-hidden")
-        $("#help-pw").removeClass("is-hidden")
+        $("#help-id-register").addClass("is-hidden")
+        $("#help-pw-register").removeClass("is-hidden")
         pw_box.focus()
         return;
     } else if (pw !== check_password) {
-        $("#help-pw").addClass("is-hidden")
+        $("#help-pw-register").addClass("is-hidden")
         $("#help-pw-re").removeClass("is-hidden")
         $('#input-check-password').focus()
         return;
@@ -59,9 +59,9 @@ function sign_up() {
 }
 
 function is_dup(id) {
-    let id_box = $("#input-id")
+    let id_box = $("#input-id-register")
     if (!VALID.ID.test(id)) {
-        $("#help-id").removeClass("is-hidden")
+        $("#help-id-register").removeClass("is-hidden")
             .text("아이디는 영어 소문자로 시작하는 5~20자 영문자 또는 숫자와 특수기호 (-),(_)만 사용 가능합니다!")
             .addClass("is-danger")
             .removeClass("is-safe")
@@ -77,10 +77,10 @@ function is_dup(id) {
         },
         success: function (response) {
             if (response['is_dup']) {
-                $("#help-id").text("이미 존재하는 아이디입니다!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
+                $("#help-id-register").text("이미 존재하는 아이디입니다!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
                 id_box.focus()
             } else {
-                $("#help-id").text("멋진 아이디네요!").addClass("is-safe").addClass("is-check").removeClass("is-danger").removeClass("is-hidden")
+                $("#help-id-register").text("멋진 아이디네요!").addClass("is-safe").addClass("is-check").removeClass("is-danger").removeClass("is-hidden")
                 id_save = id
             }
         }

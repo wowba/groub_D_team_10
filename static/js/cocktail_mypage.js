@@ -9,8 +9,13 @@ function likeListUp(id){
                 success: function (response) {
                     let cocktaillist = response['like_cocktails']
                     for (let i = 0; i < cocktaillist.length; i++) {
+                        let imgsrc = ''
+                        if (cocktaillist[i]['id'] !== undefined) {
+                            imgsrc = '/static/'+ cocktaillist[i]['imgsrc']
+                        } else {
+                            imgsrc = cocktaillist[i]['imgsrc']
+                        }
                         let name = cocktaillist[i]['id']
-                        let imgsrc = cocktaillist[i]['imgsrc']
                         let cocktailclass = cocktaillist[i]['class']
                         let like = cocktaillist[i]['like']
                         let stars = cocktaillist[i]['stars']
@@ -95,7 +100,7 @@ function recipeListUp(id){
 
             for (let i = 0; i < cocktaillist.length; i++) {
                 let name = cocktaillist[i]['id']
-                let imgsrc = cocktaillist[i]['imgsrc']
+                const imgsrc = '/static/'+ cocktaillist[i]['imgsrc']
                 let cocktailclass = cocktaillist[i]['class']
                 let like = cocktaillist[i]['like']
                 let stars = cocktaillist[i]['stars']

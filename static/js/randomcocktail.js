@@ -24,7 +24,7 @@ function randomRecommend() {
 
                 if (userLikeList.includes(name)){
                     temp_html =`    <div class="item">
-                                        <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
+                                        <img class="card-img-top" src="${imgsrc}" alt="$">
                                         <div class="item-wrapper">
                                             <a href="/api/view?cocktailname=${name}"><div class="title">${name}</div></a>
                                             <div class="address">Recipe : ${cocktail_class}</div>

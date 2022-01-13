@@ -15,7 +15,7 @@ function likeListUp(id){
                         } else {
                             imgsrc = cocktaillist[i]['imgsrc']
                         }
-                        let name = cocktaillist[i]['id']
+                        let name = cocktaillist[i]['name']
                         let cocktailclass = cocktaillist[i]['class']
                         let like = cocktaillist[i]['like']
                         let stars = cocktaillist[i]['stars']
@@ -30,8 +30,11 @@ function likeListUp(id){
                                                         <p class="card-text reply-content">${cocktailclass}</p>
                                                     </div>
                                                     <div class="card-footer">
-                                                        <span class="like"><img src="/static/img/icon/suit-heart.svg" class="Dry Martini active" style="width: 20px; height: 20px"> ${like}</span>
-                                                        <span class="stars">⭐${stars}</span>
+                                                        <div onclick="handleClickLike('${name}');" class="click">
+                                                            <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 20px; height: 20px"/>
+                                                            <span class="${name}" style="margin-left: 5px; margin-right: 20px">${like}</span>
+                                                            <span class="stars">⭐${stars}</span>
+                                                        </div>                                                        
                                                     </div>
                                                 </div>`
 
@@ -112,8 +115,10 @@ function recipeListUp(id){
                                                   <img class="card-img-top"  src="${imgsrc}" alt="Card image cap">
                                                   </div>
                                                     <div class="card-body">
+                                                    <a href="/api/view?cocktailname=${cocktailname}">
                                                         <h5 class="card-title">${cocktailname}</h5>
                                                         <p class="card-text reply-content">${cocktailclass}</p>
+                                                    </a>
                                                     </div>
                                                     <div class="card-footer">
                                                         <span class="like"><img src="/static/img/icon/suit-heart.svg" class="Dry Martini active" style="width: 20px; height: 20px"> ${like}</span>

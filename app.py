@@ -88,7 +88,13 @@ def is_dup():
 def to_listpage():
     if request.method == 'GET':
         search_list = list(db.cocktails.find({}, {'_id': False}))
-        return render_template('shop-grid.html', results=search_list)
+        try:
+            token_receive = request.cookies.get('mytoken')
+            payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+            id = db.users.find_one({"id": payload["id"]}, {'_id': False})
+            return render_template('shop-grid.html', results=search_list, user_info=id)
+        except:
+            return render_template('shop-grid.html', results=search_list)
 
     val_receive = request.form['val_give']
 

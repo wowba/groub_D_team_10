@@ -2,6 +2,7 @@ import hashlib
 import random
 import secrets
 from datetime import datetime, timedelta
+
 import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
@@ -32,31 +33,41 @@ def home():
         return render_template('index.html')
 
 
+# 로그인
 @app.route('/api/login', methods=['POST'])
 def login():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
 
+    # DB 검색 위한 비밀 번호 암호화
     pw_encrypt = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
 
+    # DB 검색
     result = db.users.find_one({'id': id_receive, 'pw': pw_encrypt})
 
+    # 검색 정보가 있을 시 payload에 정보 저장 후 JWT 발급
     if result is not None:
         payload = {
             'id': id_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        # 반환 값으로 사용자에게 토큰 할당
         return jsonify({'result': 'success', 'token': token})
     else:
+        # 검색 정보 없을 시 에러 메세지 리턴
         return jsonify({'result': 'fail', 'msg': '아이디 / 비밀번호가 일치하지 않거나 정보가 없습니다'})
 
 
+# 회원 가입
 @app.route('/api/register', methods=['GET', 'POST'])
 def sign_up():
+    # 페이지 접속 시
     if request.method == 'GET':
         return render_template('signup.html')
+    # 가입 버튼 누를 시
     else:
+        # 받은 유저 정보 (비밀 번호는 암호화) db에 저장
         id_receive = request.form['id_give']
         pw_receive = request.form['pw_give']
         email_receive = request.form['email_give']
@@ -72,8 +83,10 @@ def sign_up():
         return jsonify({'result': 'success'})
 
 
+# 아이디 중복 확인
 @app.route('/api/is_dup', methods=['POST'])
 def is_dup():
+    # 사용자가 적은 아이디가 유저 정보에 있는지 체크 있으면 true 없으면 false 리턴
     id_receive = request.form['id_give']
     if db.users.find_one({'id': id_receive}) is not None:
         return jsonify({'is_dup': True})
@@ -117,24 +130,27 @@ def to_listpage():
         return jsonify({'results': search_list, 'is_login': 0})
 
 
-# TODO 상세 페이지 API
+# 칵테일 상세 페이지
 @app.route('/api/view', methods=['GET'])
 def to_detail_page():
+    # 쿼리로 받은 칵테일 이름을 통해 db 검색
     token_receive = request.cookies.get('mytoken')
     cocktail_name = request.args.get('cocktailname')
     cocktail_info = db.cocktails.find_one({'name': cocktail_name}, {'_id': False})
     try:
+        # 로그인 했다면 각테일 정보, 사용자 정보를 함께 렌더링, 상세 페이지 작성 중 배열 탐색을 위해 enumerate 도 같이 넘김
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
         return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate, user_info=user_info)
     except:
+        # 로그인 안했다면 사용자 정보 제외
         return render_template('details.html', cocktail_info=cocktail_info, enumerate=enumerate)
 
 
-# 삭제 버튼을 누른 사람 기준 검증 or 현 페이지 접속자 기준 검증 ?
-# 일단 전자
+# 게시글 삭제
 @app.route('/api/custom_delete', methods=['DELETE'])
 def delete_article():
+    # 받은 아이디와 게시글 id 를 통해 db 에서 게시글 삭제
     id_receive = request.form['id_give']
     idx_receive = request.form['idx_give']
 
@@ -143,8 +159,10 @@ def delete_article():
     return jsonify({'msg': "게시글 삭제 완료"})
 
 
+# 댓글 삭제
 @app.route('/api/reply_delete', methods=['DELETE'])
 def delete_comment():
+    # 사용자 id와 칵테일 이름을 통해 db 검색 후 삭제
     name_receive = request.form['name_give']
     cocktail_name_receive = request.form['cocktail_name_give']
     db.reviews.delete_one({'name': name_receive, 'cocktail_name': cocktail_name_receive})
@@ -153,8 +171,10 @@ def delete_comment():
     return jsonify({'msg': "댓글 삭제 완료"})
 
 
+# 댓글 등록
 @app.route('/api/reply_write', methods=['POST'])
 def write_comment():
+    # 사용자 id, 칵테일 이름, 내용, 별점을 받아 칵테일 db의 리뷰에 업데이트
     name_receive = request.form['name_give']
     cocktail_name_receive = request.form['cocktail_name_give']
     content_receive = request.form['content_give']
@@ -173,15 +193,17 @@ def write_comment():
     return jsonify({'result': "작성 완료!"})
 
 
-# TODO 게시글 작성 API
+# 게시글 작성
 @app.route('/api/custom_write', methods=['GET', 'POST'])
 def to_write_page():
+    # 게시글 작성 페이지로 들어올 시 페이지 렌더링 로그인을 안했을 시 home으로 돌려보냄
     if request.method == 'GET':
         user_info = get_user_info()
         if user_info is None:
             return render_template('index.html')
         return render_template('write.html', user_info=user_info)
     else:
+        # 입력 정보를 취합 후 시간 정보를 id로 삼아 db 등록
         id_receive = request.form['id_give']
         name_receive = request.form['name_give']
         class_receive = "user_recipe"
@@ -190,6 +212,7 @@ def to_write_page():
         garnish_receive = request.form['garnish_give']
         idx = str(datetime.now())
 
+        # 유저가 올린 이미지 파일이 있을 때 서버에 저장 후 상대 경로 저장
         if "file_give" in request.files:
             file = request.files["file_give"]
             filename = secure_filename(file.filename)
@@ -283,7 +306,6 @@ def like_click():
 # mypage 접근 api
 @app.route('/api/mypage', methods=['GET'])
 def to_my_page():
-
     # 클라이언트에서 토큰정보 받기
     token_receive = request.cookies.get('mytoken')
     try:
@@ -309,7 +331,6 @@ def to_my_page():
 # 좋아요 리스트 출력 API
 @app.route('/api/mypage/likelistup', methods=['POST'])
 def my_page_list():
-
     # 클라이언트에서 로그인한 유저의 id값 수신
     name_receive = request.form['sample_give']
 
@@ -319,22 +340,19 @@ def my_page_list():
     # 유저 정보의 like_list에 담긴 name값을 순환
     cocktails = []
     for i in userinfo['like_list']:
-
         # name 값으로 db의 cocktails에서 딕셔너리 값 확인
         cocktail_dic = db.cocktails.find_one({'name': i}, {'_id': False})
 
-        #찾은 값을 cocktails 리스트에 넣기
+        # 찾은 값을 cocktails 리스트에 넣기
         cocktails.append(cocktail_dic)
 
         # 리스트를 json형식으로 변환하여 발송
     return jsonify({'like_cocktails': cocktails})
 
 
-
 # 내가 쓴 댓글 리스트 출력 API
 @app.route('/api/mypage/reviewlistup', methods=['POST'])
 def my_page_review_list():
-
     # 클라이언트에서 로그인한 유저의 id값 수신
     name_receive = request.form['name_give']
 
@@ -348,7 +366,6 @@ def my_page_review_list():
 # 나만의레시피 출력 API
 @app.route('/api/mypage/recipelistup', methods=['POST'])
 def my_page_recipe_list():
-
     # 클라이언트에서 로그인한 유저의 id값 수신
     name_receive = request.form['name_give']
 

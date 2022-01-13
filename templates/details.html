@@ -263,6 +263,7 @@
             color:transparent;
             width:40px;
             height:40px;
+            margin-left: 10px;
         }
 
         .score_box span{
@@ -412,13 +413,15 @@
                     <p>{{ cocktail_info.garnish }}</p>
                 </div>
                 <div class="score_box">
-                    <h3>⭐</h3>
-                    {% if cocktail_info.review | length != 0 %}
-                        {%   set rate = cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length %}
-                        <span style="margin-left: 15px;">{{'%0.2f' % rate|float}}</span>
-                    {% else %}
-                        <span style="margin-left: 15px">리뷰 없음</span><br>
-                    {% endif %}
+                    <div class="score_box_inner">
+                        <h3>⭐</h3>
+                        {% if cocktail_info.review | length != 0 %}
+                            {%   set rate = cocktail_info.review | sum(attribute='stars') / cocktail_info.review | length %}
+                            <span style="margin-left: 15px;">{{'%0.2f' % rate|float}}</span>
+                        {% else %}
+                            <span style="margin-left: 15px">리뷰 없음</span><br>
+                        {% endif %}
+                    </div>
                     {% if user_info %}
                         {% if cocktail_info.name in user_info.like_list %}
                             <div onclick="handleClickLike(`{{cocktail_info.name}}`)" class="click" style="margin-left: 15px">

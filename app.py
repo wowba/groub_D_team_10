@@ -2,14 +2,12 @@ import hashlib
 import random
 import secrets
 from datetime import datetime, timedelta
-
-NoneType = type(None)
-
 import jwt
 from flask import Flask, render_template, jsonify, request, redirect, url_for
 from pymongo import MongoClient
 from werkzeug.utils import secure_filename
 
+NoneType = type(None)
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
@@ -19,7 +17,6 @@ SECRET_KEY = secrets.token_hex(16)
 
 client = MongoClient('localhost', 27017)
 db = client.team10
-is_login = False
 
 
 @app.route('/')
@@ -190,7 +187,7 @@ def to_write_page():
             filename = secure_filename(file.filename)
             extension = filename.split(".")[-1]
             file_path = f"pics/{name_receive}.{extension}"
-            file.save("./static/"+file_path)
+            file.save("./static/" + file_path)
         else:
             filename = secure_filename("default")
             file_path = "#"
@@ -287,27 +284,29 @@ def to_my_page():
     except jwt.exceptions.DecodeError:
         return render_template('index.html')
 
+
 @app.route('/api/mypage/likelistup', methods=['POST'])
 def my_page_list():
     name_receive = request.form['sample_give']
-    userinfo = db.users.find_one({'id':name_receive}, {'_id': False})
+    userinfo = db.users.find_one({'id': name_receive}, {'_id': False})
     cocktails = []
     for i in userinfo['like_list']:
-        cocktail_dic = db.cocktails.find_one({'name':i}, {'_id':False})
+        cocktail_dic = db.cocktails.find_one({'name': i}, {'_id': False})
         cocktails.append(cocktail_dic)
     return jsonify({'like_cocktails': cocktails})
+
 
 @app.route('/api/mypage/reviewlistup', methods=['POST'])
 def my_page_review_list():
     name_receive = request.form['name_give']
-    reviews = list(db.reviews.find({'name':name_receive}, {'_id': False}))
+    reviews = list(db.reviews.find({'name': name_receive}, {'_id': False}))
     return jsonify({'all_reviews': reviews})
 
 
 @app.route('/api/mypage/recipelistup', methods=['POST'])
 def my_page_recipe_list():
     name_receive = request.form['name_give']
-    cocktails = list(db.cocktails.find({'id':name_receive}, {'_id': False}))
+    cocktails = list(db.cocktails.find({'id': name_receive}, {'_id': False}))
     return jsonify({'all_cocktails': cocktails})
 
 
@@ -319,26 +318,6 @@ def get_user_info():
         return user_info
     except:
         return None
-
-
-@app.route('/test')
-def test():
-    return render_template('filettest.html')
-
-
-@app.route('/update_profile', methods=['POST'])
-def save_img():
-    new_doc = {}
-    if 'file_give' in request.files:
-        file = request.files["file_give"]
-        filename = secure_filename(file.filename)
-        extension = filename.split(".")[-1]
-        file_path = f"/gg.{extension}"
-        file.save("./static/" + file_path)
-        new_doc["profile_pic"] = filename
-        new_doc["profile_pic_real"] = file_path
-
-    return jsonify({"result": "success", 'msg': '프로필을 업데이트했습니다.'})
 
 
 if __name__ == '__main__':

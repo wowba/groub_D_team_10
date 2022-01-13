@@ -184,7 +184,7 @@
                 </div>
                 <p>
                     {% if user_info %}
-                        <a id="user_id" href="/mypage">{{ user_info.username }}</a>님 환영합니다!
+                        <a id="user_id" href="/mypage">{{ user_info.id }}</a>님 환영합니다!
                     {% endif %}
                 </p>
                 </div>
@@ -257,13 +257,13 @@
     <section class="content_container">
         <div class="button-box">
             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-              <label class="btn btn-secondary active" for="like-receipe" onclick="likeListUp('testjm')">
+              <label class="btn btn-secondary active" for="like-receipe" onclick="likeListUp(`{{ user_info.id }}`)">
                 <input type="radio" name="options" id="like-receipe" value="0" autocomplete="off" checked>좋아요레시피
               </label>
-              <label class="btn btn-secondary" for="reply-receipe" id="1" onclick="reviewListUp('testjm')">
+              <label class="btn btn-secondary" for="reply-receipe" id="1" onclick="reviewListUp(`{{ user_info.id }}`)">
                 <input type="radio" name="options" id="reply-receipe" value="1" autocomplete="off">내가 쓴 댓글
               </label>
-              <label class="btn btn-secondary" for="write-receipe" id="2" onclick="recipeListUp('testjm')">
+              <label class="btn btn-secondary" for="write-receipe" id="2" onclick="recipeListUp(`{{ user_info.id }}`)">
                 <input type="radio" name="options" id="write-receipe"  value="2" autocomplete="off">나의 레시피
               </label>
             </div>

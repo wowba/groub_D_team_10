@@ -280,28 +280,42 @@ def like_list():
         # 아닐 시 유저의 좋아요 리스트엔 빈 배열 넣어주고 리턴
         return jsonify({'result': like_list, "user_like_list": user_like_list})
 
-
+# 좋아요 클릭 api
 @app.route('/api/likeclick', methods=["POST"])
 def like_click():
+    # 칵테일 이름 값 받아오기
     name_receive = request.form["name_give"]
     try:
+        # 토큰 값 받아오기
         token_receive = request.cookies.get('mytoken')
 
+        # 토큰 값 있는 경우
         if token_receive is not None:
+            # 토큰 값 해석
             payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+            # db에서 유저 정보 검색
             user_info = db.users.find_one({"id": payload["id"]})
+            # 유저 정보 내 like_list값 저장
             user_like_list = user_info["like_list"]
 
+            # 유저가 해당 좋아요를 누른 이력 확인
+            # 누른 이력 있는 경우
             if name_receive in user_like_list:
+                # 유저의 like_list에서 칵테일 이름 제거
                 db.users.update_one({"id": payload["id"]}, {'$pull': {'like_list': name_receive}})
+                # 게시물의 좋아요 수 차감
                 db.cocktails.update_one({"name": name_receive}, {'$inc': {'like': -1}})
                 print("좋아요 취소")
                 return jsonify({'msg': '좋아요 취소'})
+            # 유저가 좋아요 누른 이력 없는 경우
             elif name_receive not in user_like_list:
+                # 유저의 like_list에 칵테일 이름 추가
                 db.users.update_one({"id": payload["id"]}, {'$push': {'like_list': name_receive}})
+                # 게시물의 좋아요 수 증감
                 db.cocktails.update_one({"name": name_receive}, {'$inc': {'like': 1}})
                 print("좋아요")
                 return jsonify({'msg': '좋아요!'})
+            # 토큰 값 누락 예외처리
         else:
             print("로그인 먼저")
             quit()

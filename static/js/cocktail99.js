@@ -1,10 +1,16 @@
+
+// 회원 가입 시 검증을 위한 정규식
 const VALID = {
     ID: /^[a-z]+[a-z0-9\-_]{4,19}$/,
     PW: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/,
     EMAIL: /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/
 }
+
+// 중복 확인 버튼을 누른 후 다시 아이디를 바꾸고 회원가입을 하는 경우를 막기 위해
+// 중복 확인 버튼 클릭 시 아이디 저장하는 변수
 let id_save = ''
 
+// 회원가입 함수
 function sign_up() {
     let id_box = $("#input-id-register")
     let pw_box = $("#input-password-register")
@@ -14,7 +20,7 @@ function sign_up() {
     let email = email_box.val()
     let check_password = $("#input-check-password").val()
 
-
+    // 아이디 검사
     if (!VALID.ID.test(id)) {
         $("#help-id-register").text("아이디는 영어 소문자로 시작하는 5~20자 영문자 또는 숫자와 특수기호 (-),(_)만 사용 가능합니다!")
             .removeClass("is-hidden")
@@ -22,19 +28,23 @@ function sign_up() {
             .removeClass("is-safe")
         id_box.focus()
         return;
+        // 중복 확인 여부 검사
     } else if(!$('#help-id-register').hasClass('is-check') || id_save !== id) {
         $("#help-id-register").text("중복 확인을 해주세요!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
         return;
+        // 비밀번호 검사
     } else if (!VALID.PW.test(pw)) {
         $("#help-id-register").addClass("is-hidden")
         $("#help-pw-register").removeClass("is-hidden")
         pw_box.focus()
         return;
+        // 입력한 비밀번호와 재입력한 비밀번호가 같은지 검사
     } else if (pw !== check_password) {
         $("#help-pw-register").addClass("is-hidden")
         $("#help-pw-re").removeClass("is-hidden")
         $('#input-check-password').focus()
         return;
+        // 이메일 형식 검사
     } else if (!VALID.EMAIL.test(email)) {
         $("#help-pw-re").addClass("is-hidden")
         $("#help-email").removeClass("is-hidden")
@@ -42,6 +52,7 @@ function sign_up() {
     }
 
     $("#help-email").addClass("is-hidden")
+
 
     $.ajax({
         type: "POST",
@@ -52,14 +63,16 @@ function sign_up() {
             email_give: email
         },
         success: function (response) {
-            alert("회원가입을 축하드립니다!")
-            window.location.replace('../')
+            swal("회원 가입을 축하드립니다!", "당신도 이제 칵테일 러버!")
+            .then((value) => {window.location.replace('../')});
         }
     });
 }
 
+// 아이디 중복 확인 여부 검사 함수
 function is_dup(id) {
     let id_box = $("#input-id-register")
+    // 아이디 검사
     if (!VALID.ID.test(id)) {
         $("#help-id-register").removeClass("is-hidden")
             .text("아이디는 영어 소문자로 시작하는 5~20자 영문자 또는 숫자와 특수기호 (-),(_)만 사용 가능합니다!")
@@ -76,6 +89,7 @@ function is_dup(id) {
             id_give: id,
         },
         success: function (response) {
+            // 받은 json 데이터의 is_dup 값이 true 이면 경고 메세지 및 통과 x , false 면 id_save 에 해당 id 추가 후 통과 (is-check class 여부)
             if (response['is_dup']) {
                 $("#help-id-register").text("이미 존재하는 아이디입니다!").removeClass("is-hidden").addClass("is-danger").removeClass("is-safe")
                 id_box.focus()
@@ -92,6 +106,7 @@ function login() {
     let id = $("#input-username").val()
     let pw = $("#input-password").val()
 
+    // 공백 확인
     if (is_blank(id)) {
         $("#help-id").removeClass("is-hidden")
         $("#input-username").focus()
@@ -116,10 +131,10 @@ function login() {
             pw_give: pw
         },
         success: function (response) {
+            // 로그인 성공일 시 쿠키 발급 , 아닐 시 알럿으로 실패 알림
             if (response['result'] === 'success') {
                 $.cookie('mytoken', response['token'], {path: '/'});
-                alert("로그인 성공!")
-                window.location.reload()
+                window.location.replace('../')
             } else {
                 alert(response['msg'])
             }
@@ -127,25 +142,26 @@ function login() {
     });
 }
 
-// 로그아웃 함수
+// 로그아웃 함수 (쿠키 제거)
 function sign_out() {
     $.removeCookie('mytoken', {path: '/'})
-    alert('로그아웃!')
     window.location.href = '/'
 }
 
 // 댓글 등록 함수
 function post_comment(id, comment_list) {
 
+    // 쿠키 여부를 통해 로그인 여부 확인
     if ($.cookie('mytoken') === undefined || id === undefined) {
-        alert("로그인이 필요합니다")
+        swal("로그인이 필요합니다!")
         return;
     }
 
+    // 한 유저당 한 칵테일에 리뷰 수 1개 제한을 위한 검사
     if (comment_list !== undefined) {
         for (let comment of comment_list) {
             if (comment['name'] === id) {
-                alert("리뷰는 한 칵테일당 하나만 작성 가능합니다!")
+                swal("리뷰는 한 칵테일당 하나만 작성 가능합니다!")
                 return;
             }
         }
@@ -156,11 +172,12 @@ function post_comment(id, comment_list) {
     let content = $('#write_reply_text').val()
     let stars = $('input[name=rating]:checked').val();
 
+    // 공백 검사
     if (is_blank(content)) {
-        alert("내용을 입력하세요!")
+        swal("내용을 입력하세요!")
         return;
     } else if (stars === undefined) {
-        alert("별점은 1개 이상 주어야 합니다!")
+        swal("별점은 1개 이상 주어야 합니다!")
         return;
     }
 
@@ -174,7 +191,7 @@ function post_comment(id, comment_list) {
             stars_give: stars
         },
         success: function (response) {
-            alert(response['result'])
+            // 성공 시 새로고침
             window.location.reload()
         }
     })
@@ -188,14 +205,12 @@ function post_article(id) {
     let garnish = $('#cocktail-garnish').val();
     let file = $('#cocktail-imgsrc')[0].files[0];
 
-    if (is_blank(name, ingredient, method, garnish) === 1) {
-        alert("이미지를 제외한 모든 내용은 필수입니다!")
+    // 공백 검사
+    if(is_blank(name, ingredient, method, garnish) === 1) {
+        swal("이미지를 제외한 모든 내용은 필수입니다!")
         return
     }
 
-    if (file === undefined || file === " ") {
-        file = "#"
-    }
 
     let form_data = new FormData()
     form_data.append("id_give", id)
@@ -203,6 +218,8 @@ function post_article(id) {
     form_data.append("ingredient_give", ingredient)
     form_data.append("method_give", method)
     form_data.append("garnish_give", garnish)
+
+    // 파일이 있을 시에만 form 에 넣어줌
     if (file !== undefined && file !== " ") {
         form_data.append("file_give", file)
     }
@@ -218,14 +235,14 @@ function post_article(id) {
         processData: false,
         success: function (response) { // 성공하면
             if (response["result"] === "success") {
-                alert(response['msg'])
-                window.location.replace('../')
+                swal(response['msg'])
+                .then((value) => {window.location.replace('../')});
             }
         }
     })
 }
 
-
+// 게시글 삭제 함수
 function delete_article(user_id, cocktail_idx) {
     $.ajax({
         type: "DELETE",
@@ -235,12 +252,13 @@ function delete_article(user_id, cocktail_idx) {
             idx_give: cocktail_idx
         },
         success: function (response) { // 성공하면
-            alert(response["msg"]);
-            window.location.replace('../')
+            swal(response["msg"])
+            .then((value) => {window.location.replace('../')});
         }
     })
 }
 
+// 댓글 삭제 함수
 function delete_comment(id, cocktail_name) {
     $.ajax({
         type: "DELETE",
@@ -250,15 +268,17 @@ function delete_comment(id, cocktail_name) {
             cocktail_name_give: cocktail_name
         },
         success: function (response) { // 성공하면
-            alert(response["msg"]);
             window.location.reload()
         }
     })
 }
 
+// 공백 검사 함수
 function is_blank() {
+    // 공백 검사 정규식
     let blank_pattern = '/^\\s+|\\s+$/g'
 
+    // 들어온 파라미터들의 공백을 모두 제거했을 때 내용이 없다면 1 반환
     for (let arg of arguments) {
         if (arg.replace(blank_pattern, "") === '') {
             return 1
@@ -267,6 +287,3 @@ function is_blank() {
     return 0;
 }
 
-function is_valid(exp, reg) {
-    return reg.test(exp)
-}

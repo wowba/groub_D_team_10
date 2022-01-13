@@ -26,9 +26,13 @@
     <link rel="stylesheet" href="../static/css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../static/css/style.css" type="text/css">
+     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <script src="../static/js/cocktail99.js"></script>
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
 
 
     <!-- Js -->
@@ -261,6 +265,10 @@
             padding-top:30px;
         }
 
+        #article-d-button {
+            mar
+        }
+
 
     </style>
 
@@ -457,7 +465,10 @@
                     {% endif %}
                 </form>
                 {% if user_info and user_info.id == cocktail_info.id %}
-                    <button class="button is-danger" type="button" onclick="delete_article('{{user_info.id}}' , '{{cocktail_info.idx}}')">삭제</button>
+                <button id="article-d-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                        type="button" onclick="delete_article('{{user_info.id}}' , '{{cocktail_info.idx}}')">
+                    <i class="material-icons">delete</i>
+                </button>
                 {% endif %}
             </div>
         </div>

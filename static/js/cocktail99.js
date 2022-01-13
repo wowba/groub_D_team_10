@@ -203,7 +203,9 @@ function post_article(id) {
     form_data.append("ingredient_give", ingredient)
     form_data.append("method_give", method)
     form_data.append("garnish_give", garnish)
-    form_data.append("file_give", file)
+    if (file !== undefined && file !== " ") {
+        form_data.append("file_give", file)
+    }
 
 
 

@@ -179,11 +179,15 @@ def to_write_page():
         garnish_receive = request.form['garnish_give']
         idx = str(datetime.now())
 
-        file = request.files["file_give"]
-        filename = secure_filename(file.filename)
-        extension = filename.split(".")[-1]
-        file_path = f"pics/{name_receive}.{extension}"
-        file.save("./static/"+file_path)
+        if "file_give" in request.files:
+            file = request.files["file_give"]
+            filename = secure_filename(file.filename)
+            extension = filename.split(".")[-1]
+            file_path = f"pics/{name_receive}.{extension}"
+            file.save("./static/"+file_path)
+        else:
+            filename = secure_filename("default")
+            file_path = "#"
 
         doc = {
             "id": id_receive,

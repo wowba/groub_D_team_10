@@ -83,8 +83,12 @@ def is_dup():
 
 @app.route('/api/list_view', methods=['GET', 'POST'])
 def to_listpage():
+    # 리스트페이지 호출
     if request.method == 'GET':
+        # 전체 칵테일 리스트 전달
         search_list = list(db.cocktails.find({}, {'_id': False}))
+
+        # 사용자가 로그인 했는지 여부 확인. 리스트와 로그인 시 유저 정보 넘김
         try:
             token_receive = request.cookies.get('mytoken')
             payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
@@ -93,13 +97,17 @@ def to_listpage():
         except:
             return render_template('shop-grid.html', results=search_list)
 
+    # Sort by 분류값이 선택 되었을 경우 val_receive로 해당 값을 받음
     val_receive = request.form['val_give']
 
+    # 전체 리스트 선택시 전체 리스트 출력
     if val_receive == '0' or isinstance(val_receive, NoneType):
         search_list = list(db.cocktails.find({}, {'_id': False}))
+    # 카테고리가 있을 시 db에서 카테고리별 리스트 출력
     else:
         search_list = list(db.cocktails.find({'class': {"$regex": val_receive}}, {'_id': False}))
 
+    # 사용자가 로그인 했는지 여부 확인. 리스트와 로그인 시 유저 정보 넘김
     try:
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])

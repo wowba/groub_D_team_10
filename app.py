@@ -22,12 +22,14 @@ db = client.team10
 
 @app.route('/')
 def home():
+    # 로그인 했으면 토큰을 가져와 사용자 정보를 함께 렌더링 아닐 시 사용자 정보 제외
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"id": payload["id"]}, {'_id': False})
         return render_template('index.html', user_info=user_info)
     except jwt.ExpiredSignatureError:
+        # 토큰 시간 만료 시 메세지와 함께 홈으로
         return redirect(url_for("home", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return render_template('index.html')
@@ -93,7 +95,7 @@ def is_dup():
     else:
         return jsonify({'is_dup': False})
 
-
+# 리스트 페이지
 @app.route('/api/list_view', methods=['GET', 'POST'])
 def to_listpage():
     # 리스트페이지 호출
@@ -246,10 +248,12 @@ def to_write_page():
 # 랜덤 칵테일 추천 API
 @app.route('/api/randomrecommend', methods=['GET'])
 def random_list():
+    # db에서 리스트를 가지고 와 셔플로 랜덤리스트 발생. 좋아요 리스트 초기화
     random_list = list(db.cocktails.find({}, {'_id': False}))
     random.shuffle(random_list)
     user_like_list = ''
     try:
+        # 토큰 값으로 로그인 여부 확인 후 랜덤 리스트 및 좋아요 리스트 전달
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"id": payload["id"]})
@@ -262,15 +266,18 @@ def random_list():
 # 좋아요 순 칵테일 추천 API
 @app.route('/api/likerecommend', methods=['GET'])
 def like_list():
+    # 좋아요 순으로 db 정보 가져옴
     like_list = list(db.cocktails.find({}, {'_id': False}).sort('like', -1))
     user_like_list = []
     try:
+        # 로그인 했으면 그 유저의 좋아요 리스트와 함께 리턴
         token_receive = request.cookies.get('mytoken')
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         user_info = db.users.find_one({"id": payload["id"]})
         user_like_list = user_info["like_list"]
         return jsonify({'result': like_list, "user_like_list": user_like_list})
     except:
+        # 아닐 시 유저의 좋아요 리스트엔 빈 배열 넣어주고 리턴
         return jsonify({'result': like_list, "user_like_list": user_like_list})
 
 
@@ -302,7 +309,6 @@ def like_click():
         quit()
 
 
-# TODO 마이 페이지 API
 # mypage 접근 api
 @app.route('/api/mypage', methods=['GET'])
 def to_my_page():

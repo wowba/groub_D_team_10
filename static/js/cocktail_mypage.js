@@ -30,10 +30,7 @@ function likeListUp(id){
                                                         <p class="card-text reply-content">${cocktailclass}</p>
                                                     </div>
                                                     <div class="card-footer">
-                                                        <div onclick="handleClickLike('${name}')" class="click">
-                                                            <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 20px; height: 20px"/>
-                                                            <span class="${name}" style="margin-left: 5px">${like}</span>
-                                                        </div>
+                                                        <img src="/static/img/icon/suit-heart-fill.svg" class="${name} active" style="width: 20px; height: 20px"/>
                                                         <span class="like">${like}</span>
                                                         <span class="stars">⭐${stars}</span>
                                                     </div>

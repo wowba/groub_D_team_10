@@ -106,7 +106,7 @@
         .side_menu_btn{
             display: inline-block;
             width :20px;
-            
+
         }
 
         .detail_article .container{
@@ -121,7 +121,7 @@
             margin-right:200px;
         }
 
-        
+
 
         .categories .container .image-box img{
             width:500px;
@@ -201,7 +201,7 @@
             vertical-align: middle;
             display: block;
         }
-        
+
 
         .categories .reply_container .write_reply_field fieldset .rating_input_box span{
             font-size: 20px;
@@ -220,7 +220,7 @@
         .categories .reply_container .write_reply_field fieldset label:hover ~ label{
             text-shadow: 0 0 0 #d494c6;
         }
-        
+
         .categories .reply_container .write_reply_field  input[type=radio]{
             display: none;
         }
@@ -257,6 +257,12 @@
 
         }
 
+        .ingredients_box h3{
+            margin-top:0;
+        }
+        .score_box .score_box_inner{
+            margin-bottom:20px;
+        }
         .score_box h3{
             display: inline;
             text-shadow: 0 0 0 #d494c6;
@@ -274,7 +280,26 @@
 
         .score_box img{
             margin-bottom:10px;
+            margin-right: 13px;
         }
+
+        .article-delete-box{
+            margin-top:40px;
+            padding-left:10px;
+        }
+
+        #article-d-button {
+            margin: 5px 15px 15px 5px;
+        }
+        .delete-label{
+            font-size:25px;
+            font-weight: 700;
+        }
+
+        .content-text-field{
+          padding-left:15px;
+        }
+
 
         .click{
             display: inline-block;
@@ -284,14 +309,14 @@
             margin-right: 6px;
         }
 
+        .post_btn{
+            margin-top:-15px;
+        }
+
         .footer{
             padding-top:30px;
         }
 
-        #article-d-button {
-            margin: 5px;
-            float: right;
-        }
 
 
       .my_container {
@@ -339,9 +364,6 @@
                     {% endif %}
                 </p>
                 </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
             </div>
         </div>
     </header>
@@ -416,23 +438,25 @@
                 <h2 id="cocktail-name">{{cocktail_info.name}}</h2>
             </div>
             <div class="content-box">
-                <div class="ingredients_box">
-                    <h3>재료</h3>
-                    <span style="font-size: 20px">{{ cocktail_info.ingredient }}</span>
+                <div class="content-text-field">
+                    <div class="ingredients_box">
+                        <h3>재료</h3>
+                        <span>{{ cocktail_info.ingredient }}</span>
 
-                </div>
-                <div class="method_box">
-                    <h3 >주조법</h3>
-                    {% for idx, method in enumerate(cocktail_info.method.split(".")) %}
-                        {% if method == ' ' or method == '' %}
-                            {% continue %}
-                        {% endif %}
-                        <p style="font-size: 20px">#{{idx + 1}} {{method}}</p>
-                    {% endfor %}
-                </div>
-                <div class="garnish_box">
-                    <h3>가니쉬</h3>
-                    <p style="font-size: 20px">{{ cocktail_info.garnish }}</p>
+                    </div>
+                    <div class="method_box">
+                        <h3>주조법</h3>
+                        {% for idx, method in enumerate(cocktail_info.method.split(".")) %}
+                            {% if method == ' ' or method == '' %}
+                                {% continue %}
+                            {% endif %}
+                            <p>#{{idx + 1}} {{method}}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="garnish_box">
+                        <h3>가니쉬</h3>
+                        <p>{{ cocktail_info.garnish }}</p>
+                    </div>
                 </div>
                 <div class="score_box">
                     <div class="score_box_inner">
@@ -463,6 +487,17 @@
                             <div>
                     {% endif %}
                 </div>
+            </div>
+            <div class="article-delete-box">
+                {% if user_info and user_info.id == cocktail_info.id %}
+                    <button id="article-d-button"
+                            class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
+                            type="button"
+                            onclick="delete_article('{{ user_info.id }}' , '{{ cocktail_info.idx }}')">
+                        <i class="material-icons">delete</i>
+                    </button>
+                    <label class="delete-label" for="article-d-button">삭제하기</label>
+                {% endif %}
             </div>
         </div>
     </article>
@@ -512,12 +547,6 @@
                         <button class="post_btn" type="button" onclick="post_comment()">등록</button>
                     {% endif %}
                 </form>
-                {% if user_info and user_info.id == cocktail_info.id %}
-                <button id="article-d-button" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored"
-                        type="button" onclick="delete_article('{{user_info.id}}' , '{{cocktail_info.idx}}')">
-                    <i class="material-icons">delete</i>
-                </button>
-                {% endif %}
             </div>
         </div>
     </section>

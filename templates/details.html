@@ -315,6 +315,28 @@
 
 
 
+      .my_container {
+        overflow: auto;
+      }
+      .my_container::-webkit-scrollbar {
+        width: 10px;
+      }
+      .my_container::-webkit-scrollbar-thumb {
+        background-color: #2f3542;
+        border-radius: 10px;
+      }
+      .my_container::-webkit-scrollbar-track {
+        background-color: grey;
+        border-radius: 10px;
+        box-shadow: inset 0px 0px 5px white;
+      }
+
+      .my_header {
+          padding: 45px 0 15px 0;
+      }
+
+
+
     </style>
 
 </head>
@@ -328,7 +350,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="header__logo">
+                    <div class="header__logo my_header">
                         <a href="/">칵테일 99</a>
                     </div>
                 </div>
@@ -415,6 +437,7 @@
                 <h2 id="cocktail-name">{{cocktail_info.name}}</h2>
             </div>
             <div class="content-box">
+<<<<<<< HEAD
             <div class="content-text-field">
                     <div class="ingredients_box">
                         <h3>재료</h3>
@@ -434,6 +457,25 @@
                         <h3>가니쉬</h3>
                         <p>{{ cocktail_info.garnish }}</p>
                     </div>
+=======
+                <div class="ingredients_box">
+                    <h3>재료</h3>
+                    <span style="font-size: 20px">{{ cocktail_info.ingredient }}</span>
+
+                </div>
+                <div class="method_box">
+                    <h3 >주조법</h3>
+                    {% for idx, method in enumerate(cocktail_info.method.split(".")) %}
+                        {% if method == ' ' or method == '' %}
+                            {% continue %}
+                        {% endif %}
+                        <p style="font-size: 20px">#{{idx + 1}} {{method}}</p>
+                    {% endfor %}
+                </div>
+                <div class="garnish_box">
+                    <h3>가니쉬</h3>
+                    <p style="font-size: 20px">{{ cocktail_info.garnish }}</p>
+>>>>>>> 4d7b2e7a948cca206e22a2891b2c6d6f9b28f560
                 </div>
                 <div class="score_box">
                     <div class="score_box_inner">
@@ -479,7 +521,7 @@
         </div>
     </article>
     <section class="categories">
-        <div class="container reply_container">
+        <div class="container reply_container my_container">
             <div class="reply_display_field">
                 <h3>Comment</h3>
                 <div class="reply_list_container">

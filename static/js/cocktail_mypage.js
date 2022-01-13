@@ -9,7 +9,7 @@ function likeListUp(id){
                 success: function (response) {
                     let cocktaillist = response['like_cocktails']
                     for (let i = 0; i < cocktaillist.length; i++) {
-                        let name = cocktaillist[i]['id']
+                        let name = cocktaillist[i]['name']
                         let imgsrc = cocktaillist[i]['imgsrc']
                         let cocktailclass = cocktaillist[i]['class']
                         let like = cocktaillist[i]['like']
@@ -17,8 +17,10 @@ function likeListUp(id){
 
                         let temp_html = `
                                                 <div class="card">
-                                                  <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
-                                                    <div class="card-body">
+                                                  <div style="height:350px" class="card-img-box">
+                                                  <img class="card-img-top"  src="${imgsrc}" alt="Card image cap">
+                                                  </div>
+                                                    <div class="card-body" style="padding:20px">
                                                         <h5 class="card-title">${name}</h5>
                                                         <p class="card-text reply-content">${cocktailclass}</p>
                                                     </div>
@@ -57,10 +59,9 @@ function reviewListUp(id){
 
                 let temp_html = `
                                                 <div class="card">
-                                                  <img class="card-img-top" src="" alt="Card image cap">
-                                                    <div class="card-body">
+                                                    <div class="review-box style="padding:20px">
                                                         <h5 class="card-title">${name}</h5>
-                                                        <p class="card-text reply-content">${cocktail_name} ${content}</p>
+                                                        <p class="card-text reply-content">Comment : ${cocktail_name} ${content}</p>
                                                     </div>
                                                     <div class="card-footer">
                                                         <span class="like"><img src="/static/img/icon/suit-heart.svg" class="Dry Martini active" style="width: 20px; height: 20px"></span>
@@ -77,9 +78,8 @@ function reviewListUp(id){
 }
 
 
+
 // 나의 레시피 요청
-
-
 
 function recipeListUp(id){
         $(".card-deck").empty();
@@ -94,7 +94,9 @@ function recipeListUp(id){
             let cocktaillist = response['all_cocktails']
 
             for (let i = 0; i < cocktaillist.length; i++) {
+                console.log(cocktaillist[i])
                 let name = cocktaillist[i]['id']
+                let cocktailname = cocktaillist[i]['name']
                 let imgsrc = cocktaillist[i]['imgsrc']
                 let cocktailclass = cocktaillist[i]['class']
                 let like = cocktaillist[i]['like']
@@ -102,9 +104,11 @@ function recipeListUp(id){
 
                 let temp_html = `
                                                 <div class="card">
-                                                  <img class="card-img-top" src="${imgsrc}" alt="Card image cap">
+                                                  <div style="height:350px" class="card-img-box">
+                                                  <img class="card-img-top"  src="${imgsrc}" alt="Card image cap">
+                                                  </div>
                                                     <div class="card-body">
-                                                        <h5 class="card-title">${name}</h5>
+                                                        <h5 class="card-title">${cocktailname}</h5>
                                                         <p class="card-text reply-content">${cocktailclass}</p>
                                                     </div>
                                                     <div class="card-footer">

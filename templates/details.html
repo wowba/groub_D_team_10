@@ -418,21 +418,21 @@
             <div class="content-box">
                 <div class="ingredients_box">
                     <h3>재료</h3>
-                    <span>{{ cocktail_info.ingredient }}</span>
+                    <span style="font-size: 20px">{{ cocktail_info.ingredient }}</span>
 
                 </div>
                 <div class="method_box">
-                    <h3>주조법</h3>
+                    <h3 >주조법</h3>
                     {% for idx, method in enumerate(cocktail_info.method.split(".")) %}
                         {% if method == ' ' or method == '' %}
                             {% continue %}
                         {% endif %}
-                        <p>#{{idx + 1}} {{method}}</p>
+                        <p style="font-size: 20px">#{{idx + 1}} {{method}}</p>
                     {% endfor %}
                 </div>
                 <div class="garnish_box">
                     <h3>가니쉬</h3>
-                    <p>{{ cocktail_info.garnish }}</p>
+                    <p style="font-size: 20px">{{ cocktail_info.garnish }}</p>
                 </div>
                 <div class="score_box">
                     <div class="score_box_inner">

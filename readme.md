@@ -4,6 +4,8 @@ IBA / 한국 조주기능사 칵테일 레시피를 소개하는 사이트.<br>
 사용자들 또한 자신의 레시피를 올려 공유가 가능합니다.<br>
 힘들땐 공부 잠깐 놓고 주말에 술 한잔 합시다.
 
+[사이트 링크](http://wowba.shop/)
+링크는 대략 2022년말까지 유지될 예정입니다.
 [사용 영상 링크](https://www.youtube.com/watch?v=ZuPk1WB-p2Y&ab_channel=%EC%9D%B4%EC%98%81%EC%9A%B1)
 <hr>
 <h2>소개</h2>
